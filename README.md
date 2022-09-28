@@ -1,4 +1,4 @@
-## rapier-boilerplate
+## fxhash-pendulum
 Boilerplate for a fast start with three.js materials in rapier physics engine on Oculus Quest 2 VR headset.
 - only tested on Oculus Quest 2
 - movement is controlled with joystick
