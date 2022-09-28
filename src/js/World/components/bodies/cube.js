@@ -4,8 +4,25 @@ import {
   ColliderDesc
 } from '@dimforge/rapier3d-compat';
 
-const cube = (material, size, translation, rotation, physicsWorld, widthSegments = 1, heightSegments = 1, depthSegments = 1) => {
-  const geometry = new BoxGeometry(size.width, size.height, size.depth, widthSegments, heightSegments, depthSegments);
+const cube = (
+    material,
+    size,
+    translation,
+    rotation,
+    physicsWorld,
+    widthSegments = 1,
+    heightSegments = 1,
+    depthSegments = 1
+  ) => {
+
+  const geometry = new BoxGeometry(
+    size.width,
+    size.height,
+    size.depth,
+    widthSegments,
+    heightSegments,
+    depthSegments
+  );
   const mesh = new Mesh( geometry, material );
   mesh.castShadow = true;
   mesh.receiveShadow = true;
