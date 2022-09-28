@@ -33,8 +33,8 @@ const canvasNoiseFloor = (envMapIntensity = 1) => {
     // color: color,
     map: colorMap,
 
-    // roughness: 1,
-    // roughnessMap: roughnessMap,
+    roughness: 1,
+    roughnessMap: roughnessMap,
 
     // normalMap: normalMap,
 		// normalScale: new Vector2(1, 1),
@@ -52,8 +52,8 @@ const canvasNoiseFloor = (envMapIntensity = 1) => {
     // displacementScale
     // displacementBias
 
-    // metalness: 1,
-    // metalnessMap: metalnessMap,
+    metalness: 1,
+    metalnessMap: metalnessMap,
 
     // alphaMap: alphaMap,
 

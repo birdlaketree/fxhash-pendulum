@@ -41,7 +41,7 @@ class NoiseFloor {
 			roughnessCanvasContext.arc( x, y, r, 0, Math.PI * 2 );
 			roughnessCanvasContext.fill();
 
-      const mRGB = Math.random() * 20 + 20;
+      const mRGB = Math.random() * 255;
       // metalnessCanvasContext.fillStyle = 'rgb(120,120,120)';
       metalnessCanvasContext.fillStyle = `rgb(${mRGB}, ${mRGB}, ${mRGB})`;
 			metalnessCanvasContext.beginPath();
