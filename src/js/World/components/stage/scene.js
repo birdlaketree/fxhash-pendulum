@@ -1,11 +1,14 @@
 import { Scene, Color, Fog, PMREMGenerator } from 'three';
 import { RoomEnvironment } from './RoomEnv';
+import { createColor } from '../../utils/createColor';
 
 const createScene = renderer => {
   const scene = new Scene();
-  scene.background = new Color( 0xefefef );
+
+  const backgroundColor = createColor(0, 0, 0.1);
+  scene.background = backgroundColor;
   
-  const fog = new Fog( 0xefefef, 0, 200 );
+  const fog = new Fog( backgroundColor, 0, 200 );
   scene.fog = fog;
   
   const pmremGenerator = new PMREMGenerator(renderer);

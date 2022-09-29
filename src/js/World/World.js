@@ -30,7 +30,7 @@ class World {
     dolly.position.set(0, 0, 0);
     this.vrControls = new VrControls(this.renderer, dolly, this.camera);
     this.loop.updatableBodies.push(this.vrControls);
-    this.floorSize = 12;
+    this.floorSize = 300;
     RAPIER.init().then(() => this.physicsStart());
   }
 
@@ -61,16 +61,16 @@ class World {
     const bMaterial = defaultColorMattPlastic(createColor(Math.random(), 1, Math.random()));
     const cMaterial = defaultColorMattPlastic(createColor(Math.random(), 1, 1));
 
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < 1; i++) {
       const cItem = pendulum([wMaterial, bMaterial, cMaterial], this.physicsWorld, this.scene, this.loop);
     }
 
     // spheres
 
-    const colorMaterial = defaultColorShinyPlastic(createColor(0.6, 0.9, 0.01));
+    const colorMaterial = defaultColorShinyPlastic(createColor(0.6, 0.9, 0.001));
     for (let i = 0; i < 8; i++) {
       const size = {
-        radius: Math.random()/8 + 0.04
+        radius: Math.random()/12 + 0.02
       }
       const translation = {
         x: Math.random() * spreadWidth - spreadWidth/2,
@@ -93,7 +93,7 @@ class World {
     const blackMaterial = defaultColorShinyPlastic(createColor(0.6, 0, 0.02));
     for (let i = 0; i < 12; i++) {
       const size = {
-        width:  Math.random() * 0.3 + 0.05,
+        width:  Math.random() * 0.2 + 0.05,
         height: Math.random() * 0.2 + 0.05,
         depth:  Math.random() * 0.2 + 0.05
       }
@@ -116,9 +116,9 @@ class World {
 
     for (let i = 0; i < 2; i++) {
       const size = {
-        width:  Math.random() * 2 + 0.6,
-        height: Math.random() * 2 + 0.6,
-        depth:  Math.random() * 2 + 0.6
+        width:  Math.random() * 1 + 0.4,
+        height: Math.random() * 1 + 0.4,
+        depth:  Math.random() * 1 + 0.4
       }
       const translation = {
         x: Math.random() * spreadWidth - spreadWidth/2,

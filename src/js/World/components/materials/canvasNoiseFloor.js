@@ -2,8 +2,8 @@ import { Vector2, MeshPhysicalMaterial, CanvasTexture, RepeatWrapping } from 'th
 import { NoiseFloor } from '../textures/NoiseFloor';
 
 const canvasNoiseFloor = (envMapIntensity = 1) => {
-  const repeatX = 8;
-  const repeatY = 8;
+  const repeatX = 8 * 15;
+  const repeatY = 8 * 15;
 
   const maps = new NoiseFloor();
   const colorMap = new CanvasTexture(maps.colorMap);
