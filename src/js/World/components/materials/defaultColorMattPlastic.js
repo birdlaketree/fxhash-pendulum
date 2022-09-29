@@ -2,10 +2,10 @@ import {
   MeshStandardMaterial
 } from 'three';
 
-const defaultColorMattPlastic = (color, envmap = { texture: null }) => {
+const defaultColorMattPlastic = (color, envMapIntensity = 1, envmap = { texture: null }) => {
   const parameters = {
     envMap: envmap.texture,
-    envMapIntensity: 1,
+    envMapIntensity: envMapIntensity,
     color: color,
     roughness: 1,
     metalness: 0,

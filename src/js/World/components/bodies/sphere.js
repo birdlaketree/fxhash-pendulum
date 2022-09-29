@@ -23,17 +23,17 @@ const sphere = (material, size, translation, rotation, physicsWorld) => {
 
   physicsWorld.createCollider(collider, rigidBody);
 
-  rigidBody.tick = (delta) => {
-    const treshold = Math.random();
-    const impulseRange = 4;
-    if (treshold < 0.02 && ((mesh.position.y - size.radius) < 0.01)) {
-      rigidBody.applyImpulse({
-        x: Math.random() * impulseRange - impulseRange/2,
-        y: Math.random() * impulseRange/2,
-        z: Math.random() * impulseRange - impulseRange/2
-      }, true);
-    }
-  };
+  // rigidBody.tick = (delta) => {
+  //   const treshold = Math.random();
+  //   const impulseRange = 0.01;
+  //   if (treshold < 0.02 && ((mesh.position.y - size.radius) < 0.01)) {
+  //     rigidBody.applyImpulse({
+  //       x: Math.random() * impulseRange - impulseRange/2,
+  //       y: Math.random() * impulseRange/2,
+  //       z: Math.random() * impulseRange - impulseRange/2
+  //     }, true);
+  //   }
+  // };
 
   return {
     mesh: mesh,

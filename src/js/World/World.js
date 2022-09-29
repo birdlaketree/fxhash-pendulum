@@ -53,17 +53,11 @@ class World {
 
     // pendulum
 
-    // const wMaterial = defaultColorMattPlastic(createColor(0.2, 0, 1));
-    // const bMaterial = defaultColorMattPlastic(createColor(0.2, 0, 0));
-    // const cMaterial = defaultColorMattPlastic(createColor(0.8, 0.9, 0.2));
-
-    const wMaterial = defaultColorMattPlastic(createColor(Math.random(), 1, 0));
-    const bMaterial = defaultColorMattPlastic(createColor(Math.random(), 1, Math.random()));
-    const cMaterial = defaultColorMattPlastic(createColor(Math.random(), 1, 1));
-
-    for (let i = 0; i < 1; i++) {
-      const cItem = pendulum([wMaterial, bMaterial, cMaterial], this.physicsWorld, this.scene, this.loop);
-    }
+    const envMapIntensity = 0.4;
+    const wMaterial = defaultColorMattPlastic(createColor(Math.random(), 1, 0), envMapIntensity - 0.2);
+    const bMaterial = defaultColorMattPlastic(createColor(Math.random(), Math.random() * 0.3 + 0.7 , Math.random() * 0.8 + 0.04), envMapIntensity);
+    const cMaterial = defaultColorMattPlastic(createColor(Math.random(), 1, 1), envMapIntensity - 0.1);
+    const pItem = pendulum([wMaterial, bMaterial, cMaterial], this.physicsWorld, this.scene, this.loop);
 
     // spheres
 
@@ -85,7 +79,6 @@ class World {
       const sphereItem = sphere(colorMaterial, size, translation, rotation, this.physicsWorld);
       this.scene.add(sphereItem.mesh);
       this.loop.bodies.push(sphereItem);
-      // this.loop.updatableBodies.push(sphereItem.rigidBody);
     }
 
     // black cubes
