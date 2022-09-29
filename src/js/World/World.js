@@ -53,9 +53,14 @@ class World {
 
     // pendulum
 
-    const wMaterial = defaultColorMattPlastic(createColor(0.2, 0, 1));
-    const bMaterial = defaultColorMattPlastic(createColor(0.2, 0, 0));
-    const cMaterial = defaultColorMattPlastic(createColor(0.6, 1, 0.5));
+    // const wMaterial = defaultColorMattPlastic(createColor(0.2, 0, 1));
+    // const bMaterial = defaultColorMattPlastic(createColor(0.2, 0, 0));
+    // const cMaterial = defaultColorMattPlastic(createColor(0.8, 0.9, 0.2));
+
+    const wMaterial = defaultColorMattPlastic(createColor(Math.random(), 1, 0));
+    const bMaterial = defaultColorMattPlastic(createColor(Math.random(), 1, Math.random()));
+    const cMaterial = defaultColorMattPlastic(createColor(Math.random(), 1, 1));
+
     for (let i = 0; i < 3; i++) {
       const cItem = pendulum([wMaterial, bMaterial, cMaterial], this.physicsWorld, this.scene, this.loop);
     }
@@ -88,9 +93,9 @@ class World {
     const blackMaterial = defaultColorShinyPlastic(createColor(0.6, 0, 0.02));
     for (let i = 0; i < 12; i++) {
       const size = {
-        width:  Math.random() * 0.3 + 0.1,
-        height: Math.random() * 0.3 + 0.1,
-        depth:  Math.random() * 0.3 + 0.1
+        width:  Math.random() * 0.3 + 0.05,
+        height: Math.random() * 0.2 + 0.05,
+        depth:  Math.random() * 0.2 + 0.05
       }
       const translation = {
         x: Math.random() * spreadWidth - spreadWidth/2,
@@ -107,6 +112,28 @@ class World {
       this.loop.bodies.push(cubeItem);
     }
 
+    // black cube
+
+    for (let i = 0; i < 2; i++) {
+      const size = {
+        width:  Math.random() * 2 + 0.6,
+        height: Math.random() * 2 + 0.6,
+        depth:  Math.random() * 2 + 0.6
+      }
+      const translation = {
+        x: Math.random() * spreadWidth - spreadWidth/2,
+        y: Math.random() * 6 + 3,
+        z: Math.random() * spreadWidth - spreadWidth/2
+      }
+      const rotation = {
+        x: Math.random(),
+        y: Math.random(),
+        z: Math.random()
+      }
+      const cubeItem = cube(blackMaterial, size, translation, rotation, this.physicsWorld);
+      this.scene.add(cubeItem.mesh);
+      this.loop.bodies.push(cubeItem);
+    }
   }
 
   start() {

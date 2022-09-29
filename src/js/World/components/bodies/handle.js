@@ -39,6 +39,7 @@ const handle = (
 
   const rigidBody = physicsWorld.createRigidBody(rigidBodyDesc);
   const collider = ColliderDesc.cuboid(obj.size.width / 2, obj.size.height / 2, obj.size.depth / 2)
+    .setRestitution(0.7)
     .setTranslation(
         obj.anchor.x,
         obj.anchor.y,
@@ -47,17 +48,18 @@ const handle = (
 
   physicsWorld.createCollider(collider, rigidBody);
 
-  rigidBody.tick = (delta) => {
-    const treshold = Math.random();
-    const impulseRange = 1.4;
-    if (treshold < 0.02) {
-      rigidBody.applyTorqueImpulse({
-        x: 0,
-        y: 0,
-        z: Math.random() * impulseRange - impulseRange/2,
-      }, true);
-    }
-  };
+  // add in loop.updatableBodies to trigger
+  // rigidBody.tick = (delta) => {
+  //   const treshold = Math.random();
+  //   const impulseRange = 1.4;
+  //   if (treshold < 0.02) {
+  //     rigidBody.applyTorqueImpulse({
+  //       x: 0,
+  //       y: 0,
+  //       z: Math.random() * impulseRange - impulseRange/2,
+  //     }, true);
+  //   }
+  // };
 
   return {
     mesh: group,
