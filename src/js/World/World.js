@@ -35,7 +35,7 @@ class World {
   }
 
   physicsStart() {
-    console.log('fx.physicsStart.1');
+    console.log('fx.physicsStart.2');
     const gravity = new Vector3(0.0, -9.81, 0.0);
     this.physicsWorld = new RWorld(gravity);
     // console.log('RAPIER', RAPIER);
@@ -46,56 +46,23 @@ class World {
   }
 
   buildScene() {
-    console.log('fx.buildScene.1');
+    console.log('fx.buildScene.2');
     this.walls = createWalls(this.scene, this.floorSize);
     // this.handsPhysicsController = createHandsPhysicsController(this.scene, this.physics, this.vrControls);
     const spreadWidth = 10;
 
+    // pendulum
 
-    // compound cubes
-
-    const wMaterial = defaultColorMattPlastic(
-      createColor(0.2, 0, 1)
-    );
-
-    const bMaterial = defaultColorMattPlastic(
-      createColor(0.2, 0, 0)
-    );
-
-    const cMaterial = defaultColorMattPlastic(
-      createColor(0.6, 1, 0.5)
-    );
-
+    const wMaterial = defaultColorMattPlastic(createColor(0.2, 0, 1));
+    const bMaterial = defaultColorMattPlastic(createColor(0.2, 0, 0));
+    const cMaterial = defaultColorMattPlastic(createColor(0.6, 1, 0.5));
     for (let i = 0; i < 3; i++) {
-      const translation = {
-        // x: Math.random() * spreadWidth - spreadWidth/2,
-        // y: Math.random() * 1 + 3,
-        // z: Math.random() * spreadWidth - spreadWidth/2
-        x: 0,
-        y: 1,
-        z: 0
-      }
-      const rotation = {
-        // x: Math.random(),
-        // y: Math.random(),
-        // z: Math.random()
-        x: 0,
-        y: 0,
-        z: 0
-      }
-
       const cItem = pendulum([wMaterial, bMaterial, cMaterial], this.physicsWorld, this.scene, this.loop);
-      // this.scene.add(cItem.mesh);
-      // this.loop.bodies.push(cItem);
     }
-
 
     // spheres
 
-    const colorMaterial = defaultColorShinyPlastic(
-      createColor(0.6, 0.9, 0.01)
-    );
-
+    const colorMaterial = defaultColorShinyPlastic(createColor(0.6, 0.9, 0.01));
     for (let i = 0; i < 8; i++) {
       const size = {
         radius: Math.random()/8 + 0.04
@@ -110,47 +77,15 @@ class World {
         y: Math.random(),
         z: Math.random()
       }
-
       const sphereItem = sphere(colorMaterial, size, translation, rotation, this.physicsWorld);
       this.scene.add(sphereItem.mesh);
       this.loop.bodies.push(sphereItem);
       // this.loop.updatableBodies.push(sphereItem.rigidBody);
     }
 
-    // blue cubes
-
-    // const blueMaterial = defaultColorShinyPlastic(
-    //   createColor(0.6, 0.8, 0.3)
-    // );
-
-    // for (let i = 0; i < 2; i++) {
-    //   const size = {
-    //     width:  Math.random() * 1 + 0.2,
-    //     height: Math.random() * 1.6 + 0.2,
-    //     depth:  Math.random() * 1 + 0.2
-    //   }
-    //   const translation = {
-    //     x: Math.random() * spreadWidth - spreadWidth/2,
-    //     y: Math.random() * 6 + 3,
-    //     z: Math.random() * spreadWidth - spreadWidth/2
-    //   }
-    //   const rotation = {
-    //     x: Math.random(),
-    //     y: Math.random(),
-    //     z: Math.random()
-    //   }
-
-    //   const cubeItem = cube(blueMaterial, size, translation, rotation, this.physicsWorld);
-    //   this.scene.add(cubeItem.mesh);
-    //   this.loop.bodies.push(cubeItem);
-    // }
-
     // black cubes
 
-    const blackMaterial = defaultColorShinyPlastic(
-      createColor(0.6, 0, 0.02)
-    );
-
+    const blackMaterial = defaultColorShinyPlastic(createColor(0.6, 0, 0.02));
     for (let i = 0; i < 12; i++) {
       const size = {
         width:  Math.random() * 0.3 + 0.1,
@@ -167,7 +102,6 @@ class World {
         y: Math.random(),
         z: Math.random()
       }
-
       const cubeItem = cube(blackMaterial, size, translation, rotation, this.physicsWorld);
       this.scene.add(cubeItem.mesh);
       this.loop.bodies.push(cubeItem);

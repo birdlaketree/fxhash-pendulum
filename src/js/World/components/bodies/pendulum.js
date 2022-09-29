@@ -1,9 +1,4 @@
-import { BoxGeometry, Mesh, Quaternion, Euler, Group } from 'three';
-import {
-  RigidBodyDesc,
-  ColliderDesc,
-  JointData
-} from '@dimforge/rapier3d-compat';
+import { JointData } from '@dimforge/rapier3d-compat';
 import { handle } from './handle';
 
 const pendulum = (
@@ -97,15 +92,12 @@ const pendulum = (
   loop.bodies.push(handleC);
   // loop.updatableBodies.push(handleC.rigidBody);
 
-
   let x = { x: 0.0, y: 0.0, z: 1.0 };
   let paramsA = JointData.revolute({ x: 0.6 - 0.1, y: 0.0, z: 0.0 }, { x: -0.6 - 0.1, y: 0.0, z: 0.201 }, x);
   let jointA = physicsWorld.createImpulseJoint(paramsA, handleA.rigidBody, handleB.rigidBody, true);
 
   let paramsB = JointData.revolute({ x: 0.6 - 0.1, y: 0.0, z: 0.0 }, { x: -0.6 - 0.1, y: 0.0, z: 0.201 }, x);
   let jointB = physicsWorld.createImpulseJoint(paramsB, handleB.rigidBody, handleC.rigidBody, true);
-
-
 }
 
 export { pendulum };
