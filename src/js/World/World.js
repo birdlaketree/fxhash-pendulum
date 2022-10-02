@@ -107,26 +107,26 @@ class World {
 
     // black cube
 
-    for (let i = 0; i < 2; i++) {
-      const size = {
-        width:  Math.random() * 1 + 0.4,
-        height: Math.random() * 1 + 0.4,
-        depth:  Math.random() * 1 + 0.4
-      }
-      const translation = {
-        x: Math.random() * spreadWidth - spreadWidth/2,
-        y: Math.random() * 6 + 3,
-        z: Math.random() * spreadWidth - spreadWidth/2
-      }
-      const rotation = {
-        x: Math.random(),
-        y: Math.random(),
-        z: Math.random()
-      }
-      const cubeItem = cube(blackMaterial, size, translation, rotation, this.physicsWorld);
-      this.scene.add(cubeItem.mesh);
-      this.loop.bodies.push(cubeItem);
-    }
+    // for (let i = 0; i < 2; i++) {
+    //   const size = {
+    //     width:  Math.random() * 1 + 0.4,
+    //     height: Math.random() * 1 + 0.4,
+    //     depth:  Math.random() * 1 + 0.4
+    //   }
+    //   const translation = {
+    //     x: Math.random() * spreadWidth - spreadWidth/2,
+    //     y: Math.random() * 6 + 3,
+    //     z: Math.random() * spreadWidth - spreadWidth/2
+    //   }
+    //   const rotation = {
+    //     x: Math.random(),
+    //     y: Math.random(),
+    //     z: Math.random()
+    //   }
+    //   const cubeItem = cube(blackMaterial, size, translation, rotation, this.physicsWorld);
+    //   this.scene.add(cubeItem.mesh);
+    //   this.loop.bodies.push(cubeItem);
+    // }
   }
 
   start() {

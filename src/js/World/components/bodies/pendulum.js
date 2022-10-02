@@ -16,7 +16,7 @@ const pendulum = (
       depth: Math.random() * 0.3 + 0.04
     },
     translation : {
-      x: 0,
+      x: -1,
       y: 1,
       z: 0
     },
@@ -39,8 +39,8 @@ const pendulum = (
       depth: Math.random() * 0.6 + 0.05
     },
     translation : {
-      x: 2,
-      y: 0,
+      x: 0,
+      y: 1,
       z: 0
     },
     rotation: {
@@ -62,8 +62,8 @@ const pendulum = (
       depth: Math.random() * 0.6 + 0.04
     },
     translation : {
-      x: 4,
-      y: 0,
+      x: 1,
+      y: 1,
       z: 0
     },
     rotation: {
