@@ -17,9 +17,16 @@ const createLights = scene => {
 
   const point1 = new PointLight(0xffffff, 10);
   point1.position.set(0, 9, 0);
+
+
+  // mobile phone optimisation
+  // setting lower mapSize makes it much faster on iPhone 12 Pro Max
   point1.castShadow = true;
-  point1.shadow.mapSize.width = 4096;
-  point1.shadow.mapSize.height = 4096;
+  // point1.shadow.mapSize.width = 4096;
+  // point1.shadow.mapSize.height = 4096;
+  point1.shadow.mapSize.width = 2048;
+  point1.shadow.mapSize.height = 2048;
+
   scene.add(point1);
   // const point1marker = sphere(pointMaterial, 0.1);
   // point1.add(point1marker);
