@@ -16,7 +16,7 @@ const createLights = scene => {
 
   // mobile phone optimisation
   // setting lower mapSize makes it much faster on iPhone 12 Pro Max
-  const spot = new SpotLight(0xffffff, 640);
+  const spot = new SpotLight(0xffffff, 840);
   spot.penumbra = 1;
   spot.decay = 2;
   spot.angle = Math.PI/4;
