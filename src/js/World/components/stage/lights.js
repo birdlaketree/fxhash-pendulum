@@ -1,4 +1,4 @@
-import { AmbientLight, DirectionalLight, PointLight } from 'three';
+import { AmbientLight, DirectionalLight, PointLight, SpotLight } from 'three';
 import { sphere } from '../bodies/sphere';
 import { defaultColorShinyPlastic } from '../materials/defaultColorShinyPlastic.js';
 
@@ -15,19 +15,29 @@ const createLights = scene => {
   // const directional1marker = sphere(directionMaterial, 0.2);
   // directional.add(directional1marker);
 
-  const point1 = new PointLight(0xffffff, 10);
-  point1.position.set(0, 9, 0);
-
 
   // mobile phone optimisation
   // setting lower mapSize makes it much faster on iPhone 12 Pro Max
-  point1.castShadow = true;
-  // point1.shadow.mapSize.width = 4096;
-  // point1.shadow.mapSize.height = 4096;
-  point1.shadow.mapSize.width = 2048;
-  point1.shadow.mapSize.height = 2048;
+  // const point1 = new PointLight(0xffffff, 10);
+  // point1.position.set(0, 9, 0);
+  // point1.castShadow = true;
+  // point1.shadow.mapSize.width = 2048;
+  // point1.shadow.mapSize.height = 2048;
+  // scene.add(point1);
 
-  scene.add(point1);
+  // mobile phone optimisation
+  // setting lower mapSize makes it much faster on iPhone 12 Pro Max
+  const spot = new SpotLight(0xffffff, 440);
+  spot.penumbra = 1;
+  spot.decay = 2;
+  spot.angle = Math.PI/3;
+  spot.position.set(0, 20, 0);
+  spot.target.position.set(0, 0, 0);
+  spot.castShadow = true;
+  spot.shadow.mapSize.width = 2048;
+  spot.shadow.mapSize.height = 2048;
+  scene.add(spot);
+
   // const point1marker = sphere(pointMaterial, 0.1);
   // point1.add(point1marker);
 
