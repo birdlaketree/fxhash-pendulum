@@ -1,4 +1,4 @@
-import { Scene, Color, Fog, PMREMGenerator } from 'three';
+import { Scene, Fog, PMREMGenerator } from 'three';
 import { RoomEnvironment } from './RoomEnv';
 import { createColor } from '../../utils/createColor';
 

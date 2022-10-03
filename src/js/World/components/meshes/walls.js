@@ -8,7 +8,6 @@ const createWalls = (scene, size = 20) => {
   const materialFloor = canvasNoiseFloor(0.01);
   const materialCeeling = solidLight(0xffffff, 0xffffff);
   const geometry = new PlaneGeometry(size, size, 4, 4);
-  geometry.attributes.uv2 = geometry.attributes.uv; // second uv is needed for aoMap
 
   const floor = new Mesh( geometry, materialFloor );
   floor.receiveShadow = true;
