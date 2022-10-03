@@ -1,4 +1,4 @@
-import {Math, PlaneGeometry, Mesh } from 'three';
+import { PlaneGeometry, Mesh, MathUtils } from 'three';
 import { solidLight } from '../materials/solidLight';
 import { canvasNoiseWall } from '../materials/canvasNoiseWall';
 import { canvasNoiseFloor } from '../materials/canvasNoiseFloor';
@@ -11,7 +11,8 @@ const createWalls = (scene, size = 20) => {
 
   const floor = new Mesh( geometry, materialFloor );
   floor.receiveShadow = true;
-  floor.rotation.x = Math.degToRad(270);
+  floor.rotation.x = MathUtils.degToRad(270);
+  // floor.rotation.x = 270 * (Math.PI/180);
   scene.add(floor);
 
   // const ceeling = new Mesh( geometry, materialCeeling );
