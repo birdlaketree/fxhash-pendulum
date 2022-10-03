@@ -4,6 +4,7 @@ import {
   BasicShadowMap,
   PCFShadowMap,
   PCFSoftShadowMap,
+  VSMShadowMap,
   ACESFilmicToneMapping
 } from 'three';
 import { VRButton } from 'three/examples/jsm/webxr/VRButton.js';
@@ -24,8 +25,10 @@ const createRenderer = () => {
 
   renderer.outputEncoding = sRGBEncoding;
 
+  // mobile phone optimisation
+  // setting easier shadowMap makes it much faster on iPhone 12 Pro Max
   renderer.shadowMap.enabled = true;
-  renderer.shadowMap.type = PCFShadowMap;
+  renderer.shadowMap.type = PCFSoftShadowMap;
 
   // renderer.xr.enabled = true;
   document.body.appendChild( renderer.domElement );
