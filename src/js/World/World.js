@@ -29,7 +29,6 @@ class World {
     this.loop.updatableBodies.push(this.vrControls);
     this.floorSize = 300;
     RAPIER.init().then(() => {
-      console.log('init.1');
       this.physicsConfig();
       this.buildScene();
     });
