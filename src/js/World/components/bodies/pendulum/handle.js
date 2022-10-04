@@ -5,7 +5,7 @@ import {
 } from '@dimforge/rapier3d-compat';
 
 const handle = (
-    obj,
+    conf,
     physicsWorld,
     widthSegments = 1,
     heightSegments = 1,
@@ -13,36 +13,36 @@ const handle = (
   ) => {
 
   const geometry = new BoxGeometry(
-    obj.size.width,
-    obj.size.height,
-    obj.size.depth,
+    conf.size.width,
+    conf.size.height,
+    conf.size.depth,
     widthSegments,
     heightSegments,
     depthSegments
   );
-  const mesh = new Mesh(geometry, obj.material);
-  mesh.position.x = obj.anchor.x;
-  mesh.position.y = obj.anchor.y;
-  mesh.position.z = obj.anchor.z;
+  const mesh = new Mesh(geometry, conf.material);
+  mesh.position.x = conf.anchor.x;
+  mesh.position.y = conf.anchor.y;
+  mesh.position.z = conf.anchor.z;
   mesh.castShadow = true;
   mesh.receiveShadow = true;
   const group = new Group();
   group.add(mesh);
 
   const rigidBodyDesc = RigidBodyDesc.dynamic();
-  rigidBodyDesc.setTranslation(obj.translation.x, obj.translation.y, obj.translation.z);
+  rigidBodyDesc.setTranslation(conf.translation.x, conf.translation.y, conf.translation.z);
   const q = new Quaternion().setFromEuler(
-    new Euler(obj.rotation.x, obj.rotation.y, obj.rotation.z, 'XYZ')
+    new Euler(conf.rotation.x, conf.rotation.y, conf.rotation.z, 'XYZ')
   )
   rigidBodyDesc.setRotation({x: q.x, y: q.y, z: q.z, w: q.w});
 
   const rigidBody = physicsWorld.createRigidBody(rigidBodyDesc);
-  const collider = ColliderDesc.cuboid(obj.size.width / 2, obj.size.height / 2, obj.size.depth / 2)
+  const collider = ColliderDesc.cuboid(conf.size.width / 2, conf.size.height / 2, conf.size.depth / 2)
     .setRestitution(0.7)
     .setTranslation(
-        obj.anchor.x,
-        obj.anchor.y,
-        obj.anchor.z
+        conf.anchor.x,
+        conf.anchor.y,
+        conf.anchor.z
       );
 
   physicsWorld.createCollider(collider, rigidBody);

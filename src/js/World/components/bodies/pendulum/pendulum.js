@@ -17,6 +17,8 @@ const pendulum = (
   const materialB = defaultColorMattPlastic(colorComposition.b.color, colorComposition.b.envMapIntensity);
   const materialC = defaultColorMattPlastic(colorComposition.c.color, colorComposition.c.envMapIntensity);
 
+  const initYPos = 1;
+
   const hAConf = {
     size: {
       width: Math.random() * 1.6 + 0.6,
@@ -25,8 +27,8 @@ const pendulum = (
     },
     translation : {
       x: -1,
-      y: 1,
-      z: 0
+      y: initYPos,
+      z: 0.5
     },
     rotation: {
       x: 0,
@@ -49,7 +51,7 @@ const pendulum = (
     },
     translation : {
       x: 0,
-      y: 1,
+      y: initYPos,
       z: 0
     },
     rotation: {
@@ -73,8 +75,8 @@ const pendulum = (
     },
     translation : {
       x: 1,
-      y: 1,
-      z: 0
+      y: initYPos,
+      z: -0.5
     },
     rotation: {
       x: 0,
