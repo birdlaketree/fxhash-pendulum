@@ -1,13 +1,13 @@
 import { cube } from "../bodies/cube";
 import { defaultColorShinyPlastic } from "../materials/defaultColorShinyPlastic";
-import { createColor } from "../../utils/createColor";
+import { hslToHex } from "../../utils/colorUtils";
 
 const cubes = (
   scene,
   loop,
   physicsWorld
 ) => {
-  const blackMaterial = defaultColorShinyPlastic(createColor(0.6, 0, 0.02));
+  const blackMaterial = defaultColorShinyPlastic(hslToHex(0.6, 0, 0.02));
   const spreadWidth = 10;
 
   for (let i = 0; i < 12; i++) {

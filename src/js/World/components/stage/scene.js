@@ -1,11 +1,11 @@
 import { Scene, Fog, PMREMGenerator } from 'three';
 import { RoomEnvironment } from './RoomEnv';
-import { createColor } from '../../utils/createColor';
+import { hslToHex } from '../../utils/colorUtils';
 
 const createScene = renderer => {
   const scene = new Scene();
 
-  const backgroundColor = createColor(0, 0, 0.04);
+  const backgroundColor = hslToHex(0, 0, 0.04);
   scene.background = backgroundColor;
   
   const fog = new Fog( backgroundColor, 0, 200 );

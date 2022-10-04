@@ -1,21 +1,22 @@
-import { createColor } from "../../../utils/createColor";
+import { hslToHex } from "../../../utils/colorUtils";
+import { THEMES } from "@thi.ng/color-palettes";
 
 const colorComposer = (colorCompositionID) => {
   const envMapIntensity = 0.4;
 
   const black = {
-    color: createColor(0, 1, 0),
+    color: hslToHex(0, 1, 0),
     envMapIntensity: envMapIntensity - 0.2
   };
   const white = {
-    color: createColor(0, 1, 1),
+    color: hslToHex(0, 1, 1),
     envMapIntensity: envMapIntensity - 0.1
   };
 
   const whiteBlackColor = () => {
     const a = black;
     const b = {
-      color: createColor(Math.random(), Math.random() * 0.3 + 0.7 , Math.random() * 0.8 + 0.04),
+      color: hslToHex(Math.random(), Math.random() * 0.3 + 0.7 , Math.random() * 0.8 + 0.04),
       envMapIntensity
     };
     const c = white;
@@ -31,11 +32,11 @@ const colorComposer = (colorCompositionID) => {
     const hue = Math.random();
     const a = black;
     const b = {
-      color: createColor(hue, Math.random() * 0.3 + 0.7 , 0.78),
+      color: hslToHex(hue, Math.random() * 0.3 + 0.7 , 0.78),
       envMapIntensity
     };
     const c = {
-      color: createColor(hue, Math.random() * 0.3 + 0.7 , 0.5),
+      color: hslToHex(hue, Math.random() * 0.3 + 0.7 , 0.5),
       envMapIntensity
     };
     const randomized = [a,b,c].sort(() => Math.random() - 0.5);
@@ -50,11 +51,11 @@ const colorComposer = (colorCompositionID) => {
     const hue = Math.random();
     const a = white;
     const b = {
-      color: createColor(hue, Math.random() * 0.3 + 0.7 , 0.5),
+      color: hslToHex(hue, Math.random() * 0.3 + 0.7 , 0.5),
       envMapIntensity
     };
     const c = {
-      color: createColor(hue, Math.random() * 0.3 + 0.7 , 0.01),
+      color: hslToHex(hue, Math.random() * 0.3 + 0.7 , 0.01),
       envMapIntensity
     };
     const randomized = [a,b,c].sort(() => Math.random() - 0.5);
@@ -65,16 +66,45 @@ const colorComposer = (colorCompositionID) => {
     };
   }
 
+  const toxiColorPalettes = () => {
+    const selectedThemes = [
+      '00qAPJU0vXnWXxf1k',
+      '00QMEZl7ulP3f2WaX',
+      '00uOqryM4SOXgd7S0',
+      '00g3Jv9zydyJs2QlX'
+    ]
+    const themeIndex = Math.round(Math.random() * (selectedThemes.length - 1));
+    // console.log('colorComposer.themeIndex', themeIndex);
+    const theme = THEMES[selectedThemes[themeIndex]];
+
+    const rangeB = Math.round(Math.random()*2) + 1;
+    const rangeC = Math.round(Math.random()) + 4;
+    const envI = 0.3;
+    return {
+      a: { color: theme[0],      envMapIntensity: envI},
+      b: { color: theme[rangeB], envMapIntensity: envI},
+      c: { color: theme[rangeC], envMapIntensity: envI}
+    };
+  }
+
   let colorConfig;
-  console.log(colorCompositionID);
-  if (colorCompositionID <= 0.33) {
+  // colorConfig = toxiColorPalettes();
+
+  if (colorCompositionID <= 0.25) {
     colorConfig = whiteBlackColor();
+    console.log('colorComposer.whiteBlackColor');
   }
-  if (colorCompositionID >= 0.66) {
-    colorConfig = hueSpreadAndOneBlack();
-  }
-  if (colorCompositionID > 0.33 && colorCompositionID < 0.66) {
+  if (colorCompositionID > 0.25 && colorCompositionID <= 0.5) {
     colorConfig = hueSpreadAndOneWhite();
+    console.log('colorComposer.hueSpreadAndOneWhite');
+  }
+  if (colorCompositionID > 0.5 && colorCompositionID <= 0.75) {
+    colorConfig = hueSpreadAndOneBlack();
+    console.log('colorComposer.hueSpreadAndOneBlack');
+  }
+  if (colorCompositionID > 0.75) {
+    colorConfig = toxiColorPalettes();
+    console.log('colorComposer.toxiColorPalettes');
   }
 
   return colorConfig;

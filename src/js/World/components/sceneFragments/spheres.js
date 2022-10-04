@@ -1,13 +1,13 @@
 import { sphere } from "../bodies/sphere";
 import { defaultColorShinyPlastic } from "../materials/defaultColorShinyPlastic";
-import { createColor } from "../../utils/createColor";
+import { hslToHex } from "../../utils/colorUtils";
 
 const spheres = (
   scene,
   loop,
   physicsWorld
 ) => {
-  const colorMaterial = defaultColorShinyPlastic(createColor(0.6, 0, 0.002));
+  const colorMaterial = defaultColorShinyPlastic(hslToHex(0.6, 0, 0.002));
   const spreadWidth = 10;
 
   for (let i = 0; i < 8; i++) {

@@ -1,11 +1,11 @@
 import { Group } from 'three';
 import { sphere } from '../components/bodies/sphere';
-import { createColor } from '../utils/createColor';
+import { hslToHex } from '../utils/colorUtils';
 import { defaultColorMattPlastic } from '../components/materials/defaultColorMattPlastic';
 
 const createHandsPhysicsController = (scene, physics, vrControls) => {
   const handleMaterial = defaultColorMattPlastic(
-    createColor(0, 1, 1)
+    hslToHex(0, 1, 1)
   );
 
   const handDistance = 0;
