@@ -117,7 +117,7 @@ const pendulum = (
     },
     x
   );
-  let jointA = physicsWorld.createImpulseJoint(paramsA, handleA.rigidBody, handleB.rigidBody, true);
+  let jointA = physicsWorld.createImpulseJoint(paramsA, handleA.rigidBody, handleB.rigidBody, false);
 
   let paramsB = JointData.revolute(
     {
@@ -132,7 +132,7 @@ const pendulum = (
     },
     x
   );
-  let jointB = physicsWorld.createImpulseJoint(paramsB, handleB.rigidBody, handleC.rigidBody, true);
+  let jointB = physicsWorld.createImpulseJoint(paramsB, handleB.rigidBody, handleC.rigidBody, false);
 
   jointA.tick = (delta) => {
     const treshold = Math.random();
