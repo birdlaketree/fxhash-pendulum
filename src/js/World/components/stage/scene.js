@@ -5,7 +5,7 @@ import { createColor } from '../../utils/createColor';
 const createScene = renderer => {
   const scene = new Scene();
 
-  const backgroundColor = createColor(0, 0, 0.1);
+  const backgroundColor = createColor(0, 0, 0.04);
   scene.background = backgroundColor;
   
   const fog = new Fog( backgroundColor, 0, 200 );
