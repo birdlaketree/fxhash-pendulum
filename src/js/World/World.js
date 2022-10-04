@@ -11,7 +11,7 @@ import RAPIER from '@dimforge/rapier3d-compat';
 import { World as RWorld } from '@dimforge/rapier3d-compat';
 import { room as roomPhysicsComposition } from './components/bodies/room.js';
 import { roomWalls } from './components/meshes/roomWalls.js'
-import { pendulum } from "./components/bodies/pendulum.js";
+import { pendulum } from "./components/bodies/pendulum/pendulum.js";
 import { spheres } from "./components/sceneFragments/spheres.js";
 import { cubes } from "./components/sceneFragments/cubes.js";
 

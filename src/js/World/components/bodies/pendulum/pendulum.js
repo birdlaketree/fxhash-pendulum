@@ -1,8 +1,8 @@
 import { MathUtils } from 'three';
 import { JointData } from '@dimforge/rapier3d-compat';
 import { handle } from './handle';
-import { createColor } from '../../utils/createColor';
-import { defaultColorMattPlastic } from '../materials/defaultColorMattPlastic';
+import { colorComposer } from './colorComposer';
+import { defaultColorMattPlastic } from '../../materials/defaultColorMattPlastic';
 
 const pendulum = (
     scene,
@@ -10,10 +10,12 @@ const pendulum = (
     physicsWorld
   ) => {
 
-  const envMapIntensity = 0.4;
-  const materialA = defaultColorMattPlastic(createColor(Math.random(), 1, 0), envMapIntensity - 0.2);
-  const materialB = defaultColorMattPlastic(createColor(Math.random(), Math.random() * 0.3 + 0.7 , Math.random() * 0.8 + 0.04), envMapIntensity);
-  const materialC = defaultColorMattPlastic(createColor(Math.random(), 1, 1), envMapIntensity - 0.1);
+  const colorCompositionID = Math.random();
+  const colorComposition = colorComposer(colorCompositionID);
+
+  const materialA = defaultColorMattPlastic(colorComposition.a.color, colorComposition.a.envMapIntensity);
+  const materialB = defaultColorMattPlastic(colorComposition.b.color, colorComposition.b.envMapIntensity);
+  const materialC = defaultColorMattPlastic(colorComposition.c.color, colorComposition.c.envMapIntensity);
 
   const hAConf = {
     size: {
