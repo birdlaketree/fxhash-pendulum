@@ -5,7 +5,6 @@ import {
 } from '@dimforge/rapier3d-compat';
 
 const handle = (
-    material,
     obj,
     physicsWorld,
     widthSegments = 1,
@@ -21,7 +20,7 @@ const handle = (
     heightSegments,
     depthSegments
   );
-  const mesh = new Mesh(geometry, material);
+  const mesh = new Mesh(geometry, obj.material);
   mesh.position.x = obj.anchor.x;
   mesh.position.y = obj.anchor.y;
   mesh.position.z = obj.anchor.z;

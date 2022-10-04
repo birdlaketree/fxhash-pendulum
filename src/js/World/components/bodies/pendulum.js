@@ -1,15 +1,21 @@
 import { MathUtils } from 'three';
-import { JointData, RevoluteImpulseJoint } from '@dimforge/rapier3d-compat';
+import { JointData } from '@dimforge/rapier3d-compat';
 import { handle } from './handle';
+import { createColor } from '../../utils/createColor';
+import { defaultColorMattPlastic } from '../materials/defaultColorMattPlastic';
 
 const pendulum = (
-    materials,
-    physicsWorld,
     scene,
-    loop
+    loop,
+    physicsWorld
   ) => {
 
-  const objA = {
+  const envMapIntensity = 0.4;
+  const materialA = defaultColorMattPlastic(createColor(Math.random(), 1, 0), envMapIntensity - 0.2);
+  const materialB = defaultColorMattPlastic(createColor(Math.random(), Math.random() * 0.3 + 0.7 , Math.random() * 0.8 + 0.04), envMapIntensity);
+  const materialC = defaultColorMattPlastic(createColor(Math.random(), 1, 1), envMapIntensity - 0.1);
+
+  const hAConf = {
     size: {
       width: Math.random() * 1.6 + 0.6,
       height: Math.random() * 0.3 + 0.04,
@@ -29,10 +35,11 @@ const pendulum = (
       x: 0,
       y: 0,
       z: 0
-    }
+    },
+    material : materialA
   }
 
-  const objB = {
+  const hBConf = {
     size: {
       width: Math.random() * 1.2 + 0.2,
       height: Math.random() * 0.6 + 0.05,
@@ -52,10 +59,11 @@ const pendulum = (
       x: 0,
       y: 0,
       z: 0
-    }
+    },
+    material : materialB
   }
 
-  const objC = {
+  const hCConf = {
     size: {
       width: Math.random() * 1.8 + 0.4,
       height: Math.random() * 0.6 + 0.04,
@@ -75,32 +83,33 @@ const pendulum = (
       x: 0,
       y: 0,
       z: 0
-    }
+    },
+    material : materialC
   }
 
-  const handleA = handle(materials[0], objA, physicsWorld);
+  const handleA = handle(hAConf, physicsWorld);
   scene.add(handleA.mesh);
   loop.bodies.push(handleA);
 
-  const handleB = handle(materials[1], objB, physicsWorld);
+  const handleB = handle(hBConf, physicsWorld);
   scene.add(handleB.mesh);
   loop.bodies.push(handleB);
 
-  const handleC = handle(materials[2], objC, physicsWorld);
+  const handleC = handle(hCConf, physicsWorld);
   scene.add(handleC.mesh);
   loop.bodies.push(handleC);
 
   let x = { x: 0.0, y: 0.0, z: 1.0 };
   let paramsA = JointData.revolute(
     { 
-      x: objA.size.width/2 - objA.size.height/2,
+      x: hAConf.size.width/2 - hAConf.size.height/2,
       y: 0.0,
       z: 0.0
     },
     { 
-      x: -objB.size.width/2 + objB.size.height/2,
+      x: -hBConf.size.width/2 + hBConf.size.height/2,
       y: 0.0,
-      z: objA.size.depth/2 + objB.size.depth/2
+      z: hAConf.size.depth/2 + hBConf.size.depth/2
     },
     x
   );
@@ -108,14 +117,14 @@ const pendulum = (
 
   let paramsB = JointData.revolute(
     {
-      x: objB.size.width/2 - objB.size.height/2,
+      x: hBConf.size.width/2 - hBConf.size.height/2,
       y: 0.0,
       z: 0.0
     },
     {
-      x: -objC.size.width/2 + objC.size.height/2,
+      x: -hCConf.size.width/2 + hCConf.size.height/2,
       y: 0.0,
-      z: objB.size.depth/2 + objC.size.depth/2
+      z: hBConf.size.depth/2 + hCConf.size.depth/2
     },
     x
   );

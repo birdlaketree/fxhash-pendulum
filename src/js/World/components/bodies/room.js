@@ -4,7 +4,7 @@ import {
   ColliderDesc
 } from '@dimforge/rapier3d-compat';
 
-const roomComposition = (physicsWorld, floorSize, isVisible = false) => {
+const room = (physicsWorld, floorSize, isVisible = false) => {
   const wallTickness = 1;
 
   const floor = {
@@ -185,4 +185,4 @@ const roomComposition = (physicsWorld, floorSize, isVisible = false) => {
   // };
 }
 
-export { roomComposition };
+export { room };
