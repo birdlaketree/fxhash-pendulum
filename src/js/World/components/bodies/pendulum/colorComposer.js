@@ -37,11 +37,11 @@ const colorComposer = (colorCompositionID) => {
 
     const a = black;
     const b = {
-      color: hslToHex(hue, Math.random() * 0.4 + 0.6 , 0.8),
+      color: hslToHex(hue,                Math.random() * 0.4 + 0.6 , 0.8),
       envMapIntensity
     };
     const c = {
-      color: hslToHex(hue, Math.random() * 0.3 + 0.7 , 0.5),
+      color: hslToHex(hue,                Math.random() * 0.3 + 0.7 , 0.5),
       envMapIntensity
     };
 
@@ -59,11 +59,11 @@ const colorComposer = (colorCompositionID) => {
 
     const a = white;
     const b = {
-      color: hslToHex(hue, Math.random() * 0.3 + 0.7 , 0.5),
+      color: hslToHex(hue,                Math.random() * 0.3 + 0.7 , 0.5),
       envMapIntensity
     };
     const c = {
-      color: hslToHex(hue, Math.random() * 0.3 + 0.7 , 0.01),
+      color: hslToHex(hue,                Math.random() * 0.3 + 0.7 , 0.01),
       envMapIntensity
     };
 
@@ -82,11 +82,11 @@ const colorComposer = (colorCompositionID) => {
 
     const a = white;
     const b = {
-      color: hslToHex(hue, Math.random() * 0.3 + 0.7 , 0.5),
+      color: hslToHex(hue,                Math.random() * 0.3 + 0.7 , 0.5),
       envMapIntensity
     };
     const c = {
-      color: hslToHex(hueComplementary, Math.random() * 0.3 + 0.6 , 0.02),
+      color: hslToHex(hueComplementary,   Math.random() * 0.3 + 0.6 , 0.02),
       envMapIntensity
     };
 
@@ -102,15 +102,15 @@ const colorComposer = (colorCompositionID) => {
 
   const hueComplementaryAndOneBlack = () => {
     const hue = Math.random();
-    const hueComplementary = hue + 0.6;
+    const hueComplementary = hue + 0.3;
 
     const a = black;
     const b = {
-      color: hslToHex(hue, Math.random() * 0.4 + 0.6 , 0.8),
+      color: hslToHex(hue,                Math.random() * 0.1 + 0.9 , Math.random() * 0.2 + 0.4),
       envMapIntensity
     };
     const c = {
-      color: hslToHex(hueComplementary, Math.random() * 0.3 + 0.7 , 0.5),
+      color: hslToHex(hueComplementary,   Math.random() * 0.2 + 0.8 , Math.random() * 0.6 + 0.4),
       envMapIntensity
     };
 
@@ -122,6 +122,52 @@ const colorComposer = (colorCompositionID) => {
     };
   }
   paleteGenerators.push(hueComplementaryAndOneBlack);
+
+  const hueComplementaryLight = () => {
+    const hue = Math.random();
+    const hueComplementary = hue + 0.2;
+
+    const a = white;
+    const b = {
+      color: hslToHex(hue,                Math.random() * 0.1 + 0.9 , Math.random() * 0.2 + 0.4),
+      envMapIntensity
+    };
+    const c = {
+      color: hslToHex(hueComplementary,   Math.random() * 0.2 + 0.8 , Math.random() * 0.6 + 0.4),
+      envMapIntensity
+    };
+
+    const randomized = [a,b,c].sort(() => Math.random() - 0.5);
+    return {
+      a: randomized[0],
+      b: randomized[1],
+      c: randomized[2],
+    };
+  }
+  paleteGenerators.push(hueComplementaryLight);
+
+  const hueComplementaryDark = () => {
+    const hue = Math.random()*0.15 + 0.55;
+    const hueComplementary = hue + 0.5;
+
+    const a = black;
+    const b = {
+      color: hslToHex(hue,                Math.random() * 0.5 + 0.5 , Math.random() * 0.04),
+      envMapIntensity
+    };
+    const c = {
+      color: hslToHex(hueComplementary,   Math.random() * 0.5 + 0.5 , Math.random() * 0.04),
+      envMapIntensity
+    };
+
+    const randomized = [a,b,c].sort(() => Math.random() - 0.5);
+    return {
+      a: randomized[0],
+      b: randomized[1],
+      c: randomized[2],
+    };
+  }
+  paleteGenerators.push(hueComplementaryDark);
 
   // const toxiColorPalettes = () => {
   //   const selectedThemes = [
@@ -145,7 +191,7 @@ const colorComposer = (colorCompositionID) => {
   // }
   // paleteGenerators.push(toxiColorPalettes);
 
-  // let colorConfig = hueSpreadAndOneBlack();
+  // let colorConfig = hueComplementaryAndOneBlack();
   const pgIndex = Math.round((paleteGenerators.length - 1) * colorCompositionID);
   let colorConfig = paleteGenerators[pgIndex]();
   console.log('palette:', paleteGenerators[pgIndex].name);
