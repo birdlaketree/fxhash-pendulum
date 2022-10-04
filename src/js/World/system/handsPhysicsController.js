@@ -11,10 +11,6 @@ const createHandsPhysicsController = (scene, physics, vrControls) => {
   const handDistance = 0;
 
   const rightHandController = new Group();
-  // const rightHandAnchor = sphere(handleMaterial, 0.04);
-  // rightHandAnchor.position.z = 0;
-  // rightHandAnchor.visible = false;
-  // rightHandController.add(rightHandAnchor);
   const rightHandAsset = sphere(handleMaterial, 0.04);
   rightHandAsset.position.z = handDistance;
   rightHandAsset.castShadow = true;

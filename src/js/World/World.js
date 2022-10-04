@@ -48,7 +48,7 @@ class World {
   buildScene() {
     console.log('fx.buildScene.2');
     this.walls = createWalls(this.scene, this.floorSize);
-    // this.handsPhysicsController = createHandsPhysicsController(this.scene, this.physics, this.vrControls);
+    // this.handsPhysicsController = createHandsPhysicsController(this.scene, this.physicsWorld, this.vrControls);
     const spreadWidth = 10;
 
     // pendulum
