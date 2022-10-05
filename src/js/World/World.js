@@ -1,4 +1,4 @@
-import { Vector3 } from "three";
+import { Vector3, PlaneGeometry, MathUtils, Mesh } from "three";
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import { Loop } from './system/Loop.js';
 import { createRenderer } from './system/renderer.js';
@@ -14,6 +14,10 @@ import { roomWalls } from './components/meshes/roomWalls.js'
 import { pendulum } from "./components/bodies/pendulum/pendulum.js";
 import { spheres } from "./components/sceneFragments/spheres.js";
 import { cubes } from "./components/sceneFragments/cubes.js";
+
+// import { defaultColorShinyPlastic } from "./components/materials/defaultColorShinyPlastic"
+// import { bentPlane } from "./components/materials/bentPlane";
+
 
 class World {
   constructor() {
@@ -43,6 +47,16 @@ class World {
   }
 
   buildScene() {
+    // const planeMaterial = bentPlane(0x000000, 1);
+    // const planeGeom = new PlaneGeometry(2, 2, 4, 4);
+    // const plane = new Mesh( planeGeom, planeMaterial );
+    // plane.rotation.y = MathUtils.degToRad(35);
+    // plane.rotation.x = MathUtils.degToRad(-55);
+    // plane.position.x = -2;
+    // plane.position.y = 2;
+    // plane.position.z = -2;
+    // this.scene.add(plane);
+
     this.walls = roomWalls(this.scene, this.floorSize);
     this.pendulum = pendulum(this.scene, this.loop, this.physicsWorld);
     this.spheresFragment = spheres(this.scene, this.loop, this.physicsWorld);
