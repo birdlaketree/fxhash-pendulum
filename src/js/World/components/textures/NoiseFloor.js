@@ -27,14 +27,14 @@ class NoiseFloor {
 			const y = Math.random() * height;
 			const r = Math.random() * 4;
       
-      const cRGB = Math.random() * 200;
+			const cRGB = isDay ? Math.random() * 100 : Math.random() * 200;
       // colorCanvasContext.fillStyle = 'rgb(`100`, 100, 100)';
       colorCanvasContext.fillStyle = `rgb(${cRGB}, ${cRGB}, ${cRGB})`;
 			colorCanvasContext.beginPath();
 			colorCanvasContext.arc( x, y, r, 0, Math.PI * 2 );
 			colorCanvasContext.fill();
 
-      const rRGB = Math.random() * 255;
+      const rRGB = isDay ? Math.random() * 55 : Math.random() * 255;
 			// roughnessCanvasContext.fillStyle = 'rgb(30,30,30)';
       roughnessCanvasContext.fillStyle = `rgb(${rRGB}, ${rRGB}, ${rRGB})`;
 			roughnessCanvasContext.beginPath();

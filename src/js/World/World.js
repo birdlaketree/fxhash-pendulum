@@ -19,6 +19,7 @@ import { cubes } from "./components/sceneFragments/cubes.js";
 class World {
   constructor() {
     this.isDay = Math.round(Math.random());
+    // this.isDay = 1;
     this.renderer = createRenderer();
     this.scene = createScene(this.renderer, this.isDay);
     this.camera = createCamera();
