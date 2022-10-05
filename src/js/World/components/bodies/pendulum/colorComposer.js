@@ -1,8 +1,9 @@
 import { hslToHex } from "../../../utils/colorUtils";
-import { THEMES } from "@thi.ng/color-palettes";
 
 const colorComposer = (colorCompositionID) => {
   const envMapIntensity = 0.4;
+
+  // primitives
 
   const black = {
     color: hslToHex(0, 1, 0),
@@ -15,13 +16,60 @@ const colorComposer = (colorCompositionID) => {
 
   const paleteGenerators = [];
 
+  // palette tools
+
+  const brightSaturation = () => Math.random() * 0.1 + 0.9;
+  const strongSaturation = () => Math.random() * 0.2 + 0.8;
+  const darkSaturation   = () => Math.random() * 0.4 + 0.2;
+
+  const brightLightness = () => Math.random() * 0.2 + 0.6;
+  const strongLightness = () => Math.random() * 0.2 + 0.3;
+  const darkLightness   = () => Math.random() * 0.1 + 0.004;
+
+  const brightTheme = [brightSaturation(), brightLightness()];
+  const strongTheme = [strongSaturation(), strongLightness()];
+  const darkTheme   = [darkSaturation(), darkLightness()];
+
+  const themes = [
+    brightTheme,
+    strongTheme,
+    darkTheme
+  ]
+
+  const getHueVariants = hue => {
+    // 0.166 is equivalent to 60 degrees in the hue spectrum
+    return [
+      hue + 0.166 / 2,
+      hue + 0.166,
+      hue + 0.166 * 1.2,
+      // hue + 0.166*2, // almost complement -- maybe to much for this env
+      // initHue + 0.166*3 // complement -- maybe to much for this env
+    ]
+  }
+
+  const grayscaleBright = () => Math.random() * 0.1 + 0.92;
+  const grayscaleStrong = () => Math.random() * 0.3 + 0.1;
+  const grayscaleDark   = () => Math.random() * 0.02;
+
+  const grayscaleThemes = [
+    grayscaleBright(),
+    grayscaleStrong(),
+    grayscaleDark()
+  ]
+
+  // palettes
+
   const whiteBlackColor = () => {
+    const themeSeed = Math.random();
+    const themeIndex = Math.round((themes.length - 1) * themeSeed);
+    const theme = themes[themeIndex];
+
     const a = black;
-    const b = {
-      color: hslToHex(Math.random(), Math.random() * 0.3 + 0.7 , Math.random() * 0.8 + 0.04),
+    const b = white;
+    const c = {
+      color: hslToHex(Math.random(), ...theme),
       envMapIntensity
     };
-    const c = white;
 
     const randomized = [a,b,c].sort(() => Math.random() - 0.5);
     return {
@@ -32,16 +80,32 @@ const colorComposer = (colorCompositionID) => {
   }
   paleteGenerators.push(whiteBlackColor);
 
-  const hueSpreadAndOneBlack = () => {
-    const hue = Math.random();
+  const duoAndLightness = () => {
+    const themeSeed = Math.random();
+    const themeIndex = Math.round((themes.length - 1) * themeSeed);
+    const theme = themes[themeIndex];
 
-    const a = black;
+    const themeASeed = Math.random();
+    const themeAIndex = Math.round((themes.length - 1) * themeASeed);
+    const themeA = themes[themeAIndex];
+
+    const themeBSeed = Math.random();
+    const themeBIndex = Math.round((themes.length - 1) * themeBSeed);
+    const themeB = themes[themeBIndex];
+
+    const initHue = Math.random();
+    const secondHueVariants = getHueVariants(initHue);
+    const secondHueSeed = Math.random();
+    const secondHueIndex = Math.round((secondHueVariants.length - 1) * secondHueSeed);
+    const secondHue = secondHueVariants[secondHueIndex];
+
+    const a = Math.round(Math.random()) ? white : black;
     const b = {
-      color: hslToHex(hue,                Math.random() * 0.4 + 0.6 , 0.8),
+      color: hslToHex(initHue, ...themeA),
       envMapIntensity
     };
     const c = {
-      color: hslToHex(hue,                Math.random() * 0.3 + 0.7 , 0.5),
+      color: hslToHex(secondHue, ...themeB),
       envMapIntensity
     };
 
@@ -52,18 +116,47 @@ const colorComposer = (colorCompositionID) => {
       c: randomized[2],
     };
   }
-  paleteGenerators.push(hueSpreadAndOneBlack);
+  paleteGenerators.push(duoAndLightness);
 
-  const hueSpreadAndOneWhite = () => {
-    const hue = Math.random();
+  const tripple = () => {
+    const themeSeed = Math.random();
+    const themeIndex = Math.round((themes.length - 1) * themeSeed);
+    const theme = themes[themeIndex];
 
-    const a = white;
+    const themeASeed = Math.random();
+    const themeAIndex = Math.round((themes.length - 1) * themeASeed);
+    const themeA = themes[themeAIndex];
+
+    const themeBSeed = Math.random();
+    const themeBIndex = Math.round((themes.length - 1) * themeBSeed);
+    const themeB = themes[themeBIndex];
+
+    const themeCSeed = Math.random();
+    const themeCIndex = Math.round((themes.length - 1) * themeCSeed);
+    const themeC = themes[themeCIndex];
+
+    const initHue = Math.random();
+
+    const secondHueVariants = getHueVariants(initHue);
+    const secondHueSeed = Math.random();
+    const secondHueIndex = Math.round((secondHueVariants.length - 1) * secondHueSeed);
+    const secondHue = secondHueVariants[secondHueIndex];
+
+    const thirdHueVariants = getHueVariants(secondHue);
+    const thirdHueSeed = Math.random();
+    const thirdHueIndex = Math.round((thirdHueVariants.length - 1) * thirdHueSeed);
+    const thirdHue = thirdHueVariants[thirdHueIndex];
+
+    const a = {
+      color: hslToHex(initHue, ...themeA),
+      envMapIntensity
+    };
     const b = {
-      color: hslToHex(hue,                Math.random() * 0.3 + 0.7 , 0.5),
+      color: hslToHex(secondHue, ...themeB),
       envMapIntensity
     };
     const c = {
-      color: hslToHex(hue,                Math.random() * 0.3 + 0.7 , 0.01),
+      color: hslToHex(thirdHue, ...themeC),
       envMapIntensity
     };
 
@@ -74,19 +167,31 @@ const colorComposer = (colorCompositionID) => {
       c: randomized[2],
     };
   }
-  paleteGenerators.push(hueSpreadAndOneWhite);
+  paleteGenerators.push(tripple);
 
-  const hueComplementaryAndOneWhite = () => {
-    const hue = Math.random();
-    const hueComplementary = hue + 0.7;
+  const grayscale = () => {
+    const themeASeed = Math.random();
+    const themeAIndex = Math.round((grayscaleThemes.length - 1) * themeASeed);
+    const themeA = grayscaleThemes[themeAIndex];
 
-    const a = white;
+    const themeBSeed = Math.random();
+    const themeBIndex = Math.round((grayscaleThemes.length - 1) * themeBSeed);
+    const themeB = grayscaleThemes[themeBIndex];
+
+    const themeCSeed = Math.random();
+    const themeCIndex = Math.round((grayscaleThemes.length - 1) * themeCSeed);
+    const themeC = grayscaleThemes[themeCIndex];
+
+    const a = {
+      color: hslToHex(0, 0, themeA),
+      envMapIntensity
+    };
     const b = {
-      color: hslToHex(hue,                Math.random() * 0.3 + 0.7 , 0.5),
+      color: hslToHex(0, 0, themeB),
       envMapIntensity
     };
     const c = {
-      color: hslToHex(hueComplementary,   Math.random() * 0.3 + 0.6 , 0.02),
+      color: hslToHex(0, 0, themeC),
       envMapIntensity
     };
 
@@ -97,101 +202,9 @@ const colorComposer = (colorCompositionID) => {
       c: randomized[2],
     };
   }
-  paleteGenerators.push(hueComplementaryAndOneWhite);
+  paleteGenerators.push(grayscale);
 
-
-  const hueComplementaryAndOneBlack = () => {
-    const hue = Math.random();
-    const hueComplementary = hue + 0.3;
-
-    const a = black;
-    const b = {
-      color: hslToHex(hue,                Math.random() * 0.1 + 0.9 , Math.random() * 0.2 + 0.4),
-      envMapIntensity
-    };
-    const c = {
-      color: hslToHex(hueComplementary,   Math.random() * 0.2 + 0.8 , Math.random() * 0.6 + 0.4),
-      envMapIntensity
-    };
-
-    const randomized = [a,b,c].sort(() => Math.random() - 0.5);
-    return {
-      a: randomized[0],
-      b: randomized[1],
-      c: randomized[2],
-    };
-  }
-  paleteGenerators.push(hueComplementaryAndOneBlack);
-
-  const hueComplementaryLight = () => {
-    const hue = Math.random();
-    const hueComplementary = hue + 0.2;
-
-    const a = white;
-    const b = {
-      color: hslToHex(hue,                Math.random() * 0.1 + 0.9 , Math.random() * 0.2 + 0.4),
-      envMapIntensity
-    };
-    const c = {
-      color: hslToHex(hueComplementary,   Math.random() * 0.2 + 0.8 , Math.random() * 0.6 + 0.4),
-      envMapIntensity
-    };
-
-    const randomized = [a,b,c].sort(() => Math.random() - 0.5);
-    return {
-      a: randomized[0],
-      b: randomized[1],
-      c: randomized[2],
-    };
-  }
-  paleteGenerators.push(hueComplementaryLight);
-
-  const hueComplementaryDark = () => {
-    const hue = Math.random()*0.15 + 0.55;
-    const hueComplementary = hue + 0.5;
-
-    const a = black;
-    const b = {
-      color: hslToHex(hue,                Math.random() * 0.5 + 0.5 , Math.random() * 0.04),
-      envMapIntensity
-    };
-    const c = {
-      color: hslToHex(hueComplementary,   Math.random() * 0.5 + 0.5 , Math.random() * 0.04),
-      envMapIntensity
-    };
-
-    const randomized = [a,b,c].sort(() => Math.random() - 0.5);
-    return {
-      a: randomized[0],
-      b: randomized[1],
-      c: randomized[2],
-    };
-  }
-  paleteGenerators.push(hueComplementaryDark);
-
-  // const toxiColorPalettes = () => {
-  //   const selectedThemes = [
-  //     '00qAPJU0vXnWXxf1k',
-  //     '00QMEZl7ulP3f2WaX',
-  //     '00uOqryM4SOXgd7S0',
-  //     '00g3Jv9zydyJs2QlX'
-  //   ]
-  //   const themeIndex = Math.round(Math.random() * (selectedThemes.length - 1));
-  //   // console.log('themeIndex', themeIndex);
-  //   const theme = THEMES[selectedThemes[themeIndex]];
-
-  //   const rangeB = Math.round(Math.random()*2) + 1;
-  //   const rangeC = Math.round(Math.random()) + 4;
-  //   const envI = 0.3;
-  //   return {
-  //     a: { color: theme[0],      envMapIntensity: envI},
-  //     b: { color: theme[rangeB], envMapIntensity: envI},
-  //     c: { color: theme[rangeC], envMapIntensity: envI}
-  //   };
-  // }
-  // paleteGenerators.push(toxiColorPalettes);
-
-  // let colorConfig = hueComplementaryAndOneBlack();
+  // let colorConfig = whiteBlackColorDark();
   const pgIndex = Math.round((paleteGenerators.length - 1) * colorCompositionID);
   let colorConfig = paleteGenerators[pgIndex]();
   console.log('palette:', paleteGenerators[pgIndex].name);
