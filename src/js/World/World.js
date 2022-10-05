@@ -14,10 +14,7 @@ import { roomWalls } from './components/meshes/roomWalls.js'
 import { pendulum } from "./components/bodies/pendulum/pendulum.js";
 import { spheres } from "./components/sceneFragments/spheres.js";
 import { cubes } from "./components/sceneFragments/cubes.js";
-
-// import { defaultColorShinyPlastic } from "./components/materials/defaultColorShinyPlastic"
-// import { bentPlane } from "./components/materials/bentPlane";
-
+// import { defaultColorWithNoise } from "./components/materials/defaultColorWithNoise";
 
 class World {
   constructor() {
@@ -47,7 +44,7 @@ class World {
   }
 
   buildScene() {
-    // const planeMaterial = bentPlane(0x000000, 1);
+    // const planeMaterial = defaultColorWithNoise(0xffffff, 1);
     // const planeGeom = new PlaneGeometry(2, 2, 4, 4);
     // const plane = new Mesh( planeGeom, planeMaterial );
     // plane.rotation.y = MathUtils.degToRad(35);
