@@ -5,9 +5,11 @@ import { hslToHex } from "../../utils/colorUtils";
 const cubes = (
   scene,
   loop,
-  physicsWorld
+  physicsWorld,
+  isDay
 ) => {
-  const blackMaterial = defaultColorShinyPlastic(hslToHex(0.6, 0, 0.02));
+  const color = isDay ? hslToHex(0.6, 0, 0.8) : hslToHex(0.6, 0, 0.002);
+  const blackMaterial = defaultColorShinyPlastic(color));
   const spreadWidth = 10;
 
   for (let i = 0; i < 12; i++) {

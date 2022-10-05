@@ -1,11 +1,11 @@
 class NoiseFloor {
-	constructor( width = 2048, height = 2048 ) {
+	constructor(isDay, width = 2048, height = 2048) {
 
 		const colorCanvas = document.createElement('canvas');
 		colorCanvas.width = width;
 		colorCanvas.height = height;
     const colorCanvasContext = colorCanvas.getContext( '2d' );
-    colorCanvasContext.fillStyle = 'rgb(10,10,10)';
+		colorCanvasContext.fillStyle = isDay ? 'rgb(255,255,255)' : 'rgb(10,10,10)';
 		colorCanvasContext.fillRect( 0, 0, width, height );
 
     const roughnessCanvas = document.createElement('canvas');

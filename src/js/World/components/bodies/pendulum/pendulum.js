@@ -3,6 +3,7 @@ import { JointData } from '@dimforge/rapier3d-compat';
 import { handle } from './handle';
 import { colorComposer } from './colorComposer';
 import { defaultColorMattPlastic } from '../../materials/defaultColorMattPlastic';
+import { defaultColorShinyPlastic } from '../../materials/defaultColorShinyPlastic';
 
 const pendulum = (
     scene,

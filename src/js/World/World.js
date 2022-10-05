@@ -18,8 +18,9 @@ import { cubes } from "./components/sceneFragments/cubes.js";
 
 class World {
   constructor() {
+    this.isDay = Math.round(Math.random());
     this.renderer = createRenderer();
-    this.scene = createScene(this.renderer);
+    this.scene = createScene(this.renderer, this.isDay);
     this.camera = createCamera();
     this.lights = createLights(this.scene);
     this.loop = new Loop(this.camera, this.scene, this.renderer);
@@ -54,10 +55,10 @@ class World {
     // plane.position.z = -2;
     // this.scene.add(plane);
 
-    this.walls = roomWalls(this.scene, this.floorSize);
-    this.pendulum = pendulum(this.scene, this.loop, this.physicsWorld);
-    this.spheresFragment = spheres(this.scene, this.loop, this.physicsWorld);
-    this.cubesFragment = cubes(this.scene, this.loop, this.physicsWorld);
+    this.walls           = roomWalls(this.scene, this.floorSize, this.isDay);
+    this.pendulum        = pendulum (this.scene, this.loop, this.physicsWorld);
+    this.spheresFragment = spheres  (this.scene, this.loop, this.physicsWorld, this.isDay);
+    this.cubesFragment   = cubes    (this.scene, this.loop, this.physicsWorld, this.isDay);
   }
 
   start() {

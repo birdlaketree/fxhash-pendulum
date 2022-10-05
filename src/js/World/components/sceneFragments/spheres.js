@@ -5,9 +5,11 @@ import { hslToHex } from "../../utils/colorUtils";
 const spheres = (
   scene,
   loop,
-  physicsWorld
+  physicsWorld,
+  isDay
 ) => {
-  const colorMaterial = defaultColorShinyPlastic(hslToHex(0.6, 0, 0.002));
+  const color = isDay ? hslToHex(0.6, 0, 0.8) : hslToHex(0.6, 0, 0.002);
+  const colorMaterial = defaultColorShinyPlastic(color);
   const spreadWidth = 10;
 
   for (let i = 0; i < 8; i++) {
