@@ -2,8 +2,7 @@ import { MathUtils } from 'three';
 import { JointData } from '@dimforge/rapier3d-compat';
 import { handle } from './handle';
 import { colorComposer } from './colorComposer';
-import { defaultColorMattPlastic } from '../../materials/defaultColorMattPlastic';
-import { defaultColorShinyPlastic } from '../../materials/defaultColorShinyPlastic';
+import { canvasNoiseHandle } from '../../materials/canvasNoiseHandle';
 
 const pendulum = (
     scene,
@@ -11,21 +10,57 @@ const pendulum = (
     physicsWorld
   ) => {
 
+  const sizeA = {
+    width: Math.random() * 1.6 + 0.6,
+    height: Math.random() * 0.3 + 0.04,
+    depth: Math.random() * 0.3 + 0.04
+  };
+
+  const sizeB = {
+    width: Math.random() * 1.2 + 0.2,
+    height: Math.random() * 0.6 + 0.05,
+    depth: Math.random() * 0.6 + 0.05
+  }
+
+  const sizeC = {
+    width: Math.random() * 1.8 + 0.4,
+    height: Math.random() * 0.6 + 0.04,
+    depth: Math.random() * 0.6 + 0.04
+  };
+
   const colorCompositionID = Math.random();
   const colorComposition = colorComposer(colorCompositionID);
 
-  const materialA = defaultColorMattPlastic(colorComposition.a.color, colorComposition.a.envMapIntensity);
-  const materialB = defaultColorMattPlastic(colorComposition.b.color, colorComposition.b.envMapIntensity);
-  const materialC = defaultColorMattPlastic(colorComposition.c.color, colorComposition.c.envMapIntensity);
+  const tsf = 2;
+  const materialA = [
+    canvasNoiseHandle(colorComposition.a.color, colorComposition.a.envMapIntensity, sizeA.depth * tsf, sizeA.depth/(sizeA.depth/sizeA.height) * tsf),
+    canvasNoiseHandle(colorComposition.a.color, colorComposition.a.envMapIntensity, sizeA.depth * tsf, sizeA.depth/(sizeA.depth/sizeA.height) * tsf),
+    canvasNoiseHandle(colorComposition.a.color, colorComposition.a.envMapIntensity, sizeA.width * tsf, sizeA.width/(sizeA.width/sizeA.depth) * tsf),
+    canvasNoiseHandle(colorComposition.a.color, colorComposition.a.envMapIntensity, sizeA.width * tsf, sizeA.width/(sizeA.width/sizeA.depth) * tsf),
+    canvasNoiseHandle(colorComposition.a.color, colorComposition.a.envMapIntensity, sizeA.width * tsf, sizeA.width/(sizeA.width/sizeA.height) * tsf),
+    canvasNoiseHandle(colorComposition.a.color, colorComposition.a.envMapIntensity, sizeA.width * tsf, sizeA.width/(sizeA.width/sizeA.height) * tsf),
+  ];
+  const materialB = [
+    canvasNoiseHandle(colorComposition.b.color, colorComposition.b.envMapIntensity, sizeB.depth * tsf, sizeB.depth/(sizeB.depth/sizeB.height) * tsf),
+    canvasNoiseHandle(colorComposition.b.color, colorComposition.b.envMapIntensity, sizeB.depth * tsf, sizeB.depth/(sizeB.depth/sizeB.height) * tsf),
+    canvasNoiseHandle(colorComposition.b.color, colorComposition.b.envMapIntensity, sizeB.width * tsf, sizeB.width/(sizeB.width/sizeB.depth) * tsf),
+    canvasNoiseHandle(colorComposition.b.color, colorComposition.b.envMapIntensity, sizeB.width * tsf, sizeB.width/(sizeB.width/sizeB.depth) * tsf),
+    canvasNoiseHandle(colorComposition.b.color, colorComposition.b.envMapIntensity, sizeB.width * tsf, sizeB.width/(sizeB.width/sizeB.height) * tsf),
+    canvasNoiseHandle(colorComposition.b.color, colorComposition.b.envMapIntensity, sizeB.width * tsf, sizeB.width/(sizeB.width/sizeB.height) * tsf),
+  ];
+  const materialC = [
+    canvasNoiseHandle(colorComposition.c.color, colorComposition.c.envMapIntensity, sizeC.depth * tsf, sizeC.depth/(sizeC.depth/sizeC.height) * tsf),
+    canvasNoiseHandle(colorComposition.c.color, colorComposition.c.envMapIntensity, sizeC.depth * tsf, sizeC.depth/(sizeC.depth/sizeC.height) * tsf),
+    canvasNoiseHandle(colorComposition.c.color, colorComposition.c.envMapIntensity, sizeC.width * tsf, sizeC.width/(sizeC.width/sizeC.depth) * tsf),
+    canvasNoiseHandle(colorComposition.c.color, colorComposition.c.envMapIntensity, sizeC.width * tsf, sizeC.width/(sizeC.width/sizeC.depth) * tsf),
+    canvasNoiseHandle(colorComposition.c.color, colorComposition.c.envMapIntensity, sizeC.width * tsf, sizeC.width/(sizeC.width/sizeC.height) * tsf),
+    canvasNoiseHandle(colorComposition.c.color, colorComposition.c.envMapIntensity, sizeC.width * tsf, sizeC.width/(sizeC.width/sizeC.height) * tsf),
+  ];
 
   const initYPos = 1;
 
   const hAConf = {
-    size: {
-      width: Math.random() * 1.6 + 0.6,
-      height: Math.random() * 0.3 + 0.04,
-      depth: Math.random() * 0.3 + 0.04
-    },
+    size: sizeA,
     translation : {
       x: -1,
       y: initYPos,
@@ -45,11 +80,7 @@ const pendulum = (
   }
 
   const hBConf = {
-    size: {
-      width: Math.random() * 1.2 + 0.2,
-      height: Math.random() * 0.6 + 0.05,
-      depth: Math.random() * 0.6 + 0.05
-    },
+    size: sizeB,
     translation : {
       x: 0,
       y: initYPos,
@@ -69,11 +100,7 @@ const pendulum = (
   }
 
   const hCConf = {
-    size: {
-      width: Math.random() * 1.8 + 0.4,
-      height: Math.random() * 0.6 + 0.04,
-      depth: Math.random() * 0.6 + 0.04
-    },
+    size: sizeC,
     translation : {
       x: 1,
       y: initYPos,
