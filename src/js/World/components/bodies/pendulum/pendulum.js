@@ -2,65 +2,25 @@ import { MathUtils } from 'three';
 import { JointData } from '@dimforge/rapier3d-compat';
 import { handle } from './handle';
 import { colorComposer } from './colorComposer';
+import { cubeMaterial } from '../../../utils/cubeMaterial'
 import { canvasNoiseHandle } from '../../materials/canvasNoiseHandle';
+import { NoiseHandle } from '../../textures/NoiseHandle';
 
 const pendulum = (
     scene,
     loop,
     physicsWorld
   ) => {
-
-  const sizeA = {
-    width: Math.random() * 1.6 + 0.6,
-    height: Math.random() * 0.3 + 0.04,
-    depth: Math.random() * 0.3 + 0.04
-  };
-
-  const sizeB = {
-    width: Math.random() * 1.2 + 0.2,
-    height: Math.random() * 0.6 + 0.05,
-    depth: Math.random() * 0.6 + 0.05
-  }
-
-  const sizeC = {
-    width: Math.random() * 1.8 + 0.4,
-    height: Math.random() * 0.6 + 0.04,
-    depth: Math.random() * 0.6 + 0.04
-  };
-
   const colorCompositionID = Math.random();
   const colorComposition = colorComposer(colorCompositionID);
-
-  const tsf = 2;
-  const materialA = [
-    canvasNoiseHandle(colorComposition.a.color, colorComposition.a.envMapIntensity, sizeA.depth * tsf, sizeA.depth/(sizeA.depth/sizeA.height) * tsf),
-    canvasNoiseHandle(colorComposition.a.color, colorComposition.a.envMapIntensity, sizeA.depth * tsf, sizeA.depth/(sizeA.depth/sizeA.height) * tsf),
-    canvasNoiseHandle(colorComposition.a.color, colorComposition.a.envMapIntensity, sizeA.width * tsf, sizeA.width/(sizeA.width/sizeA.depth) * tsf),
-    canvasNoiseHandle(colorComposition.a.color, colorComposition.a.envMapIntensity, sizeA.width * tsf, sizeA.width/(sizeA.width/sizeA.depth) * tsf),
-    canvasNoiseHandle(colorComposition.a.color, colorComposition.a.envMapIntensity, sizeA.width * tsf, sizeA.width/(sizeA.width/sizeA.height) * tsf),
-    canvasNoiseHandle(colorComposition.a.color, colorComposition.a.envMapIntensity, sizeA.width * tsf, sizeA.width/(sizeA.width/sizeA.height) * tsf),
-  ];
-  const materialB = [
-    canvasNoiseHandle(colorComposition.b.color, colorComposition.b.envMapIntensity, sizeB.depth * tsf, sizeB.depth/(sizeB.depth/sizeB.height) * tsf),
-    canvasNoiseHandle(colorComposition.b.color, colorComposition.b.envMapIntensity, sizeB.depth * tsf, sizeB.depth/(sizeB.depth/sizeB.height) * tsf),
-    canvasNoiseHandle(colorComposition.b.color, colorComposition.b.envMapIntensity, sizeB.width * tsf, sizeB.width/(sizeB.width/sizeB.depth) * tsf),
-    canvasNoiseHandle(colorComposition.b.color, colorComposition.b.envMapIntensity, sizeB.width * tsf, sizeB.width/(sizeB.width/sizeB.depth) * tsf),
-    canvasNoiseHandle(colorComposition.b.color, colorComposition.b.envMapIntensity, sizeB.width * tsf, sizeB.width/(sizeB.width/sizeB.height) * tsf),
-    canvasNoiseHandle(colorComposition.b.color, colorComposition.b.envMapIntensity, sizeB.width * tsf, sizeB.width/(sizeB.width/sizeB.height) * tsf),
-  ];
-  const materialC = [
-    canvasNoiseHandle(colorComposition.c.color, colorComposition.c.envMapIntensity, sizeC.depth * tsf, sizeC.depth/(sizeC.depth/sizeC.height) * tsf),
-    canvasNoiseHandle(colorComposition.c.color, colorComposition.c.envMapIntensity, sizeC.depth * tsf, sizeC.depth/(sizeC.depth/sizeC.height) * tsf),
-    canvasNoiseHandle(colorComposition.c.color, colorComposition.c.envMapIntensity, sizeC.width * tsf, sizeC.width/(sizeC.width/sizeC.depth) * tsf),
-    canvasNoiseHandle(colorComposition.c.color, colorComposition.c.envMapIntensity, sizeC.width * tsf, sizeC.width/(sizeC.width/sizeC.depth) * tsf),
-    canvasNoiseHandle(colorComposition.c.color, colorComposition.c.envMapIntensity, sizeC.width * tsf, sizeC.width/(sizeC.width/sizeC.height) * tsf),
-    canvasNoiseHandle(colorComposition.c.color, colorComposition.c.envMapIntensity, sizeC.width * tsf, sizeC.width/(sizeC.width/sizeC.height) * tsf),
-  ];
-
   const initYPos = 1;
 
   const hAConf = {
-    size: sizeA,
+    size: {
+      width: Math.random() * 1.6 + 0.6,
+      height: Math.random() * 0.3 + 0.04,
+      depth: Math.random() * 0.3 + 0.04
+    },
     translation : {
       x: -1,
       y: initYPos,
@@ -75,12 +35,15 @@ const pendulum = (
       x: 0,
       y: 0,
       z: 0
-    },
-    material : materialA
+    }
   }
 
   const hBConf = {
-    size: sizeB,
+    size: {
+      width: Math.random() * 1.2 + 0.2,
+      height: Math.random() * 0.6 + 0.05,
+      depth: Math.random() * 0.6 + 0.05
+    },
     translation : {
       x: 0,
       y: initYPos,
@@ -95,12 +58,15 @@ const pendulum = (
       x: 0,
       y: 0,
       z: 0
-    },
-    material : materialB
+    }
   }
 
   const hCConf = {
-    size: sizeC,
+    size: {
+      width: Math.random() * 1.8 + 0.4,
+      height: Math.random() * 0.6 + 0.04,
+      depth: Math.random() * 0.6 + 0.04
+    },
     translation : {
       x: 1,
       y: initYPos,
@@ -115,9 +81,12 @@ const pendulum = (
       x: 0,
       y: 0,
       z: 0
-    },
-    material : materialC
+    }
   }
+
+  hAConf.material = cubeMaterial(canvasNoiseHandle, NoiseHandle, colorComposition.a, hAConf.size, 2);
+  hBConf.material = cubeMaterial(canvasNoiseHandle, NoiseHandle, colorComposition.b, hBConf.size, 2);
+  hCConf.material = cubeMaterial(canvasNoiseHandle, NoiseHandle, colorComposition.c, hCConf.size, 2);
 
   const handleA = handle(hAConf, physicsWorld);
   scene.add(handleA.mesh);

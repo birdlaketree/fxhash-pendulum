@@ -1,6 +1,5 @@
 class NoiseHandle {
 	constructor(color, width = 1024, height = 1024 ) {
-
 		const colorCanvas = document.createElement('canvas');
 		colorCanvas.width = width;
 		colorCanvas.height = height;
