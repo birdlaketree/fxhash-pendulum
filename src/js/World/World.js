@@ -1,4 +1,4 @@
-import { Vector3, PlaneGeometry, MathUtils, Mesh } from "three";
+import { Vector3, PlaneGeometry, MathUtils, Mesh, Color } from "three";
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import { Loop } from './system/Loop.js';
 import { createRenderer } from './system/renderer.js';
@@ -14,7 +14,10 @@ import { roomWalls } from './components/meshes/roomWalls.js'
 import { pendulum } from "./components/bodies/pendulum/pendulum.js";
 import { spheres } from "./components/sceneFragments/spheres.js";
 import { cubes } from "./components/sceneFragments/cubes.js";
-// import { defaultColorWithNoise } from "./components/materials/defaultColorWithNoise";
+
+import { defaultColorWithNoise } from "./components/materials/defaultColorWithNoise";
+import { NoiseHandle } from './components/textures/NoiseHandle';
+import { canvasNoiseHandle } from './components/materials/canvasNoiseHandle';
 
 class World {
   constructor() {
@@ -46,14 +49,15 @@ class World {
   }
 
   buildScene() {
-    // const planeMaterial = defaultColorWithNoise(0xffffff, 1);
+    // let maps = new NoiseHandle(new Color(0x0000ff));
+    // const planeMaterial = canvasNoiseHandle(maps, 1);
     // const planeGeom = new PlaneGeometry(2, 2, 4, 4);
     // const plane = new Mesh( planeGeom, planeMaterial );
     // plane.rotation.y = MathUtils.degToRad(35);
     // plane.rotation.x = MathUtils.degToRad(-55);
-    // plane.position.x = -2;
+    // plane.position.x = 2;
     // plane.position.y = 2;
-    // plane.position.z = -2;
+    // plane.position.z = 2;
     // this.scene.add(plane);
 
     this.walls           = roomWalls(this.scene, this.floorSize, this.isDay);

@@ -19,20 +19,26 @@ const canvasNoiseHandle = (maps, envMapIntensity = 1, repeatX = 1, repeatY = 1) 
   metalnessMap.wrapS = RepeatWrapping;
   metalnessMap.wrapT = RepeatWrapping;
 
+  const normalMap = new CanvasTexture(maps.normalMap);
+  normalMap.repeat.x = repeatX;
+  normalMap.repeat.y = repeatY;
+  normalMap.wrapS = RepeatWrapping;
+  normalMap.wrapT = RepeatWrapping;
+
   const parameters = {
     // STANDARD
 
     // envMap: envmap.texture,
     envMapIntensity: envMapIntensity,
 
-    // color: color,
+    // color: 0x444444,
     map: colorMap,
 
     roughness: 1,
     roughnessMap: roughnessMap,
 
-    // normalMap: normalMap,
-		// normalScale: new Vector2(1, 1),
+    normalMap: normalMap,
+		normalScale: new Vector2(1, 1),
 
     // aoMap: aoMap,
     // aoMapIntensity:
@@ -47,8 +53,8 @@ const canvasNoiseHandle = (maps, envMapIntensity = 1, repeatX = 1, repeatY = 1) 
     // displacementScale
     // displacementBias
 
-    metalness: 0,
-    // metalnessMap: metalnessMap,
+    metalness: 1,
+    metalnessMap: metalnessMap,
 
     // alphaMap: alphaMap,
 

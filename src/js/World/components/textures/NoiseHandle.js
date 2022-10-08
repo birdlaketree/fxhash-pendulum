@@ -1,3 +1,5 @@
+import { floatBufferFromCanvas, normalMap } from "@thi.ng/pixel";
+
 class NoiseHandle {
 	constructor(color, width = 1024, height = 1024 ) {
 		const colorCanvas = document.createElement('canvas');
@@ -21,6 +23,13 @@ class NoiseHandle {
     metalnessCanvasContext.fillStyle = 'rgb(0,0,0)';
 		metalnessCanvasContext.fillRect( 0, 0, width, height );
 
+		const normalCanvas = document.createElement('canvas');
+		normalCanvas.width = width;
+		normalCanvas.height = height;
+    const normalCanvasContext = normalCanvas.getContext( '2d' );
+    normalCanvasContext.fillStyle = `rgb(${255*color.r}, ${255*color.g}, ${255*color.b})`;
+		normalCanvasContext.fillRect( 0, 0, width, height );
+
 		for ( let i = 0; i < 40; i ++ ) {
 			const x = Math.random() * width;
 			const y = Math.random() * height;
@@ -38,17 +47,33 @@ class NoiseHandle {
 			roughnessCanvasContext.arc( x, y, r, 0, Math.PI * 2 );
 			roughnessCanvasContext.fill();
 
-      const mRGB = Math.random() * 0;
+      const mRGB = Math.random() * 255;
       metalnessCanvasContext.fillStyle = `rgb(${mRGB}, ${mRGB}, ${mRGB})`;
 			metalnessCanvasContext.beginPath();
 			metalnessCanvasContext.arc( x, y, r, 0, Math.PI * 2 );
 			metalnessCanvasContext.fill();
 		}
 
+		for ( let i = 0; i < 4000; i ++ ) {
+			const x = Math.random() * width;
+			const y = Math.random() * height;
+			const r = Math.random() * 1 + 1;
+      
+      const nRGB = Math.round(Math.random()) ? 255 : 0;
+      normalCanvasContext.fillStyle = `rgb(${nRGB}, ${nRGB}, ${nRGB})`;
+			normalCanvasContext.beginPath();
+			normalCanvasContext.arc( x, y, r, 0, Math.PI * 2 );
+			normalCanvasContext.fill();
+		}
+
+		const normalMapSrc = floatBufferFromCanvas(normalCanvas);
+		const nMap = normalMap(normalMapSrc, {step: 0, scale: 1}).toImageData();
+
 		return {
       colorMap: colorCanvas,
       roughnessMap: roughnessCanvas,
-      metalnessMap: metalnessCanvas
+      metalnessMap: metalnessCanvas,
+			normalMap: nMap
     };
 	}
 }
