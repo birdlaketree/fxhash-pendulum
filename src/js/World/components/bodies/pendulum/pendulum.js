@@ -93,8 +93,6 @@ const pendulum = (
   hAConf.material = cubeMaterialComposer(dynamicMapsMaterial, mapsA, hAConf, 2);
   hBConf.material = cubeMaterialComposer(dynamicMapsMaterial, mapsB, hBConf, 2);
   hCConf.material = cubeMaterialComposer(dynamicMapsMaterial, mapsC, hCConf, 2);
-
-  // delete canvas as it is not needed anymore
   mapsA = null;
   mapsB = null;
   mapsC = null;
