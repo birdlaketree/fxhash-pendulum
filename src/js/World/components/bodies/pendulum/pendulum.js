@@ -2,9 +2,9 @@ import { MathUtils } from 'three';
 import { JointData } from '@dimforge/rapier3d-compat';
 import { handle } from './handle';
 import { colorComposer } from './colorComposer';
-import { cubeMaterial } from '../../../utils/cubeMaterial'
-import { canvasNoiseHandle } from '../../materials/canvasNoiseHandle';
-import { NoiseHandle } from '../../textures/NoiseHandle';
+import { NoiseMaps } from '../../textures/NoiseMaps';
+import { dynamicMapsMaterial } from '../../materials/dynamicMapsMaterial';
+import { cubeMaterialComposer } from '../../../utils/cubeMaterialComposer'
 
 const pendulum = (
     scene,
@@ -35,7 +35,8 @@ const pendulum = (
       x: 0,
       y: 0,
       z: 0
-    }
+    },
+    colorComposition : colorComposition.a
   }
 
   const hBConf = {
@@ -58,7 +59,8 @@ const pendulum = (
       x: 0,
       y: 0,
       z: 0
-    }
+    },
+    colorComposition : colorComposition.b
   }
 
   const hCConf = {
@@ -81,12 +83,21 @@ const pendulum = (
       x: 0,
       y: 0,
       z: 0
-    }
+    },
+    colorComposition : colorComposition.c
   }
 
-  hAConf.material = cubeMaterial(canvasNoiseHandle, NoiseHandle, colorComposition.a, hAConf.size, 2);
-  hBConf.material = cubeMaterial(canvasNoiseHandle, NoiseHandle, colorComposition.b, hBConf.size, 2);
-  hCConf.material = cubeMaterial(canvasNoiseHandle, NoiseHandle, colorComposition.c, hCConf.size, 2);
+  let mapsA = new NoiseMaps(hAConf.colorComposition.color);
+  let mapsB = new NoiseMaps(hBConf.colorComposition.color);
+  let mapsC = new NoiseMaps(hCConf.colorComposition.color);
+  hAConf.material = cubeMaterialComposer(dynamicMapsMaterial, mapsA, hAConf, 2);
+  hBConf.material = cubeMaterialComposer(dynamicMapsMaterial, mapsB, hBConf, 2);
+  hCConf.material = cubeMaterialComposer(dynamicMapsMaterial, mapsC, hCConf, 2);
+
+  // delete canvas as it is not needed anymore
+  mapsA = null;
+  mapsB = null;
+  mapsC = null;
 
   const handleA = handle(hAConf, physicsWorld);
   scene.add(handleA.mesh);

@@ -1,6 +1,6 @@
 import { floatBufferFromCanvas, normalMap } from "@thi.ng/pixel";
 
-class NoiseHandle {
+class NoiseMaps {
 	constructor(color, width = 1024, height = 1024 ) {
 		const colorCanvas = document.createElement('canvas');
 		colorCanvas.width = width;
@@ -27,7 +27,7 @@ class NoiseHandle {
 		normalCanvas.width = width;
 		normalCanvas.height = height;
     const normalCanvasContext = normalCanvas.getContext( '2d' );
-    normalCanvasContext.fillStyle = `rgb(${255*color.r}, ${255*color.g}, ${255*color.b})`;
+    normalCanvasContext.fillStyle = 'rgb(255,255,255)';
 		normalCanvasContext.fillRect( 0, 0, width, height );
 
 		for ( let i = 0; i < 40; i ++ ) {
@@ -54,12 +54,12 @@ class NoiseHandle {
 			metalnessCanvasContext.fill();
 		}
 
-		for ( let i = 0; i < 4000; i ++ ) {
+		for ( let i = 0; i < 600; i ++ ) {
 			const x = Math.random() * width;
 			const y = Math.random() * height;
-			const r = Math.random() * 1 + 1;
+			const r = Math.random() * 3 + 1;
       
-      const nRGB = Math.round(Math.random()) ? 255 : 0;
+      const nRGB = 0;
       normalCanvasContext.fillStyle = `rgb(${nRGB}, ${nRGB}, ${nRGB})`;
 			normalCanvasContext.beginPath();
 			normalCanvasContext.arc( x, y, r, 0, Math.PI * 2 );
@@ -78,4 +78,4 @@ class NoiseHandle {
 	}
 }
 
-export { NoiseHandle };
+export { NoiseMaps };

@@ -1,6 +1,6 @@
 import { Vector2, MeshPhysicalMaterial, CanvasTexture, RepeatWrapping } from 'three';
 
-const canvasNoiseHandle = (maps, envMapIntensity = 1, repeatX = 1, repeatY = 1) => {
+const dynamicMapsMaterial = (maps, envMapIntensity = 1, repeatX = 1, repeatY = 1) => {
   const colorMap = new CanvasTexture(maps.colorMap);
   colorMap.repeat.x = repeatX;
   colorMap.repeat.y = repeatY;
@@ -90,5 +90,5 @@ const canvasNoiseHandle = (maps, envMapIntensity = 1, repeatX = 1, repeatY = 1) 
 }
 
 export {
-  canvasNoiseHandle
+  dynamicMapsMaterial
 };

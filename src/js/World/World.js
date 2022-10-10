@@ -16,8 +16,8 @@ import { spheres } from "./components/sceneFragments/spheres.js";
 import { cubes } from "./components/sceneFragments/cubes.js";
 
 import { defaultColorWithNoise } from "./components/materials/defaultColorWithNoise";
-import { NoiseHandle } from './components/textures/NoiseHandle';
-import { canvasNoiseHandle } from './components/materials/canvasNoiseHandle';
+import { NoiseMaps } from './components/textures/NoiseMaps';
+import { dynamicMapsMaterial } from './components/materials/dynamicMapsMaterial';
 
 class World {
   constructor() {
@@ -49,8 +49,8 @@ class World {
   }
 
   buildScene() {
-    // let maps = new NoiseHandle(new Color(0x0000ff));
-    // const planeMaterial = canvasNoiseHandle(maps, 1);
+    // let maps = new NoiseMaps(new Color(0x0000ff));
+    // const planeMaterial = dynamicMapsMaterial(maps, 1);
     // const planeGeom = new PlaneGeometry(2, 2, 4, 4);
     // const plane = new Mesh( planeGeom, planeMaterial );
     // plane.rotation.y = MathUtils.degToRad(35);
