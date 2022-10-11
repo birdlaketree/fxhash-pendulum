@@ -22,11 +22,11 @@ const pendulum = (
 
   const hAConf = {
     colorComposition : colorComposition.a,
-    size: sizeComposition.a,
+    size: sizeComposition.size.a,
     translation : {
       x: -1,
       y: initYPos,
-      z: 0.5
+      z: 1
     },
     rotation: {
       x: 0,
@@ -42,7 +42,7 @@ const pendulum = (
 
   const hBConf = {
     colorComposition : colorComposition.b,
-    size: sizeComposition.b,
+    size: sizeComposition.size.b,
     translation : {
       x: 0,
       y: initYPos,
@@ -62,11 +62,11 @@ const pendulum = (
 
   const hCConf = {
     colorComposition : colorComposition.c,
-    size: sizeComposition.c,
+    size: sizeComposition.size.c,
     translation : {
       x: 1,
       y: initYPos,
-      z: -0.5
+      z: -1
     },
     rotation: {
       x: 0,
@@ -184,7 +184,7 @@ const pendulum = (
     loop.updatableBodies.push(jointB); 
   }
 
-  createJoints();
+  // createJoints();
 }
 
 export { pendulum };
