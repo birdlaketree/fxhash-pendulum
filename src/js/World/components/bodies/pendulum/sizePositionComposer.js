@@ -1,6 +1,6 @@
 import { mapNumber } from "../../../utils/numUtils";
 
-const sizePositionComposer = () => {
+const sizePositionComposer = sizeAndPositionID => {
   const minW = 0.3;
   const maxW  = 2.4;
 
@@ -14,14 +14,9 @@ const sizePositionComposer = () => {
   const maxVolume = maxW * maxHD * maxHD * 0.4;
   const minVolumeAsFrac = ( maxW * maxHD * maxHD)/60;
 
-  // console.log('.');
-  // console.log('maxVolume', maxVolume);
-  // console.log('minVolume', minVolume);
-  // console.log('minVolume:c', minVolumeAsFrac);
-
   const centerWeighted = () => {
     console.log('size:    centerWeighted');
-    const bVolumeIndex = Math.random();
+    const bVolumeIndex = sizeAndPositionID;
     const bVolume = mapNumber(bVolumeIndex, 0, 1, minVolumeAsFrac, maxVolume);
     const bW      = mapNumber(1, 0, 1, minW, maxW);
     const brd     = mapNumber(Math.random(), 0, 1, minAspect, maxAspect);
@@ -29,7 +24,7 @@ const sizePositionComposer = () => {
     const bH = Math.pow(bVolume/bW * brh, 1/2);
     const bD = Math.pow(bVolume/bW * brd, 1/2);
 
-    const aVolumeIndex = Math.random();
+    const aVolumeIndex = Math.random()1;
     const aVolumeMin = bVolume * mapNumber(bVolumeIndex, 0, 1, 1, Math.log(bVolumeIndex + 0.0001) + minVolumeAsFrac);
     const aVolumeMax = bVolume * mapNumber(bVolumeIndex, 0, 1, 4, 1)
     const aVolume = mapNumber(aVolumeIndex, 0, 1, aVolumeMin, aVolumeMax);
@@ -49,7 +44,7 @@ const sizePositionComposer = () => {
     const cH = Math.pow(cVolume/cW * crh, 1/2);
     const cD = Math.pow(cVolume/cW * crd, 1/2);
 
-    return {
+    const size = {
       a: {
         width:  aW,
         height: aH,
@@ -66,11 +61,22 @@ const sizePositionComposer = () => {
         depth:  cD
       }
     }
+
+    const volume = {
+      a: aVolume/maxVolume,
+      b: bVolume/maxVolume,
+      c: cVolume/maxVolume
+    }
+
+    return {
+      size,
+      volume
+    }
   }
 
   const sideWeighted = () => {
     console.log('size:    sideWeighted');
-    const aVolumeIndex = Math.random();
+    const aVolumeIndex = sizeAndPositionID;
     const aVolume = mapNumber(aVolumeIndex, 0, 1, minVolumeAsFrac, maxVolume);
     const aW      = mapNumber(Math.random(), 0, 1, minW, maxW);
     const ard     = mapNumber(Math.random(), 0, 1, minAspect, maxAspect);
@@ -98,7 +104,7 @@ const sizePositionComposer = () => {
     const cH = Math.pow(cVolume/cW * crh, 1/2);
     const cD = Math.pow(cVolume/cW * crd, 1/2);
 
-    return {
+    const size = {
       a: {
         width:  aW,
         height: aH,
@@ -115,9 +121,22 @@ const sizePositionComposer = () => {
         depth:  cD
       }
     }
+
+    const volume = {
+      a: aVolume/maxVolume,
+      b: bVolume/maxVolume,
+      c: cVolume/maxVolume
+    }
+
+    return {
+      size,
+      volume
+    }
   }
 
-  const size = Math.round(Math.random()) ? centerWeighted() : sideWeighted();
+  const sizeAndVolume = Math.round(Math.random()) ? centerWeighted() : sideWeighted();
+  const size = sizeAndVolume.size;
+  console.log('volume index', sizeAndVolume.volume);
 
   const initY = 1;
   let hAConfXOffset = size.a.height/2;
@@ -154,7 +173,8 @@ const sizePositionComposer = () => {
   }
 
   return {
-    size,
+    size: sizeAndVolume.size,
+    volume: sizeAndVolume.volume,
     translation
   }
 }

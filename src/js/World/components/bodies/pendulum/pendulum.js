@@ -14,60 +14,38 @@ const pendulum = (
   ) => {
   const colorCompositionID = Math.random();
   const colorComposition = colorComposer(colorCompositionID);
-  const sizeAndPosition = sizePositionComposer();
 
-  // handles configuration
+  const sizeAndPositionID = Math.random();
+  const sizeAndPosition = sizePositionComposer(sizeAndPositionID);
 
   const hAConf = {
     colorComposition : colorComposition.a,
     size: sizeAndPosition.size.a,
     translation : sizeAndPosition.translation.a,
-    rotation: {
-      x: 0,
-      y: 0,
-      z: 0
-    },
-    anchor: {
-      x: 0,
-      y: 0,
-      z: 0
-    }
+    rotation: {x: 0, y: 0, z: 0},
+    anchor: {x: 0, y: 0, z: 0},
+    volume: sizeAndPosition.volume.a
   }
 
   const hBConf = {
     colorComposition : colorComposition.b,
     size: sizeAndPosition.size.b,
     translation : sizeAndPosition.translation.b,
-    rotation: {
-      x: 0,
-      y: 0,
-      z: 0
-    },
-    anchor: {
-      x: 0,
-      y: 0,
-      z: 0
-    }
+    rotation: {x: 0, y: 0, z: 0},
+    anchor: {x: 0, y: 0, z: 0},
+    volume: sizeAndPosition.volume.b
   }
 
   const hCConf = {
     colorComposition : colorComposition.c,
     size: sizeAndPosition.size.c,
     translation : sizeAndPosition.translation.c,
-    rotation: {
-      x: 0,
-      y: 0,
-      z: 0
-    },
-    anchor: {
-      x: 0,
-      y: 0,
-      z: 0
-    },
-    
+    rotation: {x: 0, y: 0, z: 0},
+    anchor: {x: 0, y: 0, z: 0},
+    volume: sizeAndPosition.volume.c
   }
 
-  // create materials
+  // materials
 
   let mapsA = new NoiseMaps(hAConf.colorComposition.color);
   let mapsB = new NoiseMaps(hBConf.colorComposition.color);
@@ -79,7 +57,7 @@ const pendulum = (
   mapsB = null;
   mapsC = null;
 
-  // create handles
+  // handles
 
   const handleA = handle(hAConf, physicsWorld);
   scene.add(handleA.mesh);
@@ -93,7 +71,7 @@ const pendulum = (
   scene.add(handleC.mesh);
   loop.bodies.push(handleC);
 
-  // create joints
+  // joints
 
   const createJoints = () => {
     let hAConfXOffset = hAConf.size.height/2;
@@ -134,7 +112,7 @@ const pendulum = (
         z: -hBConf.size.depth/2
       },
       {
-        x: -hCConf.size.width/2 + hBConfXOffset,
+        x: -hCConf.size.width/2 + hCConfXOffset,
         y: 0.0,
         z: hCConf.size.depth/2
       },
@@ -152,12 +130,8 @@ const pendulum = (
         handleC.rigidBody.wakeUp();
         const angleRangeDeg = 720;
         const rndAngleRad = MathUtils.degToRad(Math.random() * angleRangeDeg - angleRangeDeg/2);
-        // const stiffness = Math.random() * 100 + 400;
-
-        const stiffness = Math.random() * 150 + 100; // strength of the force that will be applied to make the bodies reach the target relative positions
+        const stiffness = Math.random() * 200 + (100 * hAConf.volume * hBConf.volume); // strength of the force that will be applied to make the bodies reach the target relative positions
         const damping   = Math.random() * 0.6 + 0.3;   // strength of the force that will be applied to make the bodies reach the target relative velocities 
-        
-        // console.log('rndAngleRad', rndAngleRad);
         jointA.configureMotorPosition(rndAngleRad, stiffness, damping);
       }
     }
@@ -171,12 +145,8 @@ const pendulum = (
         handleC.rigidBody.wakeUp();
         const angleRangeDeg = 720;
         const rndAngleRad = MathUtils.degToRad(Math.random() * angleRangeDeg - angleRangeDeg/2);
-        // const stiffness = Math.random() * 300 + 200;
-
-        const stiffness = Math.random() * 150 + 100; // strength of the force that will be applied to make the bodies reach the target relative positions
+        const stiffness = Math.random() * 200 + (100 * hBConf.volume * hCConf.volume); // strength of the force that will be applied to make the bodies reach the target relative positions
         const damping   = Math.random() * 0.6 + 0.3;   // strength of the force that will be applied to make the bodies reach the target relative velocities 
-
-        // console.log('rndAngleRad', rndAngleRad);
         jointB.configureMotorPosition(rndAngleRad, stiffness, damping);
       }
     }
