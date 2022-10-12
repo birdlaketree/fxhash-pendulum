@@ -119,10 +119,6 @@ const colorComposer = (colorCompositionID) => {
   paleteGenerators.push(duoAndLightness);
 
   const tripple = () => {
-    const themeSeed = Math.random();
-    const themeIndex = Math.round((themes.length - 1) * themeSeed);
-    const theme = themes[themeIndex];
-
     const themeASeed = Math.random();
     const themeAIndex = Math.round((themes.length - 1) * themeASeed);
     const themeA = themes[themeAIndex];
@@ -132,7 +128,7 @@ const colorComposer = (colorCompositionID) => {
     const themeB = themes[themeBIndex];
 
     const themeCSeed = Math.random();
-    const themeCIndex = Math.round((themes.length - 1) * themeCSeed);
+    const themeCIndex = Math.round((themes.length - 2) * themeCSeed);
     const themeC = themes[themeCIndex];
 
     const initHue = Math.random();
@@ -204,10 +200,10 @@ const colorComposer = (colorCompositionID) => {
   }
   paleteGenerators.push(grayscale);
 
-  // let colorConfig = whiteBlackColorDark();
-  const pgIndex = Math.round((paleteGenerators.length - 1) * colorCompositionID);
-  let colorConfig = paleteGenerators[pgIndex]();
-  console.log('palette:', paleteGenerators[pgIndex].name);
+  let colorConfig = tripple();
+  // const pgIndex = Math.round((paleteGenerators.length - 1) * colorCompositionID);
+  // let colorConfig = paleteGenerators[pgIndex]();
+  // console.log('palette:', paleteGenerators[pgIndex].name);
 
   return colorConfig;
 }
