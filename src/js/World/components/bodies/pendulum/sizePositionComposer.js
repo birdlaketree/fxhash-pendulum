@@ -1,6 +1,6 @@
 import { mapNumber } from "../../../utils/numUtils";
 
-const sizeComposer = () => {
+const sizePositionComposer = () => {
   // make three presets
   // small mid big -- and reverse
   // small big small
@@ -18,28 +18,28 @@ const sizeComposer = () => {
   const minVolume = minW * minHD * minHD;
   const maxVolume = maxW * maxHD * maxHD;
 
-  const rb = 0;
-
-  const bW       = mapNumber(rb, 0, 1, minW, maxW);
-  const bH       = mapNumber(rb, 0, 1, minHD, maxHD);
-  const bDAspect = mapNumber(rb, 0, 1, minAspect, maxAspect);
+  const r1 = 0;
+  const bW       = mapNumber(Math.random(), 0, 1, minW, maxW);
+  const bH       = mapNumber(Math.random(), 0, 1, minHD, maxHD);
+  const bDAspect = mapNumber(Math.random(), 0, 1, minAspect, maxAspect);
   const bD       = mapNumber(bH * bDAspect, bH * minAspect, bH * maxAspect, minHD, maxHD);
-  const bV = bW * bH * bD;
+  // const bV = bW * bH * bD;
 
-  console.log('.');
-  console.log('minVolume', minVolume);
-  console.log('maxVolume', maxVolume);
-
+  const r2 = 0;
   const aW       = mapNumber(Math.random(), 0, 1, minW, maxW);
   const aH       = mapNumber(Math.random(), 0, 1, minHD, maxHD);
-  const aDAspect = mapNumber(Math.random(), 0, 1, minAspect, maxAspect);
-  const aD       = mapNumber(aH * aDAspect, aH * minAspect, aH * maxAspect, minHD, maxHD);
+  const aAspect = mapNumber(Math.random(), 0, 1, minAspect, maxAspect);
+  const aD       = mapNumber(aH * aAspect, aH * minAspect, aH * maxAspect, minHD, maxHD);
 
+  const r3 = 0;
   const cW       = mapNumber(Math.random(), 0, 1, minW, maxW);
   const cH       = mapNumber(Math.random(), 0, 1, minHD, maxHD);
-  const cDAspect = mapNumber(Math.random(), 0, 1, minAspect, maxAspect);
-  const cD       = mapNumber(cH * cDAspect, cH * minAspect, cH * maxAspect, minHD, maxHD);
+  const cAspect = mapNumber(Math.random(), 0, 1, minAspect, maxAspect);
+  const cD       = mapNumber(cH * cAspect, cH * minAspect, cH * maxAspect, minHD, maxHD);
 
+  // console.log('.');
+  // console.log('minVolume', minVolume);
+  // console.log('maxVolume', maxVolume);
 
   // console.log('.');
   // console.log('bW', bW);
@@ -80,38 +80,48 @@ const sizeComposer = () => {
   // console.log('ard       ', ard);
   // console.log('arh       ', arh);
 
-  const a = {
-    width:  aW,
-    height: aH,
-    depth:  aD
-  }
-  const b = {
-    width:  bW,
-    height: bH,
-    depth:  bD
-  }
-  const c = {
-    width:  cW,
-    height: cH,
-    depth:  cD
+  const size = {
+    a: {
+      width:  aW,
+      height: aH,
+      depth:  aD
+    },
+    b: {
+      width:  bW,
+      height: bH,
+      depth:  bD
+    },
+    c: {
+      width:  cW,
+      height: cH,
+      depth:  cD
+    }
   }
 
-  // console.log('a', a);
-  // console.log('b', b);
-  // console.log('c', c);
+  const initY = 1;
+
+  const translation = {
+    a: {
+      x: -bW/2 - aW/2 + bH/2 + aH/2,
+      y: initY,
+      z: bD/2 + aD/2
+    },
+    b: {
+      x: 0,
+      y: initY,
+      z: 0
+    },
+    c: {
+      x: bW/2 + cW/2 - bH/2 - cH/2,
+      y: initY,
+      z: -bD/2 - cD/2
+    }
+  }
 
   return {
-    size: {
-      a,
-      b,
-      c
-    },
-    translation: {
-      x: 0,
-      y: 0,
-      z: 0
-    }
+    size,
+    translation
   }
 }
 
-export { sizeComposer };
+export { sizePositionComposer };

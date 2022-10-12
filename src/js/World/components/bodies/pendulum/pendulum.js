@@ -5,7 +5,7 @@ import { colorComposer } from './colorComposer';
 import { NoiseMaps } from '../../textures/NoiseMaps';
 import { dynamicMapsMaterial } from '../../materials/dynamicMapsMaterial';
 import { cubeMaterialComposer } from '../../../utils/cubeMaterialComposer'
-import { sizeComposer } from './sizeComposer';
+import { sizePositionComposer } from './sizePositionComposer';
 
 const pendulum = (
     scene,
@@ -14,20 +14,14 @@ const pendulum = (
   ) => {
   const colorCompositionID = Math.random();
   const colorComposition = colorComposer(colorCompositionID);
-  const initYPos = 1;
-
-  const sizeComposition = sizeComposer();
+  const sizeAndPosition = sizePositionComposer();
 
   // handles configuration
 
   const hAConf = {
     colorComposition : colorComposition.a,
-    size: sizeComposition.size.a,
-    translation : {
-      x: -1,
-      y: initYPos,
-      z: 1
-    },
+    size: sizeAndPosition.size.a,
+    translation : sizeAndPosition.translation.a,
     rotation: {
       x: 0,
       y: 0,
@@ -42,12 +36,8 @@ const pendulum = (
 
   const hBConf = {
     colorComposition : colorComposition.b,
-    size: sizeComposition.size.b,
-    translation : {
-      x: 0,
-      y: initYPos,
-      z: 0
-    },
+    size: sizeAndPosition.size.b,
+    translation : sizeAndPosition.translation.b,
     rotation: {
       x: 0,
       y: 0,
@@ -62,12 +52,8 @@ const pendulum = (
 
   const hCConf = {
     colorComposition : colorComposition.c,
-    size: sizeComposition.size.c,
-    translation : {
-      x: 1,
-      y: initYPos,
-      z: -1
-    },
+    size: sizeAndPosition.size.c,
+    translation : sizeAndPosition.translation.c,
     rotation: {
       x: 0,
       y: 0,
@@ -115,12 +101,12 @@ const pendulum = (
       { 
         x: hAConf.size.width/2 - hAConf.size.height/2,
         y: 0.0,
-        z: 0.0
+        z: -hAConf.size.depth/2
       },
       { 
         x: -hBConf.size.width/2 + hBConf.size.height/2,
         y: 0.0,
-        z: hAConf.size.depth/2 + hBConf.size.depth/2
+        z: hBConf.size.depth/2
       },
       x
     );
@@ -130,12 +116,12 @@ const pendulum = (
       {
         x: hBConf.size.width/2 - hBConf.size.height/2,
         y: 0.0,
-        z: 0.0
+        z: -hBConf.size.depth/2
       },
       {
         x: -hCConf.size.width/2 + hCConf.size.height/2,
         y: 0.0,
-        z: hBConf.size.depth/2 + hCConf.size.depth/2
+        z: hCConf.size.depth/2
       },
       x
     );
@@ -184,7 +170,7 @@ const pendulum = (
     loop.updatableBodies.push(jointB); 
   }
 
-  // createJoints();
+  createJoints();
 }
 
 export { pendulum };
