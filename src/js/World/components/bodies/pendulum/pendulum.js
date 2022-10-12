@@ -96,15 +96,30 @@ const pendulum = (
   // create joints
 
   const createJoints = () => {
+    let hAConfXOffset = hAConf.size.height/2;
+    if (hAConf.size.height >= hAConf.size.width) {
+      hAConfXOffset = hAConf.size.width/2;
+    };
+
+    let hBConfXOffset = hBConf.size.height/2;
+    if (hBConf.size.height >= hBConf.size.width) {
+      hBConfXOffset = hBConf.size.width/2;
+    };
+
+    let hCConfXOffset = hCConf.size.height/2;
+    if (hCConf.size.height >= hCConf.size.width) {
+      hCConfXOffset = hCConf.size.width/2;
+    };
+
     let x = { x: 0.0, y: 0.0, z: 1.0 };
     let paramsA = JointData.revolute(
       { 
-        x: hAConf.size.width/2 - hAConf.size.height/2,
+        x: hAConf.size.width/2 - hAConfXOffset,
         y: 0.0,
         z: -hAConf.size.depth/2
       },
       { 
-        x: -hBConf.size.width/2 + hBConf.size.height/2,
+        x: -hBConf.size.width/2 + hBConfXOffset,
         y: 0.0,
         z: hBConf.size.depth/2
       },
@@ -114,12 +129,12 @@ const pendulum = (
   
     let paramsB = JointData.revolute(
       {
-        x: hBConf.size.width/2 - hBConf.size.height/2,
+        x: hBConf.size.width/2 - hBConfXOffset,
         y: 0.0,
         z: -hBConf.size.depth/2
       },
       {
-        x: -hCConf.size.width/2 + hCConf.size.height/2,
+        x: -hCConf.size.width/2 + hBConfXOffset,
         y: 0.0,
         z: hCConf.size.depth/2
       },
@@ -139,8 +154,8 @@ const pendulum = (
         const rndAngleRad = MathUtils.degToRad(Math.random() * angleRangeDeg - angleRangeDeg/2);
         // const stiffness = Math.random() * 100 + 400;
 
-        const stiffness = 500; // strength of the force that will be applied to make the bodies reach the target relative positions
-        const damping = 0.6;   // strength of the force that will be applied to make the bodies reach the target relative velocities 
+        const stiffness = 200; // strength of the force that will be applied to make the bodies reach the target relative positions
+        const damping = 0.9;   // strength of the force that will be applied to make the bodies reach the target relative velocities 
         
         // console.log('rndAngleRad', rndAngleRad);
         jointA.configureMotorPosition(rndAngleRad, stiffness, damping);
@@ -158,8 +173,8 @@ const pendulum = (
         const rndAngleRad = MathUtils.degToRad(Math.random() * angleRangeDeg - angleRangeDeg/2);
         // const stiffness = Math.random() * 300 + 200;
 
-        const stiffness = 500; // strength of the force that will be applied to make the bodies reach the target relative positions
-        const damping = 0.6;   // strength of the force that will be applied to make the bodies reach the target relative velocities 
+        const stiffness = 200; // strength of the force that will be applied to make the bodies reach the target relative positions
+        const damping = 0.9;   // strength of the force that will be applied to make the bodies reach the target relative velocities 
 
         // console.log('rndAngleRad', rndAngleRad);
         jointB.configureMotorPosition(rndAngleRad, stiffness, damping);

@@ -1,110 +1,145 @@
 import { mapNumber } from "../../../utils/numUtils";
 
 const sizePositionComposer = () => {
-  // make three presets
-  // small mid big -- and reverse
-  // small big small
-  // big small big
-
   const minW = 0.3;
   const maxW  = 2.4;
 
   const minHD = 0.1;
   const maxHD = 0.6;
 
-  const maxAspect = 1.25;
-  const minAspect = 0.3;
+  const maxAspect = 1.5;
+  const minAspect = 0.5;
 
   const minVolume = minW * minHD * minHD;
-  const maxVolume = maxW * maxHD * maxHD;
-
-  const r1 = 0;
-  const bW       = mapNumber(Math.random(), 0, 1, minW, maxW);
-  const bH       = mapNumber(Math.random(), 0, 1, minHD, maxHD);
-  const bDAspect = mapNumber(Math.random(), 0, 1, minAspect, maxAspect);
-  const bD       = mapNumber(bH * bDAspect, bH * minAspect, bH * maxAspect, minHD, maxHD);
-  // const bV = bW * bH * bD;
-
-  const r2 = 0;
-  const aW       = mapNumber(Math.random(), 0, 1, minW, maxW);
-  const aH       = mapNumber(Math.random(), 0, 1, minHD, maxHD);
-  const aAspect = mapNumber(Math.random(), 0, 1, minAspect, maxAspect);
-  const aD       = mapNumber(aH * aAspect, aH * minAspect, aH * maxAspect, minHD, maxHD);
-
-  const r3 = 0;
-  const cW       = mapNumber(Math.random(), 0, 1, minW, maxW);
-  const cH       = mapNumber(Math.random(), 0, 1, minHD, maxHD);
-  const cAspect = mapNumber(Math.random(), 0, 1, minAspect, maxAspect);
-  const cD       = mapNumber(cH * cAspect, cH * minAspect, cH * maxAspect, minHD, maxHD);
+  const maxVolume = maxW * maxHD * maxHD * 0.4;
+  const minVolumeAsFrac = ( maxW * maxHD * maxHD)/60;
 
   // console.log('.');
-  // console.log('minVolume', minVolume);
   // console.log('maxVolume', maxVolume);
+  // console.log('minVolume', minVolume);
+  // console.log('minVolume:c', minVolumeAsFrac);
 
-  // console.log('.');
-  // console.log('bW', bW);
-  // console.log('bH', bH);
-  // console.log('bD', bD);
+  const centerWeighted = () => {
+    console.log('size:    centerWeighted');
+    const bVolumeIndex = Math.random();
+    const bVolume = mapNumber(bVolumeIndex, 0, 1, minVolumeAsFrac, maxVolume);
+    const bW      = mapNumber(1, 0, 1, minW, maxW);
+    const brd     = mapNumber(Math.random(), 0, 1, minAspect, maxAspect);
+    const brh = 1/brd;
+    const bH = Math.pow(bVolume/bW * brh, 1/2);
+    const bD = Math.pow(bVolume/bW * brd, 1/2);
 
-  // const volumeIndex = mapNumber(bV, minVolume, maxVolume, 0, 1);
-  // console.log('currentMaxVolume', maxVolume * (1 - volumeIndex));
+    const aVolumeIndex = Math.random();
+    const aVolumeMin = bVolume * mapNumber(bVolumeIndex, 0, 1, 1, Math.log(bVolumeIndex + 0.0001) + minVolumeAsFrac);
+    const aVolumeMax = bVolume * mapNumber(bVolumeIndex, 0, 1, 4, 1)
+    const aVolume = mapNumber(aVolumeIndex, 0, 1, aVolumeMin, aVolumeMax);
+    const aW      = mapNumber(Math.random(), 0, 1, minW, maxW);
+    const ard     = mapNumber(Math.random(), 0, 1, minAspect, maxAspect);
+    const arh = 1/ard;
+    const aH = Math.pow(aVolume/aW * arh, 1/2);
+    const aD = Math.pow(aVolume/aW * ard, 1/2);
 
-  // console.log('.');
-  // console.log('volumeIndex       ', volumeIndex);
+    const cVolumeIndex = Math.random();
+    const cVolumeMin = bVolume * mapNumber(bVolumeIndex, 0, 1, 1, Math.log(bVolumeIndex + 0.0001) + minVolumeAsFrac);
+    const cVolumeMax = bVolume * mapNumber(bVolumeIndex, 0, 1, 4, 1)
+    const cVolume = mapNumber(cVolumeIndex, 0, 1, cVolumeMin, cVolumeMax);
+    const cW      = mapNumber(Math.random(), 0, 1, minW, maxW);
+    const crd     = mapNumber(Math.random(), 0, 1, minAspect, maxAspect);
+    const crh = 1/crd;
+    const cH = Math.pow(cVolume/cW * crh, 1/2);
+    const cD = Math.pow(cVolume/cW * crd, 1/2);
 
-  
-  // const nextVolume = volumeIndex * (Math.random() * 1.5 - 1.5/2);
-  // console.log('nextVolume       ', nextVolume);
-
-  // const aVRange = mapNumber(Math.random(), 0, 1, bV/2, bV*2);
-  // const aV = mapNumber(aVRange, bV/2, bV*2, minVolume, maxVolume);
-  // const aW = mapNumber(Math.random(), 0, 1, minW, maxW);
-  // const ard = mapNumber(Math.random(), 0, 1, minAspect, maxAspect);
-  // const arh = 1/ard;
-  // const aH = Math.pow(aV/aW * arh, 1/2);
-  // const aD = Math.pow(aV/aW * ard, 1/2);
-
-  // const cVRange = mapNumber(Math.random(), 0, 1, bV/2, bV*2);
-  // const cV = mapNumber(cVRange, bV/2, bV*2, minVolume, maxVolume);
-  // const cW = mapNumber(Math.random(), 0, 1, minW, maxW);
-  // const crd = mapNumber(Math.random(), 0, 1, minAspect, maxAspect);
-  // const crh = 1/crd;
-  // const cH = Math.pow(cV/cW * crh, 1/2);
-  // const cD = Math.pow(cV/cW * crd, 1/2);
-
-  // console.log('.');
-  // console.log('bV       ', bV);
-  // console.log('aV       ', aV);
-
-  // console.log('.');
-  // console.log('ard       ', ard);
-  // console.log('arh       ', arh);
-
-  const size = {
-    a: {
-      width:  aW,
-      height: aH,
-      depth:  aD
-    },
-    b: {
-      width:  bW,
-      height: bH,
-      depth:  bD
-    },
-    c: {
-      width:  cW,
-      height: cH,
-      depth:  cD
+    return {
+      a: {
+        width:  aW,
+        height: aH,
+        depth:  aD
+      },
+      b: {
+        width:  bW,
+        height: bH,
+        depth:  bD
+      },
+      c: {
+        width:  cW,
+        height: cH,
+        depth:  cD
+      }
     }
   }
 
+  const sideWeighted = () => {
+    console.log('size:    sideWeighted');
+    const aVolumeIndex = Math.random();
+    const aVolume = mapNumber(aVolumeIndex, 0, 1, minVolumeAsFrac, maxVolume);
+    const aW      = mapNumber(Math.random(), 0, 1, minW, maxW);
+    const ard     = mapNumber(Math.random(), 0, 1, minAspect, maxAspect);
+    const arh = 1/ard;
+    const aH = Math.pow(aVolume/aW * arh, 1/2);
+    const aD = Math.pow(aVolume/aW * ard, 1/2);
+
+    const bVolumeIndex = Math.random();
+    const bVolumeMin = aVolume * mapNumber(aVolumeIndex, 0, 1, 1, Math.log(aVolumeIndex*1.03 + 0.0001) + minVolumeAsFrac);
+    const bVolumeMax = aVolume * mapNumber(aVolumeIndex, 0, 1, 4, 1)
+    const bVolume = mapNumber(bVolumeIndex, 0, 1, bVolumeMin, bVolumeMax);
+    const bW      = mapNumber(Math.random(), 0, 1, minW, maxW);
+    const brd     = mapNumber(Math.random(), 0, 1, minAspect, maxAspect);
+    const brh = 1/brd;
+    const bH = Math.pow(bVolume/bW * brh, 1/2);
+    const bD = Math.pow(bVolume/bW * brd, 1/2);
+
+    const cVolumeIndex = Math.random();
+    const cVolumeMin = bVolume * mapNumber(bVolumeIndex, 0, 1, 1, Math.log(bVolumeIndex + 0.0001) + minVolumeAsFrac);
+    const cVolumeMax = bVolume * mapNumber(bVolumeIndex, 0, 1, 4, 1)
+    const cVolume = mapNumber(cVolumeIndex, 0, 1, cVolumeMin, cVolumeMax);
+    const cW      = mapNumber(Math.random(), 0, 1, minW, maxW);
+    const crd     = mapNumber(Math.random(), 0, 1, minAspect, maxAspect);
+    const crh = 1/crd;
+    const cH = Math.pow(cVolume/cW * crh, 1/2);
+    const cD = Math.pow(cVolume/cW * crd, 1/2);
+
+    return {
+      a: {
+        width:  aW,
+        height: aH,
+        depth:  aD
+      },
+      b: {
+        width:  bW,
+        height: bH,
+        depth:  bD
+      },
+      c: {
+        width:  cW,
+        height: cH,
+        depth:  cD
+      }
+    }
+  }
+
+  const size = Math.round(Math.random()) ? centerWeighted() : sideWeighted();
+
   const initY = 1;
+  let hAConfXOffset = size.a.height/2;
+  if (size.a.height >= size.a.width) {
+    hAConfXOffset = size.a.width/2;
+  };
+
+  let hBConfXOffset = size.b.height/2;
+  if (size.b.height >= size.b.width) {
+    hBConfXOffset = size.b.width/2;
+  };
+
+  let hCConfXOffset = size.c.height/2;
+  if (size.c.height >= size.c.width) {
+    hCConfXOffset = size.c.width/2;
+  };
 
   const translation = {
     a: {
-      x: -bW/2 - aW/2 + bH/2 + aH/2,
+      x: -size.b.width/2 - size.a.width/2 + hBConfXOffset + hAConfXOffset,
       y: initY,
-      z: bD/2 + aD/2
+      z: size.b.depth/2 + size.a.depth/2
     },
     b: {
       x: 0,
@@ -112,9 +147,9 @@ const sizePositionComposer = () => {
       z: 0
     },
     c: {
-      x: bW/2 + cW/2 - bH/2 - cH/2,
+      x: size.b.width/2 + size.c.width/2 - hBConfXOffset - hCConfXOffset,
       y: initY,
-      z: -bD/2 - cD/2
+      z: -size.b.depth/2 - size.c.depth/2
     }
   }
 
