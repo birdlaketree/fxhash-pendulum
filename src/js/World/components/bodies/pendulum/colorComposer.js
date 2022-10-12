@@ -200,10 +200,10 @@ const colorComposer = (colorCompositionID) => {
   }
   paleteGenerators.push(grayscale);
 
-  let colorConfig = tripple();
-  // const pgIndex = Math.round((paleteGenerators.length - 1) * colorCompositionID);
-  // let colorConfig = paleteGenerators[pgIndex]();
-  // console.log('palette:', paleteGenerators[pgIndex].name);
+  // let colorConfig = tripple();
+  const pgIndex = Math.round((paleteGenerators.length - 1) * colorCompositionID);
+  let colorConfig = paleteGenerators[pgIndex]();
+  console.log('palette:', paleteGenerators[pgIndex].name);
 
   return colorConfig;
 }
