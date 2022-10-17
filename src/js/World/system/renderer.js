@@ -9,7 +9,7 @@ import {
 } from 'three';
 import { VRButton } from 'three/examples/jsm/webxr/VRButton.js';
 
-const createRenderer = () => {
+const createRenderer = (xrEnabled = false) => {
   const renderer = new WebGLRenderer({ antialias: true });
   renderer.physicallyCorrectLights = true;
 
@@ -30,9 +30,11 @@ const createRenderer = () => {
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = PCFSoftShadowMap;
 
-  renderer.xr.enabled = true;
   document.body.appendChild( renderer.domElement );
-  document.body.appendChild( VRButton.createButton( renderer ) );
+  if (xrEnabled) {
+    renderer.xr.enabled = true;
+    document.body.appendChild( VRButton.createButton( renderer ) ); 
+  }
   return renderer;
 }
 

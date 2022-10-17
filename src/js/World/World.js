@@ -22,8 +22,8 @@ import { dynamicMapsMaterial } from './components/materials/dynamicMapsMaterial'
 class World {
   constructor() {
     this.isDay = Math.round(Math.random());
-    // this.isDay = 1;
-    this.renderer = createRenderer();
+    this.xrEnabled = false;
+    this.renderer = createRenderer(this.xrEnabled);
     this.scene = createScene(this.renderer, this.isDay);
     this.camera = createCamera();
     this.lights = createLights(this.scene);
@@ -31,8 +31,8 @@ class World {
     this.controls = new OrbitControls(this.camera, this.renderer.domElement);
     this.dolly = createDolly(this.camera, this.scene);
     this.dolly.position.set(0, 0, 0);
-    this.vrControls = new VrControls(this.renderer, this.dolly, this.camera);
-    this.loop.updatableBodies.push(this.vrControls);
+    this.vrControls = this.xrEnabled ? new VrControls(this.renderer, this.dolly, this.camera) : null;
+    this.xrEnabled ? this.loop.updatableBodies.push(this.vrControls) : null;
     this.floorSize = 300;
     RAPIER.init().then(() => {
       this.physicsConfig();
@@ -45,7 +45,7 @@ class World {
     this.physicsWorld = new RWorld(gravity);
     this.loop.setPhysics(this.physicsWorld);
     this.room = roomPhysicsComposition(this.physicsWorld, this.floorSize, false);
-    this.handsPhysicsController = createHandsPhysicsController(this.scene, this.loop, this.physicsWorld, this.vrControls);
+    this.handsPhysicsController = this.xrEnabled ? createHandsPhysicsController(this.scene, this.loop, this.physicsWorld, this.vrControls) : null;
   }
 
   buildScene() {

@@ -14,7 +14,6 @@ import {
   MeshBasicMaterial,
   Mesh,
   Vector3,
-  Group
 } from 'three';
 
 class VrControls {
