@@ -24,7 +24,7 @@ const sizePositionComposer = sizeAndPositionID => {
     const bH = Math.pow(bVolume/bW * brh, 1/2);
     const bD = Math.pow(bVolume/bW * brd, 1/2);
 
-    const aVolumeIndex = Math.random()1;
+    const aVolumeIndex = Math.random();
     const aVolumeMin = bVolume * mapNumber(bVolumeIndex, 0, 1, 1, Math.log(bVolumeIndex + 0.0001) + minVolumeAsFrac);
     const aVolumeMax = bVolume * mapNumber(bVolumeIndex, 0, 1, 4, 1)
     const aVolume = mapNumber(aVolumeIndex, 0, 1, aVolumeMin, aVolumeMax);
