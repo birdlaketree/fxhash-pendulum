@@ -14,6 +14,7 @@ import { roomWalls } from './components/meshes/roomWalls.js'
 import { pendulum } from "./components/bodies/pendulum/pendulum.js";
 import { spheres } from "./components/sceneFragments/spheres.js";
 import { cubes } from "./components/sceneFragments/cubes.js";
+import Stats from 'three/examples/jsm/libs/stats.module';
 
 import { defaultColorWithNoise } from "./components/materials/defaultColorWithNoise";
 import { NoiseMaps } from './components/textures/NoiseMaps';
@@ -21,19 +22,33 @@ import { dynamicMapsMaterial } from './components/materials/dynamicMapsMaterial'
 
 class World {
   constructor() {
-    this.isDay = Math.round(Math.random());
     this.xrEnabled = false;
+    this.isDay = Math.round(Math.random());
+
     this.renderer = createRenderer(this.xrEnabled);
     this.scene = createScene(this.renderer, this.isDay);
     this.camera = createCamera();
     this.lights = createLights(this.scene);
-    this.loop = new Loop(this.camera, this.scene, this.renderer);
+
+    this.stats = Stats();
+    document.body.appendChild(this.stats.dom);
+
+    this.loop = new Loop(this.camera, this.scene, this.renderer, this.stats);
+
     this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+    this.controls.maxPolarAngle = Math.PI/2 - Math.PI/32;
+    this.controls.minPolarAngle = 0;
+    this.controls.maxDistance = 40;
+    this.controls.minDistance = 2;
+
     this.dolly = createDolly(this.camera, this.scene);
     this.dolly.position.set(0, 0, 0);
+
     this.vrControls = this.xrEnabled ? new VrControls(this.renderer, this.dolly, this.camera) : null;
     this.xrEnabled ? this.loop.updatableBodies.push(this.vrControls) : null;
+
     this.floorSize = 300;
+
     RAPIER.init().then(() => {
       this.physicsConfig();
       this.buildScene();

@@ -2,10 +2,11 @@ import { Clock } from 'three';
 import { Quaternion } from "three";
 
 class Loop {
-  constructor(camera, scene, renderer) {
+  constructor(camera, scene, renderer, stats) {
     this.camera = camera;
     this.scene = scene;
     this.renderer = renderer;
+    this.stats = stats;
     this.bodies = []
     this.kinematicPositionBasedBodies = []
     this.updatableBodies = [];
@@ -17,6 +18,9 @@ class Loop {
     this.renderer.setAnimationLoop(() => {
       // tell every animated object to tick forward one frame
       this.tick();
+
+      // update stats
+      this.stats.update();
 
       // render a frame
       this.renderer.render(this.scene, this.camera);
