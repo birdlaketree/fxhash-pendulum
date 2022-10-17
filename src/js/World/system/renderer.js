@@ -30,9 +30,9 @@ const createRenderer = () => {
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = PCFSoftShadowMap;
 
-  // renderer.xr.enabled = true;
+  renderer.xr.enabled = true;
   document.body.appendChild( renderer.domElement );
-  // document.body.appendChild( VRButton.createButton( renderer ) );
+  document.body.appendChild( VRButton.createButton( renderer ) );
   return renderer;
 }
 

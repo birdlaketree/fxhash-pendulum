@@ -7,6 +7,7 @@ class Loop {
     this.scene = scene;
     this.renderer = renderer;
     this.bodies = []
+    this.kinematicPositionBasedBodies = []
     this.updatableBodies = [];
     this.clock = new Clock();
     this.physicsWorld = undefined;
@@ -41,6 +42,7 @@ class Loop {
     for (const object of this.updatableBodies) {
       object.tick(delta);
     }
+
     
     if (this.physicsWorld && this.bodies.length > 0) {
       this.physicsWorld.step();
@@ -61,6 +63,20 @@ class Loop {
             rotation.w
           ));
       });
+
+      this.kinematicPositionBasedBodies.forEach(body => {
+        const position = body.mesh.position;
+        const rotation = body.mesh.rotation;
+
+        const quaternion = new Quaternion();
+        quaternion.setFromEuler(rotation);
+
+        body.rigidBody.setNextKinematicTranslation(position);
+        body.rigidBody.setNextKinematicRotation(quaternion);
+        // body.rigidBody.setTranslation(position, true);
+        // body.rigidBody.setRotation(quaternion, true);
+      });
+
     }
   }
 }

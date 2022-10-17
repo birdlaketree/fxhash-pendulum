@@ -96,8 +96,8 @@ class VrControls {
       let velocityTranslation = 0.05;
       let velocityRotation = 0.4;
 
-      console.log('this.leftHandAssets', this.leftHandAssets);
-      console.log('this.rightHandAssets', this.leftHandAssets);
+      // console.log('this.leftHandAssets', this.leftHandAssets);
+      // console.log('this.rightHandAssets', this.leftHandAssets);
 
       for (const source of session.inputSources) {
         if (source && source.gamepad && source.handedness) {
@@ -114,24 +114,20 @@ class VrControls {
               if (this.leftHandAssets.length > 0) {
                 for (let i = 0; i < this.leftHandAssets.length; i++) {
                   const element = this.leftHandAssets[i];
-                  element.body.setCollisionFlags(2);
                   element.visible = true;
-                  element.position.x = this.dolly.position.x + this.controller1.position.x;
-                  element.position.y = this.dolly.position.y + this.controller1.position.y;
-                  element.position.z = this.dolly.position.z + this.controller1.position.z;
-                  element.rotation.x = this.controller1.rotation.x;
-                  element.rotation.y = this.controller1.rotation.y;
-                  element.rotation.z = this.controller1.rotation.z;
-                  element.body.needUpdate = true;
+                  element.position.x = this.dolly.position.x + this.controller2.position.x;
+                  element.position.y = this.dolly.position.y + this.controller2.position.y;
+                  element.position.z = this.dolly.position.z + this.controller2.position.z;
+                  element.rotation.x = this.controller2.rotation.x;
+                  element.rotation.y = this.controller2.rotation.y;
+                  element.rotation.z = this.controller2.rotation.z;
                 }
               }
             } else {
               if (this.leftHandAssets.length > 0) {
                 for (let i = 0; i < this.leftHandAssets.length; i++) {
                   const element = this.leftHandAssets[i];
-                  element.body.setCollisionFlags(4);
                   element.visible = false;
-                  element.body.needUpdate = false;
                 }
               }
             }
@@ -153,24 +149,20 @@ class VrControls {
               if (this.rightHandAssets.length > 0) {
                 for (let i = 0; i < this.rightHandAssets.length; i++) {
                   const element = this.rightHandAssets[i];
-                  element.body.setCollisionFlags(2);
                   element.visible = true;
-                  element.position.x = this.dolly.position.x + this.controller2.position.x;
-                  element.position.y = this.dolly.position.y + this.controller2.position.y;
-                  element.position.z = this.dolly.position.z + this.controller2.position.z;
-                  element.rotation.x = this.controller2.rotation.x;
-                  element.rotation.y = this.controller2.rotation.y;
-                  element.rotation.z = this.controller2.rotation.z;
-                  element.body.needUpdate = true;
+                  element.position.x = this.dolly.position.x + this.controller1.position.x;
+                  element.position.y = this.dolly.position.y + this.controller1.position.y;
+                  element.position.z = this.dolly.position.z + this.controller1.position.z;
+                  element.rotation.x = this.controller1.rotation.x;
+                  element.rotation.y = this.controller1.rotation.y;
+                  element.rotation.z = this.controller1.rotation.z;
                 }
               }
             } else {
               if (this.rightHandAssets.length > 0) {
                 for (let i = 0; i < this.rightHandAssets.length; i++) {
                   const element = this.rightHandAssets[i];
-                  element.body.setCollisionFlags(4);
                   element.visible = false;
-                  element.body.needUpdate = false;
                 }
               }
             }

@@ -1,40 +1,45 @@
-import { Group } from 'three';
-import { sphere } from '../components/bodies/sphere';
+import { sphereKinematic } from '../components/bodies/sphereKinematic';
+import { cubeKinematic } from '../components/bodies/cubeKinematic';
 import { hslToHex } from '../utils/colorUtils';
-import { defaultColorMattPlastic } from '../components/materials/defaultColorMattPlastic';
+import { defaultColorShinyPlastic } from '../components/materials/defaultColorShinyPlastic';
 
-const createHandsPhysicsController = (scene, physics, vrControls) => {
-  const handleMaterial = defaultColorMattPlastic(
-    hslToHex(0, 1, 1)
+const createHandsPhysicsController = (scene, loop, physicsWorld, vrControls) => {
+  const colorMaterialRight = defaultColorShinyPlastic(
+    hslToHex(0.6, 1, 0.2)
   );
 
-  const handDistance = 0;
+  const colorMaterialLeft = defaultColorShinyPlastic(
+    hslToHex(0, 1, 0.2)
+  );
 
-  const rightHandController = new Group();
-  const rightHandAsset = sphere(handleMaterial, 0.04);
-  rightHandAsset.position.z = handDistance;
-  rightHandAsset.castShadow = true;
-  rightHandController.add(rightHandAsset);
+  // const size = {
+  //   width:  0.05,
+  //   height: 0.05,
+  //   depth:  0.05
+  // }
+  const size = {
+    radius: 0.04
+  }
+  const translation = {
+    x: 0,
+    y: 0,
+    z: 0
+  }
+  const rotation = {
+    x: 0,
+    y: 0,
+    z: 0
+  }
 
-  scene.add(rightHandController);
-  physics.add.existing(rightHandController);
-  rightHandController.visible = false;
-  rightHandController.body.setCollisionFlags(1);
-  rightHandController.body.setBounciness(0.9);
-  vrControls.addAssetToRightHand(rightHandController);
+  const rightHandAsset = sphereKinematic(colorMaterialRight, size, translation, rotation, physicsWorld);
+  scene.add(rightHandAsset.mesh);
+  loop.kinematicPositionBasedBodies.push(rightHandAsset);
+  vrControls.addAssetToRightHand(rightHandAsset.mesh);
 
-  const leftHandController = new Group();
-  const leftHandAsset = sphere(handleMaterial, 0.04);
-  leftHandAsset.position.z = handDistance;
-  leftHandAsset.castShadow = true;
-  leftHandController.add(leftHandAsset);
-
-  scene.add(leftHandController);
-  physics.add.existing(leftHandController);
-  leftHandController.visible = false;
-  leftHandController.body.setCollisionFlags(1);
-  leftHandController.body.setBounciness(0.9);
-  vrControls.addAssetToLeftHand(leftHandController);
+  const leftHandAsset = sphereKinematic(colorMaterialLeft, size, translation, rotation, physicsWorld);
+  scene.add(leftHandAsset.mesh);
+  loop.kinematicPositionBasedBodies.push(leftHandAsset);
+  vrControls.addAssetToLeftHand(leftHandAsset.mesh);
 }
 
 export { createHandsPhysicsController };

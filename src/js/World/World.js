@@ -45,7 +45,7 @@ class World {
     this.physicsWorld = new RWorld(gravity);
     this.loop.setPhysics(this.physicsWorld);
     this.room = roomPhysicsComposition(this.physicsWorld, this.floorSize, false);
-    // this.handsPhysicsController = createHandsPhysicsController(this.scene, this.physicsWorld, this.vrControls);
+    this.handsPhysicsController = createHandsPhysicsController(this.scene, this.loop, this.physicsWorld, this.vrControls);
   }
 
   buildScene() {
