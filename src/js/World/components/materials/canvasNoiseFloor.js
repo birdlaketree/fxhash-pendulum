@@ -1,5 +1,5 @@
 import { Vector2, MeshPhysicalMaterial, CanvasTexture, RepeatWrapping } from 'three';
-import { NoiseFloor } from '../textures/NoiseFloor';
+import { NoiseFloor } from '../canvasMaps/NoiseFloor';
 
 const canvasNoiseFloor = (envMapIntensity = 1, isDay) => {
   const repeatX = 8 * 15;

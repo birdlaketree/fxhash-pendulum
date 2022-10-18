@@ -2,10 +2,11 @@ import { MathUtils } from 'three';
 import { JointData } from '@dimforge/rapier3d-compat';
 import { handle } from './handle';
 import { colorComposer } from './colorComposer';
-import { NoiseMaps } from '../../textures/NoiseMaps';
-import { dynamicMapsMaterial } from '../../materials/dynamicMapsMaterial';
+import { RndNoiseDotsMaps } from '../../canvasMaps/RndNoiseDotsMaps';
+import { canvasTextureMaterial } from '../../materials/canvasTextureMaterial';
 import { cubeMaterialComposer } from '../../../utils/cubeMaterialComposer'
 import { sizePositionComposer } from './sizePositionComposer';
+import { RndNoiseDotsNormal } from '../../canvasMaps/RndNoiseDotsNormal';
 
 const pendulum = (
     scene,
@@ -47,15 +48,21 @@ const pendulum = (
 
   // materials
 
-  let mapsA = new NoiseMaps(hAConf.colorComposition.color);
-  let mapsB = new NoiseMaps(hBConf.colorComposition.color);
-  let mapsC = new NoiseMaps(hCConf.colorComposition.color);
-  hAConf.material = cubeMaterialComposer(dynamicMapsMaterial, mapsA, hAConf, 2);
-  hBConf.material = cubeMaterialComposer(dynamicMapsMaterial, mapsB, hBConf, 2);
-  hCConf.material = cubeMaterialComposer(dynamicMapsMaterial, mapsC, hCConf, 2);
+  let mapsA = new RndNoiseDotsMaps(hAConf.colorComposition.color);
+  let mapsB = new RndNoiseDotsMaps(hBConf.colorComposition.color);
+  let mapsC = new RndNoiseDotsMaps(hCConf.colorComposition.color);
+  let normalMapA = new RndNoiseDotsNormal();
+  let normalMapB = new RndNoiseDotsNormal();
+  let normalMapC = new RndNoiseDotsNormal();
+  hAConf.material = cubeMaterialComposer(canvasTextureMaterial, {...mapsA, ...normalMapA}, hAConf, 2);
+  hBConf.material = cubeMaterialComposer(canvasTextureMaterial, {...mapsB, ...normalMapB}, hBConf, 2);
+  hCConf.material = cubeMaterialComposer(canvasTextureMaterial, {...mapsC, ...normalMapC}, hCConf, 2);
   mapsA = null;
   mapsB = null;
   mapsC = null;
+  normalMapA = null;
+  normalMapB = null;
+  normalMapC = null;
 
   // handles
 
@@ -121,8 +128,6 @@ const pendulum = (
     let jointB = physicsWorld.createImpulseJoint(paramsB, handleB.rigidBody, handleC.rigidBody, false);
 
     jointA.tick = (delta) => {
-      // console.log('jointA.isValid', jointA.isValid());
-      // console.log('jointA.limitsMax', jointA.limitsMax());
       const treshold = Math.random();
       if (treshold < 0.02) {
         handleA.rigidBody.wakeUp();
@@ -137,7 +142,6 @@ const pendulum = (
     }
   
     jointB.tick = (delta) => {
-      // console.log('jointB.isValid', jointB.isValid());
       const treshold = Math.random();
       if (treshold < 0.02) {
         handleA.rigidBody.wakeUp();

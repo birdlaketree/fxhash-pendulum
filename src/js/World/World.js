@@ -36,7 +36,7 @@ class World {
     this.controls.maxPolarAngle = Math.PI/2 - Math.PI/32;
     this.controls.minPolarAngle = 0;
     this.controls.maxDistance = 40;
-    this.controls.minDistance = 1;
+    this.controls.minDistance = 2;
 
     this.dolly = createDolly(this.camera, this.scene);
     this.dolly.position.set(0, 0, 0);
@@ -61,7 +61,7 @@ class World {
   }
 
   buildScene() {
-    this.materialTester  = materialTester(this.scene);
+    // this.materialTester  = materialTester(this.scene);
     this.walls           = roomWalls(this.scene, this.floorSize, this.isDay);
     this.pendulum        = pendulum (this.scene, this.loop, this.physicsWorld);
     this.spheresFragment = spheres  (this.scene, this.loop, this.physicsWorld, this.isDay);
