@@ -1,11 +1,13 @@
 import { Vector2, MeshPhysicalMaterial, CanvasTexture, RepeatWrapping } from 'three';
 import { RndDotsFloor } from '../canvasMaps/RndDotsFloor';
+import { RndNoiseNormal } from '../canvasMaps/RndNoiseNormal';
 
 const canvasNoiseFloor = (envMapIntensity = 1, isDay) => {
   const repeatX = 8 * 15;
   const repeatY = 8 * 15;
 
   const maps = new RndDotsFloor(isDay);
+  const normalMapCanvas = new RndNoiseNormal();
   const colorMap = new CanvasTexture(maps.colorMap);
   colorMap.repeat.x = repeatX;
   colorMap.repeat.y = repeatY;
@@ -24,6 +26,12 @@ const canvasNoiseFloor = (envMapIntensity = 1, isDay) => {
   metalnessMap.wrapS = RepeatWrapping;
   metalnessMap.wrapT = RepeatWrapping;
 
+  const normalMap = new CanvasTexture(normalMapCanvas.normalMap);
+  normalMap.repeat.x = repeatX;
+  normalMap.repeat.y = repeatY;
+  normalMap.wrapS = RepeatWrapping;
+  normalMap.wrapT = RepeatWrapping;
+
   const parameters = {
     // STANDARD
 
@@ -36,8 +44,8 @@ const canvasNoiseFloor = (envMapIntensity = 1, isDay) => {
     roughness: 1,
     roughnessMap: roughnessMap,
 
-    // normalMap: normalMap,
-		// normalScale: new Vector2(1, 1),
+    normalMap: normalMap,
+		normalScale: new Vector2(1, 1),
 
     // aoMap: aoMap,
     // aoMapIntensity:
