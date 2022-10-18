@@ -1,12 +1,11 @@
-import { floatBufferFromCanvas, normalMap } from "@thi.ng/pixel";
+class RndDotsFloor {
+	constructor(isDay, width = 2048, height = 2048) {
 
-class RndNoiseDotsMaps {
-	constructor(color, width = 1024, height = 1024 ) {
 		const colorCanvas = document.createElement('canvas');
 		colorCanvas.width = width;
 		colorCanvas.height = height;
     const colorCanvasContext = colorCanvas.getContext( '2d' );
-    colorCanvasContext.fillStyle = `rgb(${255*color.r}, ${255*color.g}, ${255*color.b})`;
+		colorCanvasContext.fillStyle = isDay ? 'rgb(255,255,255)' : 'rgb(10,10,10)';
 		colorCanvasContext.fillRect( 0, 0, width, height );
 
     const roughnessCanvas = document.createElement('canvas');
@@ -23,59 +22,39 @@ class RndNoiseDotsMaps {
     metalnessCanvasContext.fillStyle = 'rgb(0,0,0)';
 		metalnessCanvasContext.fillRect( 0, 0, width, height );
 
-		// const normalCanvas = document.createElement('canvas');
-		// normalCanvas.width = width;
-		// normalCanvas.height = height;
-    // const normalCanvasContext = normalCanvas.getContext( '2d' );
-    // normalCanvasContext.fillStyle = 'rgb(255,255,255)';
-		// normalCanvasContext.fillRect( 0, 0, width, height );
-
-		for ( let i = 0; i < 40; i ++ ) {
+		for ( let i = 0; i < 600; i ++ ) {
 			const x = Math.random() * width;
 			const y = Math.random() * height;
-			const r = Math.random() * 6 + 1;
+			const r = Math.random() * 4;
       
-      const cRGB = Math.round(Math.random()) ? 255 : 0;
+			const cRGB = isDay ? Math.random() * 100 : Math.random() * 200;
+      // colorCanvasContext.fillStyle = 'rgb(`100`, 100, 100)';
       colorCanvasContext.fillStyle = `rgb(${cRGB}, ${cRGB}, ${cRGB})`;
 			colorCanvasContext.beginPath();
 			colorCanvasContext.arc( x, y, r, 0, Math.PI * 2 );
 			colorCanvasContext.fill();
 
-      const rRGB = Math.random() * 20 + 235;
+      const rRGB = isDay ? Math.random() * 55 : Math.random() * 255;
+			// roughnessCanvasContext.fillStyle = 'rgb(30,30,30)';
       roughnessCanvasContext.fillStyle = `rgb(${rRGB}, ${rRGB}, ${rRGB})`;
 			roughnessCanvasContext.beginPath();
 			roughnessCanvasContext.arc( x, y, r, 0, Math.PI * 2 );
 			roughnessCanvasContext.fill();
 
       const mRGB = Math.random() * 255;
+      // metalnessCanvasContext.fillStyle = 'rgb(120,120,120)';
       metalnessCanvasContext.fillStyle = `rgb(${mRGB}, ${mRGB}, ${mRGB})`;
 			metalnessCanvasContext.beginPath();
 			metalnessCanvasContext.arc( x, y, r, 0, Math.PI * 2 );
 			metalnessCanvasContext.fill();
 		}
 
-		// for ( let i = 0; i < 600; i ++ ) {
-		// 	const x = Math.random() * width;
-		// 	const y = Math.random() * height;
-		// 	const r = Math.random() * 3 + 1;
-      
-    //   const nRGB = 0;
-    //   normalCanvasContext.fillStyle = `rgb(${nRGB}, ${nRGB}, ${nRGB})`;
-		// 	normalCanvasContext.beginPath();
-		// 	normalCanvasContext.arc( x, y, r, 0, Math.PI * 2 );
-		// 	normalCanvasContext.fill();
-		// }
-
-		// const normalMapSrc = floatBufferFromCanvas(normalCanvas);
-		// const nMap = normalMap(normalMapSrc, {step: 0, scale: 1}).toImageData();
-
 		return {
       colorMap: colorCanvas,
       roughnessMap: roughnessCanvas,
-      metalnessMap: metalnessCanvas,
-			// normalMap: nMap
+      metalnessMap: metalnessCanvas
     };
 	}
 }
 
-export { RndNoiseDotsMaps };
+export { RndDotsFloor };

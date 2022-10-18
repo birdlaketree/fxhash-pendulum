@@ -1,14 +1,16 @@
 import { PlaneGeometry, MathUtils, Mesh, Color } from 'three';
-import { RndNoiseDotsMaps } from "../components/canvasMaps/RndNoiseDotsMaps";
-import { RndNoiseDotsNormal } from '../components/canvasMaps/RndNoiseDotsNormal';
+import { RndDotsMaps } from "../components/canvasMaps/RndDotsMaps";
+import { RndDotsNormal } from '../components/canvasMaps/RndDotsNormal';
+import { RndNoiseNormal } from '../components/canvasMaps/RndNoiseNormal';
 import { canvasTextureMaterial } from "../components/materials/canvasTextureMaterial";
 import { GUI } from 'dat.gui';
 
 export const materialTester = scene => {
 
-  let maps = new RndNoiseDotsMaps(new Color(0x0000ff));
-  let normalMap = new RndNoiseDotsNormal();
-  const material = canvasTextureMaterial({...normalMap,...maps}, 1);
+  // let maps = new RndDotsMaps(new Color(0x0000ff));
+  let normalMap = new RndNoiseNormal();
+  // let normalMap = new RndDotsNormal();
+  const material = canvasTextureMaterial({...normalMap}, 1);
 
   const planeGeom = new PlaneGeometry(2, 2, 4, 4);
   const plane = new Mesh(planeGeom, material);

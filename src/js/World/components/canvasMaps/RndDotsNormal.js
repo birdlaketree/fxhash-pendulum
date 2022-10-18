@@ -1,6 +1,6 @@
 import { floatBufferFromCanvas, normalMap } from "@thi.ng/pixel";
 
-class RndNoiseDotsNormal {
+class RndDotsNormal {
 	constructor(radius = 1, width = 1024, height = 1024 ) {
 		const normalCanvas = document.createElement('canvas');
 		normalCanvas.width = width;
@@ -30,4 +30,4 @@ class RndNoiseDotsNormal {
 	}
 }
 
-export { RndNoiseDotsNormal };
+export { RndDotsNormal };

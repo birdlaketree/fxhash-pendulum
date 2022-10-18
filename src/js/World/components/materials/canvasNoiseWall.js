@@ -1,11 +1,11 @@
 import { Vector2, MeshPhysicalMaterial, CanvasTexture, RepeatWrapping } from 'three';
-import { NoiseWall } from '../canvasMaps/NoiseWall';
+import { RndDotsWall } from '../canvasMaps/RndDotsWall';
 
 const canvasNoiseWall = (envMapIntensity = 1) => {
   const repeatX = 4;
   const repeatY = 4;
 
-  const maps = new NoiseWall();
+  const maps = new RndDotsWall();
   const colorMap = new CanvasTexture(maps.colorMap);
   colorMap.repeat.x = repeatX;
   colorMap.repeat.y = repeatY;

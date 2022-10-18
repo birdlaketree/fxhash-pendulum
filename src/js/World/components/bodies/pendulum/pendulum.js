@@ -2,11 +2,12 @@ import { MathUtils } from 'three';
 import { JointData } from '@dimforge/rapier3d-compat';
 import { handle } from './handle';
 import { colorComposer } from './colorComposer';
-import { RndNoiseDotsMaps } from '../../canvasMaps/RndNoiseDotsMaps';
+import { RndDotsMaps } from '../../canvasMaps/RndDotsMaps';
 import { canvasTextureMaterial } from '../../materials/canvasTextureMaterial';
 import { cubeMaterialComposer } from '../../../utils/cubeMaterialComposer'
 import { sizePositionComposer } from './sizePositionComposer';
-import { RndNoiseDotsNormal } from '../../canvasMaps/RndNoiseDotsNormal';
+import { RndDotsNormal } from '../../canvasMaps/RndDotsNormal';
+import { RndNoiseNormal } from '../../canvasMaps/RndNoiseNormal';
 
 const pendulum = (
     scene,
@@ -48,12 +49,15 @@ const pendulum = (
 
   // materials
 
-  let mapsA = new RndNoiseDotsMaps(hAConf.colorComposition.color);
-  let mapsB = new RndNoiseDotsMaps(hBConf.colorComposition.color);
-  let mapsC = new RndNoiseDotsMaps(hCConf.colorComposition.color);
-  let normalMapA = new RndNoiseDotsNormal();
-  let normalMapB = new RndNoiseDotsNormal();
-  let normalMapC = new RndNoiseDotsNormal();
+  let mapsA = new RndDotsMaps(hAConf.colorComposition.color);
+  let mapsB = new RndDotsMaps(hBConf.colorComposition.color);
+  let mapsC = new RndDotsMaps(hCConf.colorComposition.color);
+  // let normalMapA = new RndDotsNormal();
+  // let normalMapB = new RndDotsNormal();
+  // let normalMapC = new RndDotsNormal();
+  let normalMapA = new RndNoiseNormal();
+  let normalMapB = new RndNoiseNormal();
+  let normalMapC = new RndNoiseNormal();
   hAConf.material = cubeMaterialComposer(canvasTextureMaterial, {...mapsA, ...normalMapA}, hAConf, 2);
   hBConf.material = cubeMaterialComposer(canvasTextureMaterial, {...mapsB, ...normalMapB}, hBConf, 2);
   hCConf.material = cubeMaterialComposer(canvasTextureMaterial, {...mapsC, ...normalMapC}, hCConf, 2);
