@@ -1,4 +1,7 @@
-import { Vector3, PlaneGeometry, MathUtils, Mesh, Color } from "three";
+import Stats from 'three/examples/jsm/libs/stats.module';
+import RAPIER from '@dimforge/rapier3d-compat';
+import { World as RWorld } from '@dimforge/rapier3d-compat';
+import { Vector3 } from "three";
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import { Loop } from './system/Loop.js';
 import { createRenderer } from './system/renderer.js';
@@ -7,18 +10,12 @@ import { createCamera, createDolly } from './components/stage/camera.js';
 import { createLights } from './components/stage/lights.js';
 import { VrControls } from './system/VrControls.js';
 import { createHandsPhysicsController } from "./system/handsPhysicsController.js";
-import RAPIER from '@dimforge/rapier3d-compat';
-import { World as RWorld } from '@dimforge/rapier3d-compat';
 import { room as roomPhysicsComposition } from './components/bodies/room.js';
 import { roomWalls } from './components/meshes/roomWalls.js'
 import { pendulum } from "./components/bodies/pendulum/pendulum.js";
 import { spheres } from "./components/sceneFragments/spheres.js";
 import { cubes } from "./components/sceneFragments/cubes.js";
-import Stats from 'three/examples/jsm/libs/stats.module';
-
-import { defaultColorWithNoise } from "./components/materials/defaultColorWithNoise";
-import { NoiseMaps } from './components/textures/NoiseMaps';
-import { dynamicMapsMaterial } from './components/materials/dynamicMapsMaterial';
+import { materialTester } from './utils/materialTester'
 
 class World {
   constructor() {
@@ -39,7 +36,7 @@ class World {
     this.controls.maxPolarAngle = Math.PI/2 - Math.PI/32;
     this.controls.minPolarAngle = 0;
     this.controls.maxDistance = 40;
-    this.controls.minDistance = 2;
+    this.controls.minDistance = 1;
 
     this.dolly = createDolly(this.camera, this.scene);
     this.dolly.position.set(0, 0, 0);
@@ -64,17 +61,7 @@ class World {
   }
 
   buildScene() {
-    // let maps = new NoiseMaps(new Color(0x0000ff));
-    // const planeMaterial = dynamicMapsMaterial(maps, 1);
-    // const planeGeom = new PlaneGeometry(2, 2, 4, 4);
-    // const plane = new Mesh( planeGeom, planeMaterial );
-    // plane.rotation.y = MathUtils.degToRad(35);
-    // plane.rotation.x = MathUtils.degToRad(-55);
-    // plane.position.x = 2;
-    // plane.position.y = 2;
-    // plane.position.z = 2;
-    // this.scene.add(plane);
-
+    this.materialTester  = materialTester(this.scene);
     this.walls           = roomWalls(this.scene, this.floorSize, this.isDay);
     this.pendulum        = pendulum (this.scene, this.loop, this.physicsWorld);
     this.spheresFragment = spheres  (this.scene, this.loop, this.physicsWorld, this.isDay);
