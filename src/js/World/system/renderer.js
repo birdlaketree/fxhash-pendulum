@@ -15,9 +15,7 @@ const createRenderer = (xrEnabled = false) => {
 
   // mobile phone optimisation
   // setting pixel ratio makes it much faster on iPhone 12 Pro Max
-  renderer.setPixelRatio( 1 );
-  // renderer.setPixelRatio( window.devicePixelRatio );
-
+  renderer.setPixelRatio( window.devicePixelRatio );
   renderer.setSize( window.innerWidth, window.innerHeight );
 
   // renderer.toneMapping = ACESFilmicToneMapping;
