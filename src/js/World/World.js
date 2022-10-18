@@ -11,7 +11,7 @@ import { createLights } from './components/stage/lights.js';
 import { VrControls } from './system/VrControls.js';
 import { createHandsPhysicsController } from "./system/handsPhysicsController.js";
 import { room as roomPhysicsComposition } from './components/bodies/room.js';
-import { roomWalls } from './components/meshes/roomWalls.js'
+import { walls } from './components/meshes/walls.js'
 import { pendulum } from "./components/bodies/pendulum/pendulum.js";
 import { spheres } from "./components/sceneFragments/spheres.js";
 import { cubes } from "./components/sceneFragments/cubes.js";
@@ -62,7 +62,7 @@ class World {
 
   buildScene() {
     // this.materialTester  = materialTester(this.scene);
-    this.walls           = roomWalls(this.scene, this.floorSize, this.isDay);
+    this.walls           = walls(this.scene, this.floorSize, this.isDay);
     this.pendulum        = pendulum (this.scene, this.loop, this.physicsWorld);
     this.spheresFragment = spheres  (this.scene, this.loop, this.physicsWorld, this.isDay);
     this.cubesFragment   = cubes    (this.scene, this.loop, this.physicsWorld, this.isDay);

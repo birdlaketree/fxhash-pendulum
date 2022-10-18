@@ -3,7 +3,7 @@ import { solidLight } from '../materials/solidLight';
 import { canvasNoiseWall } from '../materials/canvasNoiseWall';
 import { canvasNoiseFloor } from '../materials/canvasNoiseFloor';
 
-const roomWalls = (scene, size = 20, isDay) => {
+const walls = (scene, size = 20, isDay) => {
   const materialWall = canvasNoiseWall(0.9);
   const materialFloor = isDay ? canvasNoiseFloor(0.16, isDay) : canvasNoiseFloor(0.01, isDay);
   const materialCeeling = solidLight(0xffffff, 0xffffff);
@@ -51,4 +51,4 @@ const roomWalls = (scene, size = 20, isDay) => {
   // scene.add(wallBack);
 }
 
-export { roomWalls };
+export { walls };
