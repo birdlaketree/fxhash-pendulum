@@ -9,6 +9,8 @@ import { sizePositionComposer } from './sizePositionComposer';
 import { RndDotsNormal } from '../../canvasMaps/RndDotsNormal';
 import { RndNoiseNormal } from '../../canvasMaps/RndNoiseNormal';
 
+import { frostedPlastic } from '../../materials/frostedPlastic';
+
 const pendulum = (
     scene,
     loop,
@@ -58,6 +60,9 @@ const pendulum = (
   let normalMapA = new RndNoiseNormal();
   let normalMapB = new RndNoiseNormal();
   let normalMapC = new RndNoiseNormal();
+  // hAConf.material = frostedPlastic(hAConf.colorComposition.color);
+  // hBConf.material = frostedPlastic(hBConf.colorComposition.color);
+  // hCConf.material = frostedPlastic(hCConf.colorComposition.color);
   hAConf.material = cubeMaterialComposer(canvasTextureMaterial, {...mapsA, ...normalMapA}, hAConf, 2);
   hBConf.material = cubeMaterialComposer(canvasTextureMaterial, {...mapsB, ...normalMapB}, hBConf, 2);
   hCConf.material = cubeMaterialComposer(canvasTextureMaterial, {...mapsC, ...normalMapC}, hCConf, 2);

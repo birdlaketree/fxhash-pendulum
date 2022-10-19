@@ -3,12 +3,14 @@ import {
   MeshPhysicalMaterial,
 } from 'three';
 import { textureHandler } from '../../system/textureHandler';
+import { GUI } from 'dat.gui';
+
 
 const colorTexture        = new URL('/assets/public/textures/noise/uniform-noise_color_3.png', import.meta.url);
 const normalTexture       = new URL('/assets/public/textures/noise/uniform-noise_normal_5.png', import.meta.url);
 const transmissionTexture = new URL('/assets/public/textures/noise/uniform-noise_color_3.png', import.meta.url);
 
-const frostedPlastic = (color, envmap) => {
+const frostedPlastic = (color, envmap = { texture: null}) => {
   const repeat = 1;
   const colorMap = textureHandler(colorTexture, repeat);
   const normalMap = textureHandler(normalTexture, repeat);
@@ -23,7 +25,7 @@ const frostedPlastic = (color, envmap) => {
     
     metalness: 0,
     
-    transmissionMap: transmissionMap,
+    // transmissionMap: transmissionMap,
     transmission: 0.9,
     reflectivity: 0,
 
@@ -34,7 +36,18 @@ const frostedPlastic = (color, envmap) => {
     normalMap: normalMap,
 		normalScale: new Vector2(1, 1),
   }
+
   const material = new MeshPhysicalMaterial(parameters);
+
+  const gui = new GUI();
+  const cubeFolder = gui.addFolder('Material Plane');
+  cubeFolder.add(material, 'envMapIntensity', 0, 2);
+  cubeFolder.add(material, 'transmission', 0, 2);
+  cubeFolder.add(material, 'roughness', 0, 2);
+  cubeFolder.add(material, 'ior', 0, 2);
+  cubeFolder.add(material, 'thickness', 0, 2);
+  // cubeFolder.open();
+
   return material;
 }
 
