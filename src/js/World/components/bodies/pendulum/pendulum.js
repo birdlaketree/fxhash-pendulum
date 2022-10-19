@@ -8,6 +8,7 @@ import { cubeMaterialComposer } from '../../../utils/cubeMaterialComposer'
 import { sizePositionComposer } from './sizePositionComposer';
 import { RndDotsNormal } from '../../canvasMaps/RndDotsNormal';
 import { RndNoiseNormal } from '../../canvasMaps/RndNoiseNormal';
+import { RndLinesMaps } from '../../canvasMaps/RndLinesMaps';
 
 import { frostedPlastic } from '../../materials/frostedPlastic';
 
@@ -51,15 +52,25 @@ const pendulum = (
 
   // materials
 
-  let mapsA = new RndDotsMaps(hAConf.colorComposition.color);
-  let mapsB = new RndDotsMaps(hBConf.colorComposition.color);
-  let mapsC = new RndDotsMaps(hCConf.colorComposition.color);
+  const canvasMaps = [
+    null,
+    RndLinesMaps,
+    RndDotsMaps
+  ]
+  const mapsAIndex = Math.round(Math.random() * (canvasMaps.length - 1));
+  const mapsBIndex = Math.round(Math.random() * (canvasMaps.length - 1));
+  const mapsCIndex = Math.round(Math.random() * (canvasMaps.length - 1));
+  let mapsA = mapsAIndex != 0  ? new canvasMaps[mapsAIndex](hAConf.colorComposition.color) : null;
+  let mapsB = mapsBIndex != 0  ? new canvasMaps[mapsBIndex](hBConf.colorComposition.color) : null;
+  let mapsC = mapsCIndex != 0  ? new canvasMaps[mapsCIndex](hCConf.colorComposition.color) : null;
+  
   // let normalMapA = new RndDotsNormal();
   // let normalMapB = new RndDotsNormal();
   // let normalMapC = new RndDotsNormal();
   let normalMapA = new RndNoiseNormal();
   let normalMapB = new RndNoiseNormal();
   let normalMapC = new RndNoiseNormal();
+  
   // hAConf.material = frostedPlastic(hAConf.colorComposition.color);
   // hBConf.material = frostedPlastic(hBConf.colorComposition.color);
   // hCConf.material = frostedPlastic(hCConf.colorComposition.color);
