@@ -6,21 +6,29 @@ const cubes = (
   scene,
   loop,
   physicsWorld,
-  isDay
+  isDay,
+  props
 ) => {
   const color = isDay ? hslToHex(0.6, 0, 0.8) : hslToHex(0.6, 0, 0.002);
-  const blackMaterial = defaultColorShinyPlastic(color));
+  const blackMaterial = defaultColorShinyPlastic(color);
   const spreadWidth = 10;
+  const {
+    min,
+    sizeRange,
+    n = 12,
+    y = 3,
+    yRange = 6
+  } = props;
 
-  for (let i = 0; i < 12; i++) {
+  for (let i = 0; i < n; i++) {
     const size = {
-      width:  Math.random() * 0.2 + 0.05,
-      height: Math.random() * 0.2 + 0.05,
-      depth:  Math.random() * 0.2 + 0.05
+      width:  Math.random() * sizeRange + min,
+      height: Math.random() * sizeRange + min,
+      depth:  Math.random() * sizeRange + min
     }
     const translation = {
       x: Math.random() * spreadWidth - spreadWidth/2,
-      y: Math.random() * 6 + 3,
+      y: Math.random() * yRange + y,
       z: Math.random() * spreadWidth - spreadWidth/2
     }
     const rotation = {

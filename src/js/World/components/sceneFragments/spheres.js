@@ -6,19 +6,27 @@ const spheres = (
   scene,
   loop,
   physicsWorld,
-  isDay
+  isDay,
+  props
 ) => {
   const color = isDay ? hslToHex(0.6, 0, 0.8) : hslToHex(0.6, 0, 0.002);
   const colorMaterial = defaultColorShinyPlastic(color);
   const spreadWidth = 10;
+  const {
+    min = 0.02,
+    sizeRange = Math.random()/12,
+    n = 8,
+    y = 3,
+    yRange = 6
+  } = props;
 
-  for (let i = 0; i < 8; i++) {
+  for (let i = 0; i < n; i++) {
     const size = {
-      radius: Math.random()/12 + 0.02
+      radius: sizeRange + min
     }
     const translation = {
       x: Math.random() * spreadWidth - spreadWidth/2,
-      y: Math.random() * 6 + 3,
+      y: Math.random() * yRange + y,
       z: Math.random() * spreadWidth - spreadWidth/2
     }
     const rotation = {
