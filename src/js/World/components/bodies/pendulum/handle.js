@@ -3,6 +3,7 @@ import {
   RigidBodyDesc,
   ColliderDesc
 } from '@dimforge/rapier3d-compat';
+import { shiftHandleUVs } from './shiftHandleUVs';
 
 const handle = (
     conf,
@@ -28,6 +29,7 @@ const handle = (
   mesh.receiveShadow = true;
   const group = new Group();
   group.add(mesh);
+  shiftHandleUVs(conf, mesh.geometry.attributes.uv);
 
   const rigidBodyDesc = RigidBodyDesc.dynamic();
   rigidBodyDesc.setTranslation(conf.translation.x, conf.translation.y, conf.translation.z);

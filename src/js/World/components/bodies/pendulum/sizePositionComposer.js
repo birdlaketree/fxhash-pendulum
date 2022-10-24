@@ -175,7 +175,8 @@ const sizePositionComposer = sizeAndPositionID => {
   return {
     size: sizeAndVolume.size,
     volume: sizeAndVolume.volume,
-    translation
+    translation,
+    extrems: { maxWidth : maxW }
   }
 }
 

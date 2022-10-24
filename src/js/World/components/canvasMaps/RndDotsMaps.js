@@ -1,7 +1,7 @@
-import { floatBufferFromCanvas, normalMap } from "@thi.ng/pixel";
+// import { floatBufferFromCanvas, normalMap } from "@thi.ng/pixel";
 
 class RndDotsMaps {
-	constructor(color, width = 1024, height = 1024 ) {
+	constructor(color, width = 2048, height = 2048 ) {
 		const colorCanvas = document.createElement('canvas');
 		colorCanvas.width = width;
 		colorCanvas.height = height;
@@ -30,12 +30,12 @@ class RndDotsMaps {
     // normalCanvasContext.fillStyle = 'rgb(255,255,255)';
 		// normalCanvasContext.fillRect( 0, 0, width, height );
 
-		for ( let i = 0; i < 40; i ++ ) {
+		for ( let i = 0; i < 240; i ++ ) {
 			const x = Math.random() * width;
 			const y = Math.random() * height;
 			const r = Math.random() * 6 + 1;
       
-      const cRGB = Math.round(Math.random()) ? 255 : 0;
+      const cRGB = Math.round(Math.random()) ? 235 : 0;
       colorCanvasContext.fillStyle = `rgb(${cRGB}, ${cRGB}, ${cRGB})`;
 			colorCanvasContext.beginPath();
 			colorCanvasContext.arc( x, y, r, 0, Math.PI * 2 );
