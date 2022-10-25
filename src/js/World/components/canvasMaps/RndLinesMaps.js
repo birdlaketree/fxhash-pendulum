@@ -7,18 +7,22 @@ class RndLinesMaps {
     colorCanvasContext.fillStyle = `rgb(${255*color.r}, ${255*color.g}, ${255*color.b})`;
 		colorCanvasContext.fillRect( 0, 0, width, height );
 
+    const rRGBInit = Math.random() * 207 + 48;
     const roughnessCanvas = document.createElement('canvas');
 		roughnessCanvas.width = width;
 		roughnessCanvas.height = height;
 		const roughnessCanvasContext = roughnessCanvas.getContext( '2d' );
-    roughnessCanvasContext.fillStyle = 'rgb(255,255,255)';
+    // roughnessCanvasContext.fillStyle = 'rgb(255,255,255)';
+    roughnessCanvasContext.fillStyle = `rgb(${rRGBInit}, ${rRGBInit}, ${rRGBInit})`;
 		roughnessCanvasContext.fillRect( 0, 0, width, height );
 
+    const mRGBInit = Math.random() * 255;
     const metalnessCanvas = document.createElement('canvas');
 		metalnessCanvas.width = width;
 		metalnessCanvas.height = height;
 		const metalnessCanvasContext = metalnessCanvas.getContext( '2d' );
-    metalnessCanvasContext.fillStyle = 'rgb(0,0,0)';
+    // metalnessCanvasContext.fillStyle = 'rgb(0,0,0)';
+    metalnessCanvasContext.strokeStyle = `rgb(${mRGBInit}, ${mRGBInit}, ${mRGBInit})`;
 		metalnessCanvasContext.fillRect( 0, 0, width, height );
 
     const findNewPoint = (point, angle, distance) => {
@@ -28,11 +32,10 @@ class RndLinesMaps {
       }
     }
 
-    // const rRGB = Math.random() * 207 + 48;
-    // const mRGB = Math.random() * 255;
-
     const rRGB = Math.random() * 127;
     const mRGB = Math.random() * 127 + 128;
+		// const rRGB = Math.random() * 207 + 48;
+    // const mRGB = Math.random() * 255;
 
 		for ( let i = 0; i < 56; i ++ ) {      
       

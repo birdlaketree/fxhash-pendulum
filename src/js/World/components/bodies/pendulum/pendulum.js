@@ -2,17 +2,8 @@ import { MathUtils } from 'three';
 import { JointData } from '@dimforge/rapier3d-compat';
 import { handle } from './handle';
 import { colorComposer } from './colorComposer';
-import { RndDotsMaps } from '../../canvasMaps/RndDotsMaps';
-import { canvasTextureMaterial } from '../../materials/canvasTextureMaterial';
-import { cubeMaterialComposer } from '../../../utils/cubeMaterialComposer'
 import { sizePositionComposer } from './sizePositionComposer';
-import { RndDotsNormal } from '../../canvasMaps/RndDotsNormal';
-import { RndNoiseNormal } from '../../canvasMaps/RndNoiseNormal';
-import { RndLinesMaps } from '../../canvasMaps/RndLinesMaps';
-import { GridDotsMaps } from '../../canvasMaps/GridDotsMaps';
-import { SolidColorMaps } from '../../canvasMaps/SolidColorMaps';
-
-import { frostedPlastic } from '../../materials/frostedPlastic';
+import { materialListComposer } from './materialListComposer';
 
 const pendulum = (
     scene,
@@ -55,43 +46,13 @@ const pendulum = (
     extremes : sizeAndPosition.extrems
   }
 
-  // materials
-
-  const canvasMaps = [
-    SolidColorMaps,
-    RndLinesMaps,
-    RndDotsMaps
-  ]
-  const mapsAIndex = Math.round(Math.random() * (canvasMaps.length - 1));
-  const mapsBIndex = Math.round(Math.random() * (canvasMaps.length - 1));
-  const mapsCIndex = Math.round(Math.random() * (canvasMaps.length - 1));
-  let mapsA = canvasMaps[mapsAIndex] != null ? new canvasMaps[mapsAIndex](hAConf.colorComposition.color) : null;
-  let mapsB = canvasMaps[mapsBIndex] != null ? new canvasMaps[mapsBIndex](hBConf.colorComposition.color) : null;
-  let mapsC = canvasMaps[mapsCIndex] != null ? new canvasMaps[mapsCIndex](hCConf.colorComposition.color) : null;
-  
-  // let normalMapA = new RndDotsNormal();
-  // let normalMapB = new RndDotsNormal();
-  // let normalMapC = new RndDotsNormal();
-  // let normalMapA = new RndNoiseNormal();
-  // let normalMapB = new RndNoiseNormal();
-  // let normalMapC = new RndNoiseNormal();
-  let normalMapA = null;
-  let normalMapB = null;
-  let normalMapC = null;
-  
-  // hAConf.material = frostedPlastic(hAConf.colorComposition.color);
-  // hBConf.material = frostedPlastic(hBConf.colorComposition.color);
-  // hCConf.material = frostedPlastic(hCConf.colorComposition.color);
-  hAConf.material = canvasTextureMaterial({...mapsA, ...normalMapA}, hAConf.colorComposition.envMapIntensity);
-  hBConf.material = canvasTextureMaterial({...mapsB, ...normalMapB}, hBConf.colorComposition.envMapIntensity);
-  hCConf.material = canvasTextureMaterial({...mapsC, ...normalMapC}, hCConf.colorComposition.envMapIntensity);
-
-  mapsA = null;
-  mapsB = null;
-  mapsC = null;
-  normalMapA = null;
-  normalMapB = null;
-  normalMapC = null;
+  const materialCompositionID = Math.random();
+  materialListComposer(
+    materialCompositionID,
+    hAConf,
+    hBConf,
+    hCConf
+  )
 
   // handles
 
