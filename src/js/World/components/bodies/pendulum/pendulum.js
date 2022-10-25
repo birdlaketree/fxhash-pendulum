@@ -1,4 +1,3 @@
-
 import { handle } from './handle';
 import { colorComposer } from './colorComposer';
 import { sizePositionComposer } from './sizePositionComposer';
