@@ -16,87 +16,82 @@ const pendulum = (
   const sizeAndPositionID = Math.random();
   const sizeAndPosition = sizePositionComposer(sizeAndPositionID);
 
-  const hAConf = {
-    colorComposition : colorComposition.a,
-    size: sizeAndPosition.size.a,
-    translation : sizeAndPosition.translation.a,
-    rotation: {x: 0, y: 0, z: 0},
-    anchor: {x: 0, y: 0, z: 0},
-    volume: sizeAndPosition.volume.a,
-    extremes : sizeAndPosition.extrems
-  }
-
-  const hBConf = {
-    colorComposition : colorComposition.b,
-    size: sizeAndPosition.size.b,
-    translation : sizeAndPosition.translation.b,
-    rotation: {x: 0, y: 0, z: 0},
-    anchor: {x: 0, y: 0, z: 0},
-    volume: sizeAndPosition.volume.b,
-    extremes : sizeAndPosition.extrems
-  }
-
-  const hCConf = {
-    colorComposition : colorComposition.c,
-    size: sizeAndPosition.size.c,
-    translation : sizeAndPosition.translation.c,
-    rotation: {x: 0, y: 0, z: 0},
-    anchor: {x: 0, y: 0, z: 0},
-    volume: sizeAndPosition.volume.c,
-    extremes : sizeAndPosition.extrems
+  const handleComposition = {
+    a: {
+      colorComposition : colorComposition.a,
+      size: sizeAndPosition.size.a,
+      translation : sizeAndPosition.translation.a,
+      rotation: {x: 0, y: 0, z: 0},
+      anchor: {x: 0, y: 0, z: 0},
+      volume: sizeAndPosition.volume.a,
+      extremes : sizeAndPosition.extrems
+    },
+    b: {
+      colorComposition : colorComposition.b,
+      size: sizeAndPosition.size.b,
+      translation : sizeAndPosition.translation.b,
+      rotation: {x: 0, y: 0, z: 0},
+      anchor: {x: 0, y: 0, z: 0},
+      volume: sizeAndPosition.volume.b,
+      extremes : sizeAndPosition.extrems
+    },
+    c: {
+      colorComposition : colorComposition.c,
+      size: sizeAndPosition.size.c,
+      translation : sizeAndPosition.translation.c,
+      rotation: {x: 0, y: 0, z: 0},
+      anchor: {x: 0, y: 0, z: 0},
+      volume: sizeAndPosition.volume.c,
+      extremes : sizeAndPosition.extrems
+    }
   }
 
   const materialCompositionID = Math.random();
-  materialListComposer(
-    materialCompositionID,
-    hAConf,
-    hBConf,
-    hCConf
-  )
+  materialListComposer(materialCompositionID, handleComposition);
 
   // handles
 
-  const handleA = handle(hAConf, physicsWorld);
+  const handleA = handle(handleComposition.a, physicsWorld);
   scene.add(handleA.mesh);
   loop.bodies.push(handleA);
 
-  const handleB = handle(hBConf, physicsWorld);
+  const handleB = handle(handleComposition.b, physicsWorld);
   scene.add(handleB.mesh);
   loop.bodies.push(handleB);
 
-  const handleC = handle(hCConf, physicsWorld);
+  const handleC = handle(handleComposition.c, physicsWorld);
   scene.add(handleC.mesh);
   loop.bodies.push(handleC);
 
   // joints
 
   const createJoints = () => {
-    let hAConfXOffset = hAConf.size.height/2;
-    if (hAConf.size.height >= hAConf.size.width) {
-      hAConfXOffset = hAConf.size.width/2;
+    let hAConfXOffset = handleComposition.a.size.height/2;
+    if (handleComposition.a.size.height >= handleComposition.a.size.width) {
+      hAConfXOffset = handleComposition.a.size.width/2;
     };
 
-    let hBConfXOffset = hBConf.size.height/2;
-    if (hBConf.size.height >= hBConf.size.width) {
-      hBConfXOffset = hBConf.size.width/2;
+    let hBConfXOffset = handleComposition.b.size.height/2;
+    if (handleComposition.b.size.height >= handleComposition.b.size.width) {
+      hBConfXOffset = handleComposition.b.size.width/2;
     };
 
-    let hCConfXOffset = hCConf.size.height/2;
-    if (hCConf.size.height >= hCConf.size.width) {
-      hCConfXOffset = hCConf.size.width/2;
+    let hCConfXOffset = handleComposition.c.size.height/2;
+    if (handleComposition.c.size.height >= handleComposition.c.size.width) {
+      hCConfXOffset = handleComposition.c.size.width/2;
     };
 
     let x = { x: 0.0, y: 0.0, z: 1.0 };
     let paramsA = JointData.revolute(
       { 
-        x: hAConf.size.width/2 - hAConfXOffset,
+        x: handleComposition.a.size.width/2 - hAConfXOffset,
         y: 0.0,
-        z: -hAConf.size.depth/2
+        z: -handleComposition.a.size.depth/2
       },
       { 
-        x: -hBConf.size.width/2 + hBConfXOffset,
+        x: -handleComposition.b.size.width/2 + hBConfXOffset,
         y: 0.0,
-        z: hBConf.size.depth/2
+        z: handleComposition.b.size.depth/2
       },
       x
     );
@@ -104,14 +99,14 @@ const pendulum = (
   
     let paramsB = JointData.revolute(
       {
-        x: hBConf.size.width/2 - hBConfXOffset,
+        x: handleComposition.b.size.width/2 - hBConfXOffset,
         y: 0.0,
-        z: -hBConf.size.depth/2
+        z: -handleComposition.b.size.depth/2
       },
       {
-        x: -hCConf.size.width/2 + hCConfXOffset,
+        x: -handleComposition.c.size.width/2 + hCConfXOffset,
         y: 0.0,
-        z: hCConf.size.depth/2
+        z: handleComposition.c.size.depth/2
       },
       x
     );
@@ -125,7 +120,7 @@ const pendulum = (
         handleC.rigidBody.wakeUp();
         const angleRangeDeg = 720;
         const rndAngleRad = MathUtils.degToRad(Math.random() * angleRangeDeg - angleRangeDeg/2);
-        const stiffness = Math.random() * 200 + (100 * hAConf.volume * hBConf.volume); // strength of the force that will be applied to make the bodies reach the target relative positions
+        const stiffness = Math.random() * 200 + (100 * handleComposition.a.volume * handleComposition.b.volume); // strength of the force that will be applied to make the bodies reach the target relative positions
         const damping   = Math.random() * 0.6 + 0.3;   // strength of the force that will be applied to make the bodies reach the target relative velocities 
         jointA.configureMotorPosition(rndAngleRad, stiffness, damping);
       }
@@ -139,7 +134,7 @@ const pendulum = (
         handleC.rigidBody.wakeUp();
         const angleRangeDeg = 720;
         const rndAngleRad = MathUtils.degToRad(Math.random() * angleRangeDeg - angleRangeDeg/2);
-        const stiffness = Math.random() * 200 + (100 * hBConf.volume * hCConf.volume); // strength of the force that will be applied to make the bodies reach the target relative positions
+        const stiffness = Math.random() * 200 + (100 * handleComposition.b.volume * handleComposition.c.volume); // strength of the force that will be applied to make the bodies reach the target relative positions
         const damping   = Math.random() * 0.6 + 0.3;   // strength of the force that will be applied to make the bodies reach the target relative velocities 
         jointB.configureMotorPosition(rndAngleRad, stiffness, damping);
       }

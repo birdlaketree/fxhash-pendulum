@@ -5,13 +5,7 @@ import { RndDotsMaps } from "../../canvasMaps/RndDotsMaps";
 import { RndDotsNormal } from "../../canvasMaps/RndDotsNormal";
 import { RndNoiseNormal } from "../../canvasMaps/RndNoiseNormal";
 
-const materialListComposer = (
-    materialCompositionID,
-    hAConf,
-    hBConf,
-    hCConf
-  ) => {
-
+const materialListComposer = (materialCompositionID, handleComposition) => {
   const canvasMaps = [
     SolidColorMaps,
     RndLinesMaps,
@@ -21,9 +15,9 @@ const materialListComposer = (
   const mapsAIndex = Math.round(Math.random() * (canvasMaps.length - 1));
   const mapsBIndex = Math.round(Math.random() * (canvasMaps.length - 1));
   const mapsCIndex = Math.round(Math.random() * (canvasMaps.length - 1));
-  let mapsA = canvasMaps[mapsAIndex] != null ? new canvasMaps[mapsAIndex](hAConf.colorComposition.color) : null;
-  let mapsB = canvasMaps[mapsBIndex] != null ? new canvasMaps[mapsBIndex](hBConf.colorComposition.color) : null;
-  let mapsC = canvasMaps[mapsCIndex] != null ? new canvasMaps[mapsCIndex](hCConf.colorComposition.color) : null;
+  let mapsA = canvasMaps[mapsAIndex] != null ? new canvasMaps[mapsAIndex](handleComposition.a.colorComposition.color) : null;
+  let mapsB = canvasMaps[mapsBIndex] != null ? new canvasMaps[mapsBIndex](handleComposition.b.colorComposition.color) : null;
+  let mapsC = canvasMaps[mapsCIndex] != null ? new canvasMaps[mapsCIndex](handleComposition.c.colorComposition.color) : null;
   
   // let normalMapA = new RndDotsNormal();
   // let normalMapB = new RndDotsNormal();
@@ -35,12 +29,12 @@ const materialListComposer = (
   let normalMapB = null;
   let normalMapC = null;
   
-  // hAConf.material = frostedPlastic(hAConf.colorComposition.color);
-  // hBConf.material = frostedPlastic(hBConf.colorComposition.color);
-  // hCConf.material = frostedPlastic(hCConf.colorComposition.color);
-  hAConf.material = canvasTextureMaterial({...mapsA, ...normalMapA}, hAConf.colorComposition.envMapIntensity);
-  hBConf.material = canvasTextureMaterial({...mapsB, ...normalMapB}, hBConf.colorComposition.envMapIntensity);
-  hCConf.material = canvasTextureMaterial({...mapsC, ...normalMapC}, hCConf.colorComposition.envMapIntensity);
+  // handleComposition.a.material = frostedPlastic(handleComposition.a.colorComposition.color);
+  // handleComposition.b.material = frostedPlastic(handleComposition.b.colorComposition.color);
+  // handleComposition.c.material = frostedPlastic(handleComposition.c.colorComposition.color);
+  handleComposition.a.material = canvasTextureMaterial({...mapsA, ...normalMapA}, handleComposition.a.colorComposition.envMapIntensity);
+  handleComposition.b.material = canvasTextureMaterial({...mapsB, ...normalMapB}, handleComposition.b.colorComposition.envMapIntensity);
+  handleComposition.c.material = canvasTextureMaterial({...mapsC, ...normalMapC}, handleComposition.c.colorComposition.envMapIntensity);
 
   mapsA = null;
   mapsB = null;
