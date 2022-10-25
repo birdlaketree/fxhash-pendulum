@@ -1,5 +1,3 @@
-// import { floatBufferFromCanvas, normalMap } from "@thi.ng/pixel";
-
 class RndLinesMaps {
 	constructor(color, width = 2048, height = 2048 ) {
 		const colorCanvas = document.createElement('canvas');
@@ -23,13 +21,6 @@ class RndLinesMaps {
     metalnessCanvasContext.fillStyle = 'rgb(0,0,0)';
 		metalnessCanvasContext.fillRect( 0, 0, width, height );
 
-    // const normalCanvas = document.createElement('canvas');
-		// normalCanvas.width = width;
-		// normalCanvas.height = height;
-    // const normalCanvasContext = normalCanvas.getContext( '2d' );
-    // normalCanvasContext.fillStyle = 'rgb(255,255,255)';
-		// normalCanvasContext.fillRect( 0, 0, width, height );
-
     const findNewPoint = (point, angle, distance) => {
       return {
         x: Math.round(Math.cos(angle * Math.PI / 180) * distance + point.x),
@@ -37,9 +28,11 @@ class RndLinesMaps {
       }
     }
 
+    // const rRGB = Math.random() * 207 + 48;
+    // const mRGB = Math.random() * 255;
+
     const rRGB = Math.random() * 127;
     const mRGB = Math.random() * 127 + 128;
-    // const nRGB = 0;
 
 		for ( let i = 0; i < 56; i ++ ) {      
       
@@ -72,24 +65,12 @@ class RndLinesMaps {
       metalnessCanvasContext.strokeStyle = `rgb(${mRGB}, ${mRGB}, ${mRGB})`;
       metalnessCanvasContext.lineWidth = lineWidth;
       metalnessCanvasContext.lineCap = 'round';
-
-      // normalCanvasContext.beginPath(); // Start a new path
-      // normalCanvasContext.moveTo(point1.x, point1.y); // Move the pen to (30, 50)
-      // normalCanvasContext.lineTo(point2.x, point2.y); // Draw a line to (150, 100)
-      // normalCanvasContext.stroke(); // Render the path
-      // normalCanvasContext.strokeStyle = `rgb(${nRGB}, ${nRGB}, ${nRGB})`;
-      // normalCanvasContext.lineWidth = lineWidth;
-      // normalCanvasContext.lineCap = 'round';
 		}
-
-    // const normalMapSrc = floatBufferFromCanvas(normalCanvas);
-		// const nMap = normalMap(normalMapSrc, {step: 0, scale: 1}).toImageData();
 
 		return {
       colorMap: colorCanvas,
       roughnessMap: roughnessCanvas,
-      metalnessMap: metalnessCanvas,
-      // normalMap: nMap
+      metalnessMap: metalnessCanvas
     };
 	}
 }

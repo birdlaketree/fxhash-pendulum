@@ -1,4 +1,5 @@
 import { Vector2, MeshPhysicalMaterial, CanvasTexture, RepeatWrapping } from 'three';
+// import { GUI } from 'dat.gui';
 
 const canvasTextureMaterial = (maps, envMapIntensity = 1, repeatX = 1, repeatY = 1) => {
   const colorMap = maps.colorMap ? new CanvasTexture(maps.colorMap) : null;
@@ -94,6 +95,13 @@ const canvasTextureMaterial = (maps, envMapIntensity = 1, repeatX = 1, repeatY =
   } 
 
   const material = new MeshPhysicalMaterial(parameters);
+
+  // const gui = new GUI();
+  // const cubeFolder = gui.addFolder('Material');
+  // cubeFolder.add(material, 'roughness', 0, 1);
+  // cubeFolder.add(material, 'metalness', 0, 1);
+  // cubeFolder.open();
+
   return material;
 }
 
