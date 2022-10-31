@@ -1,5 +1,4 @@
 import { canvasTextureMaterial } from "../../materials/canvasTextureMaterial";
-import { SolidColorMaps } from "../../canvasMaps/SolidColorMaps";
 import { RndDotsMaps } from "../../canvasMaps/RndDotsMaps";
 import { RndNoiseNormal } from "../../canvasMaps/RndNoiseNormal";
 
@@ -37,7 +36,7 @@ const materialListComposer = (materialCompositionID, handleComposition) => {
   const nai = Math.round(Math.random() * (noiseLevels.length - 1));
   const nbi = Math.round(Math.random() * (noiseLevels.length - 1));
   const nci = Math.round(Math.random() * (noiseLevels.length - 1));
-  console.log('noise levels: ', noiseLevels[nai], noiseLevels[nbi], noiseLevels[nci]);
+  console.log('noise:    ', noiseLevels[nai], noiseLevels[nbi], noiseLevels[nci]);
   let normalMapA = new RndNoiseNormal(noiseLevels[nai]);
   let normalMapB = new RndNoiseNormal(noiseLevels[nbi]);
   let normalMapC = new RndNoiseNormal(noiseLevels[nci]);
@@ -47,18 +46,22 @@ const materialListComposer = (materialCompositionID, handleComposition) => {
   const plastic = {
     roughness: 1,
     metalness: 0,
+    n: 'plastic'
   }
   const roughMetal = {
     roughness: 1,
-    metalness: 1
+    metalness: 1,
+    n: 'roughMetal'
   }
   const shinyPlastic = {
     roughness: 0.25,
-    metalness: 0
+    metalness: 0,
+    n: 'shinyPlastic'
   }
   const shinyMetal = {
     roughness: 0.2,
-    metalness: 0.6
+    metalness: 0.6,
+    n: 'shinyMetal'
   }
 
   const rmProprerties = [];
@@ -75,9 +78,7 @@ const materialListComposer = (materialCompositionID, handleComposition) => {
     const b = rmProprerties[bi];
     const c = rmProprerties[ci];
 
-    console.log('a', a.constructor.name);
-    console.log('b', b.constructor.name);
-    console.log('c', c.constructor.name);
+    console.log('r & m:    ', a.n, b.n, c.n);
     return {a, b, c};
   }
 

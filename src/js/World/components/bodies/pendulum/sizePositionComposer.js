@@ -15,7 +15,7 @@ const sizePositionComposer = sizeAndPositionID => {
   const minVolumeAsFrac = ( maxW * maxHD * maxHD)/60;
 
   const centerWeighted = () => {
-    console.log('size:    centerWeighted');
+    console.log('size:      centerWeighted');
     const bVolumeIndex = sizeAndPositionID;
     const bVolume = mapNumber(bVolumeIndex, 0, 1, minVolumeAsFrac, maxVolume);
     const bW      = mapNumber(1, 0, 1, minW, maxW);
@@ -75,7 +75,7 @@ const sizePositionComposer = sizeAndPositionID => {
   }
 
   const sideWeighted = () => {
-    console.log('size:    sideWeighted');
+    console.log('size:      sideWeighted');
     const aVolumeIndex = sizeAndPositionID;
     const aVolume = mapNumber(aVolumeIndex, 0, 1, minVolumeAsFrac, maxVolume);
     const aW      = mapNumber(Math.random(), 0, 1, minW, maxW);
@@ -136,7 +136,7 @@ const sizePositionComposer = sizeAndPositionID => {
 
   const sizeAndVolume = Math.round(Math.random()) ? centerWeighted() : sideWeighted();
   const size = sizeAndVolume.size;
-  console.log('volume index', sizeAndVolume.volume);
+  // console.log('volume index', sizeAndVolume.volume);
 
   const initY = 1;
   let hAConfXOffset = size.a.height/2;
