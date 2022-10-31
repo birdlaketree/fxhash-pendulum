@@ -9,33 +9,6 @@ const materialListComposer = (materialCompositionID, handleComposition) => {
 
   const themesDiffuse = [];
 
-  // const solidSolidDots = () => {
-  //   const a = SolidColorMaps;
-  //   const b = SolidColorMaps;
-  //   const c = RndDotsMaps;
-
-  //   const randomized = [a,b,c].sort(() => Math.random() - 0.5);
-  //   return {
-  //     a: randomized[0],
-  //     b: randomized[1],
-  //     c: randomized[2],
-  //   };
-  // }
-  // themesDiffuse.push(solidSolidDots);
-
-  // const allSolids = () => {
-  //   const a = SolidColorMaps;
-  //   const b = SolidColorMaps;
-  //   const c = SolidColorMaps;
-
-  //   return {
-  //     a,
-  //     b,
-  //     c
-  //   };
-  // }
-  // themesDiffuse.push(allSolids);
-
   const allDots = () => {
     const a = RndDotsMaps;
     const b = RndDotsMaps;
@@ -109,82 +82,6 @@ const materialListComposer = (materialCompositionID, handleComposition) => {
   }
 
   const rm = rmTheme();
-
-  // const themesRoughnessMetalness = [];
-
-  // const allPlastic = () => {
-  //   const a = plastic;
-  //   const b = plastic;
-  //   const c = plastic;
-  //   return {a, b, c};
-  // }
-  // themesRoughnessMetalness.push(allPlastic);
-
-  // const allRoughMetal = () => {
-  //   const a = roughMetal;
-  //   const b = roughMetal;
-  //   const c = roughMetal;
-  //   return {a, b, c};
-  // }
-  // themesRoughnessMetalness.push(allRoughMetal);
-
-  // const allShinyPlastic = () => {
-  //   const a = shinyPlastic;
-  //   const b = shinyPlastic;
-  //   const c = shinyPlastic;
-  //   return {a, b, c};
-  // }
-  // themesRoughnessMetalness.push(allShinyPlastic);
-
-  // const allShinyMetal = () => {
-  //   const a = shinyMetal;
-  //   const b = shinyMetal;
-  //   const c = shinyMetal;
-  //   return {a, b, c};
-  // }
-  // themesRoughnessMetalness.push(allShinyMetal);
-
-  // const t1 = () => {
-  //   const a = roughMetal;
-  //   const b = roughMetal;
-  //   const c = shinyMetal;
-
-  //   const randomized = [a,b,c].sort(() => Math.random() - 0.5);
-  //   return {
-  //     a: randomized[0],
-  //     b: randomized[1],
-  //     c: randomized[2],
-  //   };
-  // }
-  // themesRoughnessMetalness.push(t1);
-
-  // const t2 = () => {
-  //   const a = roughMetal;
-  //   const b = roughMetal;
-  //   const c = shinyPlastic;
-
-  //   const randomized = [a,b,c].sort(() => Math.random() - 0.5);
-  //   return {
-  //     a: randomized[0],
-  //     b: randomized[1],
-  //     c: randomized[2],
-  //   };
-  // }
-  // themesRoughnessMetalness.push(t2);
-
-  // const t3 = () => {
-  //   const a = shinyPlastic;
-  //   const b = shinyPlastic;
-  //   const c = shinyMetal;
-
-  //   const randomized = [a,b,c].sort(() => Math.random() - 0.5);
-  //   return {
-  //     a: randomized[0],
-  //     b: randomized[1],
-  //     c: randomized[2],
-  //   };
-  // }
-  // themesRoughnessMetalness.push(t3);
 
   handleComposition.a.material = canvasTextureMaterial(
     {...mapsA, ...normalMapA},
