@@ -9,10 +9,10 @@ import { GUI } from 'dat.gui';
 export const materialTester = scene => {
 
   // let maps = new RndDotsMaps(new Color(0x0000ff));
-  let maps = new GridDotsMaps(new Color(0x0000ff));
-  let normalMap = new RndNoiseNormal();
+  // let maps = new GridDotsMaps(new Color(0x0000ff));
+  let normalMap = new RndNoiseNormal(16);
   // let normalMap = new RndDotsNormal();
-  const material = canvasTextureMaterial({...normalMap, ...maps}, 1);
+  const material = canvasTextureMaterial({...normalMap}, 1);
 
   const planeGeom = new PlaneGeometry(2, 2, 4, 4);
   const plane = new Mesh(planeGeom, material);

@@ -1,7 +1,13 @@
 import { Vector2, MeshPhysicalMaterial, CanvasTexture, RepeatWrapping } from 'three';
 // import { GUI } from 'dat.gui';
 
-const canvasTextureMaterial = (maps, envMapIntensity = 1, repeatX = 1, repeatY = 1) => {
+const canvasTextureMaterial = (
+    maps,
+    props = null,
+    envMapIntensity = 1,
+    repeatX = 1,
+    repeatY = 1
+  ) => {
   const colorMap = maps.colorMap ? new CanvasTexture(maps.colorMap) : null;
   if (colorMap) {
     colorMap.repeat.x = repeatX;
@@ -34,16 +40,20 @@ const canvasTextureMaterial = (maps, envMapIntensity = 1, repeatX = 1, repeatY =
     normalMap.wrapT = RepeatWrapping;
   };
 
+  const color     = props.color ? props.color : null;
+  const roughness = props.roughness ? props.roughness : null;
+  const metalness = props.metalness ? props.metalness : null;
+
   const parameters = {
     // STANDARD
 
     // envMap: envmap.texture,
     envMapIntensity: envMapIntensity,
 
-    // color: 0x444444,
+    color: color,
     map: colorMap ? colorMap : null,
 
-    roughness: 1,
+    roughness: roughness,
     roughnessMap: roughnessMap ? roughnessMap : null,
 
     normalMap: normalMap ? normalMap : null,
@@ -62,7 +72,7 @@ const canvasTextureMaterial = (maps, envMapIntensity = 1, repeatX = 1, repeatY =
     // displacementScale
     // displacementBias
 
-    metalness: 1,
+    metalness: metalness,
     metalnessMap: metalnessMap ? metalnessMap : null,
 
     // alphaMap: alphaMap,

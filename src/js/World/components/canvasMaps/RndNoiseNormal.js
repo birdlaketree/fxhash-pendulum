@@ -1,7 +1,7 @@
 import { floatBufferFromCanvas, normalMap } from "@thi.ng/pixel";
 
 class RndNoiseNormal {
-	constructor(width = 1024, height = 1024 ) {
+	constructor(level = 128, width = 1024, height = 1024 ) {
 		const normalCanvas = document.createElement('canvas');
 		normalCanvas.width = width;
 		normalCanvas.height = height;
@@ -22,7 +22,7 @@ class RndNoiseNormal {
           n = pixels.length,
           i = 0;
       while (i < n) {
-          pixels[i++] = pixels[i++] = pixels[i++] = (random() * 127) | 0;
+          pixels[i++] = pixels[i++] = pixels[i++] = (random() * level) | 0;
           pixels[i++] = alpha;
       }
       g.putImageData(imageData, x, y);
@@ -53,9 +53,6 @@ class RndNoiseNormal {
 		const nMap = normalMap(normalMapSrc, {step: 0, scale: 1}).toImageData();
 
 		return {
-      // colorMap: colorCanvas,
-      // roughnessMap: roughnessCanvas,
-      // metalnessMap: metalnessCanvas,
 			normalMap: nMap
     };
 	}
