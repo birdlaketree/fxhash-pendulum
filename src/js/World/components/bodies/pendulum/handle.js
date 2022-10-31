@@ -29,7 +29,7 @@ const handle = (
   mesh.receiveShadow = true;
   const group = new Group();
   group.add(mesh);
-  // shiftHandleUVs(conf, mesh.geometry.attributes.uv);
+  shiftHandleUVs(conf, mesh.geometry.attributes.uv);
 
   const rigidBodyDesc = RigidBodyDesc.dynamic();
   rigidBodyDesc.setTranslation(conf.translation.x, conf.translation.y, conf.translation.z);
