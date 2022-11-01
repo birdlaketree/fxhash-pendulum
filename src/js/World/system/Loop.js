@@ -2,11 +2,12 @@ import { Clock } from 'three';
 import { Quaternion } from "three";
 
 class Loop {
-  constructor(camera, scene, renderer, stats) {
+  constructor(camera, scene, renderer, stats, orbitControls) {
     this.camera = camera;
     this.scene = scene;
     this.renderer = renderer;
     this.stats = stats;
+    this.orbitControls = orbitControls;
     this.bodies = []
     this.kinematicPositionBasedBodies = []
     this.updatableBodies = [];
@@ -21,6 +22,8 @@ class Loop {
 
       // update stats
       // this.stats.update();
+
+      this.orbitControls.update();
 
       // render a frame
       this.renderer.render(this.scene, this.camera);

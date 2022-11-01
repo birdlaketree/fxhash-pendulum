@@ -66,6 +66,12 @@ const pendulum = (
     handleB,
     handleC
   );
+
+  return {
+    handleA,
+    handleB,
+    handleC
+  }
 }
 
 export { pendulum };

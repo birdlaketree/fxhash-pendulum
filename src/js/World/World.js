@@ -37,13 +37,16 @@ class World {
     // this.stats = Stats();
     // document.body.appendChild(this.stats.dom);
 
-    this.loop = new Loop(this.camera, this.scene, this.renderer, this.stats);
+    this.orbitControls = new OrbitControls(this.camera, this.renderer.domElement);
+    this.orbitControls.maxPolarAngle = Math.PI/2 - Math.PI/32;
+    this.orbitControls.minPolarAngle = 0;
+    this.orbitControls.maxDistance = 40;
+    this.orbitControls.minDistance = 2;
+    this.orbitControls.dampingFactor = 100000;
+    // this.orbitControls.autoRotate = true;
+    // this.orbitControls.autoRotateSpeed = 0.3;
 
-    this.controls = new OrbitControls(this.camera, this.renderer.domElement);
-    this.controls.maxPolarAngle = Math.PI/2 - Math.PI/32;
-    this.controls.minPolarAngle = 0;
-    this.controls.maxDistance = 40;
-    this.controls.minDistance = 2;
+    this.loop = new Loop(this.camera, this.scene, this.renderer, this.stats, this.orbitControls);
 
     this.dolly = createDolly(this.camera, this.scene);
     this.dolly.position.set(0, 0, 0);
@@ -77,6 +80,7 @@ class World {
     this.spheresFragment     = spheres  (this.scene, this.loop, this.physicsWorld, envMap, this.bgHSL, {min: 0.02,  sizeRange: Math.random()/20, n: 6, y: 0.2, yRange: 3});
     this.cubesFragment       = cubes    (this.scene, this.loop, this.physicsWorld, envMap, this.bgHSL, {min: 0.05,  sizeRange: 0.10, n: 8 , y: 0.2,  yRange: 2});
     this.miniCubesFragment   = cubes    (this.scene, this.loop, this.physicsWorld, envMap, this.bgHSL, {min: 0.006, sizeRange: 0.04, n: 24, y: 0.06, yRange: 2});
+    this.orbitControls.target = this.pendulum.handleB.mesh.position;
   }
 
   start() {
