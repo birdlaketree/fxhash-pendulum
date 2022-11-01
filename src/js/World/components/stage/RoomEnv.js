@@ -13,16 +13,14 @@
 } from 'three';
 
 class RoomEnvironment extends Scene {
-
  constructor() {
-
 	 super();
 
 	 const geometry = new BoxGeometry();
 	 geometry.deleteAttribute( 'uv' );
 
-	 const roomMaterial = new MeshStandardMaterial( { side: BackSide } );
-	 const boxMaterial = new MeshStandardMaterial();
+	//  const roomMaterial = new MeshStandardMaterial( { side: BackSide } );
+	//  const boxMaterial = new MeshStandardMaterial();
 
 	 // const mainLight = new PointLight( 0xffffff, 5.0, 28, 2 );
 	 // mainLight.position.set( 0.418, 16.199, 0.300 );
@@ -101,7 +99,7 @@ class RoomEnvironment extends Scene {
 	 // this.add( light5 );
 
 	 // +y
-	 const ceelingLight = new Mesh( geometry, createAreaLightMaterial( 10 ) );
+	 const ceelingLight = new Mesh( geometry, createAreaLightMaterial( 4 ) );
 	 ceelingLight.position.set( 0.0, 4.0, 0.0 );
 	 ceelingLight.scale.set( 4, 0.01, 4 );
 	 this.add( ceelingLight );

@@ -1,14 +1,24 @@
-import { PlaneGeometry, Mesh, MathUtils } from 'three';
-import { canvasNoiseFloor } from '../materials/canvasNoiseFloor';
+import { PlaneGeometry, SphereGeometry, Mesh, MeshStandardMaterial, MathUtils, DoubleSide } from 'three';
+import { rndNoiseFloor } from '../canvasMaps/RndNoiseFloor';
 
-const walls = (scene, size = 20, isDay) => {
-  const materialFloor = isDay ? canvasNoiseFloor(0.16, isDay) : canvasNoiseFloor(0.01, isDay);
-  const geometry = new PlaneGeometry(size, size, 4, 4);
+const walls = (scene, size = 20, bgHSL, color) => {
+  const materialFloor = rndNoiseFloor(bgHSL, color);
+  const materialDome = new MeshStandardMaterial({
+    color: color,
+    envMapIntensity: 100,
+    side: DoubleSide
+  });
 
-  const floor = new Mesh( geometry, materialFloor );
+  const geometryPlane = new PlaneGeometry(size, size, 4, 4);
+  const floor = new Mesh(geometryPlane, materialFloor);
   floor.receiveShadow = true;
   floor.rotation.x = MathUtils.degToRad(270);
   scene.add(floor);
+
+  const geometryDome = new SphereGeometry(200, 64, 64);
+  const dome = new Mesh(geometryDome, materialDome);
+  scene.add(dome);
+
 }
 
 export { walls };

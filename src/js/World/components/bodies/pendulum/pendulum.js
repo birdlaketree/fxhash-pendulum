@@ -1,5 +1,4 @@
 import { handle } from './handle';
-import { colorComposer } from './colorComposer';
 import { sizePositionComposer } from './sizePositionComposer';
 import { materialListComposer } from './materialListComposer';
 import { createJoints } from './createJoints';
@@ -7,11 +6,10 @@ import { createJoints } from './createJoints';
 const pendulum = (
     scene,
     loop,
-    physicsWorld
+    physicsWorld,
+    envMap,
+    colorComposition
   ) => {
-  const colorCompositionID = Math.random();
-  const colorComposition = colorComposer(colorCompositionID);
-
   const sizeAndPositionID = Math.random();
   const sizeAndPosition = sizePositionComposer(sizeAndPositionID);
 
@@ -46,7 +44,7 @@ const pendulum = (
   }
 
   const materialCompositionID = Math.random();
-  materialListComposer(materialCompositionID, handleComposition);
+  materialListComposer(materialCompositionID, handleComposition, envMap);
 
   const handleA = handle(handleComposition.a, physicsWorld);
   scene.add(handleA.mesh);

@@ -6,11 +6,12 @@ const spheres = (
   scene,
   loop,
   physicsWorld,
-  isDay,
+  envMap,
+  bgHSL,
   props
 ) => {
-  const color = isDay ? hslToHex(0.6, 0, 0.8) : hslToHex(0.6, 0, 0.002);
-  const colorMaterial = defaultColorShinyPlastic(color);
+  const color = (bgHSL.l > 0.5) ? hslToHex(0.6, 0, 0.8) : hslToHex(0.6, 0, 0.002);
+  const colorMaterial = defaultColorShinyPlastic(color, 1, envMap);
   const spreadWidth = 10;
   const {
     min = 0.02,

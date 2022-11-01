@@ -1,7 +1,7 @@
 import { hslToHex } from "../../../utils/colorUtils";
 
 const colorComposer = (colorCompositionID) => {
-  const envMapIntensity = 0.4;
+  const envMapIntensity = 1;
 
   // primitives
 
@@ -76,6 +76,7 @@ const colorComposer = (colorCompositionID) => {
       a: randomized[0],
       b: randomized[1],
       c: randomized[2],
+      bg: randomized[0],
     };
   }
   paleteGenerators.push(whiteBlackColor);
@@ -114,6 +115,7 @@ const colorComposer = (colorCompositionID) => {
       a: randomized[0],
       b: randomized[1],
       c: randomized[2],
+      bg: randomized[0],
     };
   }
   paleteGenerators.push(duoAndLightness);
@@ -161,6 +163,7 @@ const colorComposer = (colorCompositionID) => {
       a: randomized[0],
       b: randomized[1],
       c: randomized[2],
+      bg: randomized[0],
     };
   }
   paleteGenerators.push(tripple);
@@ -196,11 +199,12 @@ const colorComposer = (colorCompositionID) => {
       a: randomized[0],
       b: randomized[1],
       c: randomized[2],
+      bg: randomized[0],
     };
   }
   paleteGenerators.push(grayscale);
 
-  // let colorConfig = tripple();
+  // let colorConfig = whiteBlackColor();
   const pgIndex = Math.round((paleteGenerators.length - 1) * colorCompositionID);
   let colorConfig = paleteGenerators[pgIndex]();
   console.log('palette:  ', paleteGenerators[pgIndex].name);

@@ -1,13 +1,14 @@
-import { Vector2, MeshPhysicalMaterial, CanvasTexture, RepeatWrapping } from 'three';
-import { RndDotsFloor } from '../canvasMaps/RndDotsFloor';
-import { RndNoiseNormal } from '../canvasMaps/RndNoiseNormal';
+import { Vector2, MeshPhysicalMaterial, CanvasTexture, RepeatWrapping, DoubleSide } from 'three';
+import { RndDotsFloor } from './RndDotsFloor';
+import { RndNoiseNormal } from './RndNoiseNormal';
 
-const canvasNoiseFloor = (envMapIntensity = 1, isDay) => {
+const rndNoiseFloor = (bgHSL, color) => {
   const repeatX = 8 * 15;
   const repeatY = 8 * 15;
 
-  const maps = new RndDotsFloor(isDay);
+  const maps = new RndDotsFloor(bgHSL, color);
   const normalMapCanvas = new RndNoiseNormal();
+  
   const colorMap = new CanvasTexture(maps.colorMap);
   colorMap.repeat.x = repeatX;
   colorMap.repeat.y = repeatY;
@@ -35,8 +36,8 @@ const canvasNoiseFloor = (envMapIntensity = 1, isDay) => {
   const parameters = {
     // STANDARD
 
-    // envMap: envmap.texture,
-    envMapIntensity: envMapIntensity,
+    // envMap: envMap,
+    // envMapIntensity: envMapIntensity,
 
     // color: color,
     map: colorMap,
@@ -90,6 +91,8 @@ const canvasNoiseFloor = (envMapIntensity = 1, isDay) => {
     // specularColor:
     // specularIntensityMap:
     // specularColorMap:
+
+    side: DoubleSide
   } 
 
   const material = new MeshPhysicalMaterial(parameters);
@@ -97,5 +100,5 @@ const canvasNoiseFloor = (envMapIntensity = 1, isDay) => {
 }
 
 export {
-  canvasNoiseFloor
+  rndNoiseFloor
 };

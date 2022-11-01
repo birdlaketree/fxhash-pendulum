@@ -40,6 +40,7 @@ const canvasTextureMaterial = (
     normalMap.wrapT = RepeatWrapping;
   };
 
+  const envMap    = maps.envMap ? maps.envMap : null;
   const color     = props.color ? props.color : null;
   const roughness = props.roughness ? props.roughness : null;
   const metalness = props.metalness ? props.metalness : null;
@@ -47,7 +48,7 @@ const canvasTextureMaterial = (
   const parameters = {
     // STANDARD
 
-    // envMap: envmap.texture,
+    envMap: envMap,
     envMapIntensity: envMapIntensity,
 
     color: color,

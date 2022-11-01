@@ -2,7 +2,11 @@ import { canvasTextureMaterial } from "../../materials/canvasTextureMaterial";
 import { RndDotsMaps } from "../../canvasMaps/RndDotsMaps";
 import { RndNoiseNormal } from "../../canvasMaps/RndNoiseNormal";
 
-const materialListComposer = (materialCompositionID, handleComposition) => {
+const materialListComposer = (
+    materialCompositionID,
+    handleComposition,
+    envMap
+  ) => {
 
   // DIFFUSE
 
@@ -85,19 +89,19 @@ const materialListComposer = (materialCompositionID, handleComposition) => {
   const rm = rmTheme();
 
   handleComposition.a.material = canvasTextureMaterial(
-    {...mapsA, ...normalMapA},
+    {...mapsA, ...normalMapA, envMap},
     rm.a,
     handleComposition.a.colorComposition.envMapIntensity
   );
 
   handleComposition.b.material = canvasTextureMaterial(
-    {...mapsB, ...normalMapB},
+    {...mapsB, ...normalMapB, envMap},
     rm.b,
     handleComposition.b.colorComposition.envMapIntensity
   );
 
   handleComposition.c.material = canvasTextureMaterial(
-    {...mapsC, ...normalMapC},
+    {...mapsC, ...normalMapC, envMap},
     rm.c,
     handleComposition.c.colorComposition.envMapIntensity
   );

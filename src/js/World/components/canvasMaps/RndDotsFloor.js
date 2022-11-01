@@ -1,48 +1,53 @@
+import { mapNumber } from '../../utils/numUtils';
+
 class RndDotsFloor {
-	constructor(isDay, width = 2048, height = 2048) {
+	constructor(bgHSL, color, width = 2048, height = 2048) {
 
 		const colorCanvas = document.createElement('canvas');
 		colorCanvas.width = width;
 		colorCanvas.height = height;
     const colorCanvasContext = colorCanvas.getContext( '2d' );
-		colorCanvasContext.fillStyle = isDay ? 'rgb(255,255,255)' : 'rgb(10,10,10)';
+		colorCanvasContext.fillStyle = `rgb(${255*color.r}, ${255*color.g}, ${255*color.b})`;
 		colorCanvasContext.fillRect( 0, 0, width, height );
 
     const roughnessCanvas = document.createElement('canvas');
 		roughnessCanvas.width = width;
 		roughnessCanvas.height = height;
-		const roughnessCanvasContext = roughnessCanvas.getContext( '2d' );
+		const roughnessCanvasContext = roughnessCanvas.getContext('2d');
     roughnessCanvasContext.fillStyle = 'rgb(255,255,255)';
 		roughnessCanvasContext.fillRect( 0, 0, width, height );
 
     const metalnessCanvas = document.createElement('canvas');
 		metalnessCanvas.width = width;
 		metalnessCanvas.height = height;
-		const metalnessCanvasContext = metalnessCanvas.getContext( '2d' );
+		const metalnessCanvasContext = metalnessCanvas.getContext('2d');
     metalnessCanvasContext.fillStyle = 'rgb(0,0,0)';
 		metalnessCanvasContext.fillRect( 0, 0, width, height );
 
-		for ( let i = 0; i < 600; i ++ ) {
+		const spread = mapNumber(bgHSL.l, 0, 1, 12, 1200);
+		const start  = mapNumber(bgHSL.l, 0, 1, 12, 200);
+		const n = Math.random() * spread + start;
+
+		for ( let i = 0; i < n; i ++ ) {
 			const x = Math.random() * width;
 			const y = Math.random() * height;
-			const r = Math.random() * 4;
-      
-			const cRGB = isDay ? Math.random() * 100 : Math.random() * 200;
-      // colorCanvasContext.fillStyle = 'rgb(`100`, 100, 100)';
+			const r = Math.random() * 6;
+  
+			const cRGB = Math.random() * mapNumber(bgHSL.l, 0, 1, 255, 0);
+			// const cRGB = bgHSL.l > 0.5 ? 0 : 1;
+
       colorCanvasContext.fillStyle = `rgb(${cRGB}, ${cRGB}, ${cRGB})`;
 			colorCanvasContext.beginPath();
 			colorCanvasContext.arc( x, y, r, 0, Math.PI * 2 );
 			colorCanvasContext.fill();
-
-      const rRGB = isDay ? Math.random() * 55 : Math.random() * 255;
-			// roughnessCanvasContext.fillStyle = 'rgb(30,30,30)';
+			
+			const rRGB = Math.random() * 224 + 32;
       roughnessCanvasContext.fillStyle = `rgb(${rRGB}, ${rRGB}, ${rRGB})`;
 			roughnessCanvasContext.beginPath();
 			roughnessCanvasContext.arc( x, y, r, 0, Math.PI * 2 );
 			roughnessCanvasContext.fill();
 
-      const mRGB = Math.random() * 255;
-      // metalnessCanvasContext.fillStyle = 'rgb(120,120,120)';
+			const mRGB = 0;
       metalnessCanvasContext.fillStyle = `rgb(${mRGB}, ${mRGB}, ${mRGB})`;
 			metalnessCanvasContext.beginPath();
 			metalnessCanvasContext.arc( x, y, r, 0, Math.PI * 2 );
