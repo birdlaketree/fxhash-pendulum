@@ -34,8 +34,8 @@ class World {
     this.camera = createCamera();
     this.lights = createLights(this.scene);
 
-    this.stats = Stats();
-    document.body.appendChild(this.stats.dom);
+    // this.stats = Stats();
+    // document.body.appendChild(this.stats.dom);
 
     this.loop = new Loop(this.camera, this.scene, this.renderer, this.stats);
 

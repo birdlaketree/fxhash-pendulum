@@ -159,11 +159,16 @@ const colorComposer = (colorCompositionID) => {
     };
 
     const randomized = [a,b,c].sort(() => Math.random() - 0.5);
+
+    const bg1 = black;
+    const bg2 = white;
+    const randomizedBg = [a,b,c,bg1,bg2].sort(() => Math.random() - 0.5);
+
     return {
       a: randomized[0],
       b: randomized[1],
       c: randomized[2],
-      bg: randomized[0],
+      bg: randomizedBg[0],
     };
   }
   paleteGenerators.push(tripple);
@@ -195,16 +200,21 @@ const colorComposer = (colorCompositionID) => {
     };
 
     const randomized = [a,b,c].sort(() => Math.random() - 0.5);
+
+    const bg1 = black;
+    const bg2 = white;
+    const randomizedBg = [a,b,c,bg1,bg2].sort(() => Math.random() - 0.5);
+
     return {
       a: randomized[0],
       b: randomized[1],
       c: randomized[2],
-      bg: randomized[0],
+      bg: randomizedBg[0],
     };
   }
   paleteGenerators.push(grayscale);
 
-  // let colorConfig = whiteBlackColor();
+  // let colorConfig = duoAndLightness();
   const pgIndex = Math.round((paleteGenerators.length - 1) * colorCompositionID);
   let colorConfig = paleteGenerators[pgIndex]();
   console.log('palette:  ', paleteGenerators[pgIndex].name);

@@ -24,8 +24,8 @@ class RndDotsFloor {
     metalnessCanvasContext.fillStyle = 'rgb(0,0,0)';
 		metalnessCanvasContext.fillRect( 0, 0, width, height );
 
-		const spread = mapNumber(bgHSL.l, 0, 1, 12, 1200);
-		const start  = mapNumber(bgHSL.l, 0, 1, 12, 200);
+		const spread = mapNumber(bgHSL.l, 0, 1, 12, 400);
+		const start  = mapNumber(bgHSL.l, 0, 1, 12, 100);
 		const n = Math.random() * spread + start;
 
 		for ( let i = 0; i < n; i ++ ) {

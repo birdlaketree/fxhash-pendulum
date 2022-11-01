@@ -20,7 +20,7 @@ class Loop {
       this.tick();
 
       // update stats
-      this.stats.update();
+      // this.stats.update();
 
       // render a frame
       this.renderer.render(this.scene, this.camera);
