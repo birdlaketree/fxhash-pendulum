@@ -3,6 +3,7 @@ import { RndDotsMaps } from "../components/canvasMaps/RndDotsMaps";
 import { RndDotsNormal } from '../components/canvasMaps/RndDotsNormal';
 import { GridDotsMaps } from '../components/canvasMaps/GridDotsMaps';
 import { RndNoiseNormal } from '../components/canvasMaps/RndNoiseNormal';
+import { RndNoiseTresholdNormal } from '../components/canvasMaps/RndNoiseTresholdNormal';
 import { canvasTextureMaterial } from "../components/materials/canvasTextureMaterial";
 import { GUI } from 'dat.gui';
 
@@ -10,18 +11,21 @@ export const materialTester = scene => {
 
   // let maps = new RndDotsMaps(new Color(0x0000ff));
   // let maps = new GridDotsMaps(new Color(0x0000ff));
-  let normalMap = new RndNoiseNormal(16);
-  // let normalMap = new RndDotsNormal();
-  const material = canvasTextureMaterial({...normalMap}, 1);
+
+  // let normalMap = new RndNoiseNormal(128);
+  let normalMap = null;
+  let maps = new RndNoiseTresholdNormal(new Color(0x0000ff), 64);
+
+  const material = canvasTextureMaterial({...maps}, {roughness: 1, metalness: 0}, 1);
 
   const planeGeom = new PlaneGeometry(2, 2, 4, 4);
   const plane = new Mesh(planeGeom, material);
-  plane.rotation.x = 5.9;
-  plane.rotation.y = 0.2;
-  plane.rotation.z = 2;
-  plane.position.x = 3;
-  plane.position.y = 3;
-  plane.position.z = 4.1;
+  plane.rotation.x = 5.1;
+  plane.rotation.y = 0.86;
+  plane.rotation.z = 2.3;
+  plane.position.x = 4.1;
+  plane.position.y = 4.4;
+  plane.position.z = 3.3;
   scene.add(plane);
 
   const gui = new GUI();

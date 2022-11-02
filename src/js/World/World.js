@@ -42,7 +42,7 @@ class World {
     this.orbitControls.minPolarAngle = 0;
     this.orbitControls.maxDistance = 40;
     this.orbitControls.minDistance = 2;
-    this.orbitControls.dampingFactor = 100000;
+    this.orbitControls.dampingFactor = 1000000;
     // this.orbitControls.autoRotate = true;
     // this.orbitControls.autoRotateSpeed = 0.3;
 

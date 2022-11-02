@@ -1,6 +1,7 @@
 import { canvasTextureMaterial } from "../../materials/canvasTextureMaterial";
 import { RndDotsMaps } from "../../canvasMaps/RndDotsMaps";
 import { RndNoiseNormal } from "../../canvasMaps/RndNoiseNormal";
+import { RndNoiseTresholdNormal } from "../../canvasMaps/RndNoiseTresholdNormal";
 
 const materialListComposer = (
     materialCompositionID,
@@ -9,6 +10,8 @@ const materialListComposer = (
   ) => {
 
   // DIFFUSE
+
+  // let maps = new RndNoiseTresholdNormal(new Color(0x0000ff), 64);
 
   const themesDiffuse = [];
 
@@ -25,25 +28,38 @@ const materialListComposer = (
   }
   themesDiffuse.push(allDots);
 
+  const allNoise = () => {
+    const a = RndNoiseTresholdNormal;
+    const b = RndNoiseTresholdNormal;
+    const c = RndNoiseTresholdNormal;
+
+    return {
+      a,
+      b,
+      c
+    };
+  }
+  themesDiffuse.push(allNoise);
+
   const themeIndex = Math.round((themesDiffuse.length - 1) * materialCompositionID);
   // const themeIndex = 0;
 
   let maps = themesDiffuse[themeIndex]();
   console.log('materials:', themesDiffuse[themeIndex].name);
-  let mapsA = new maps.a(handleComposition.a.colorComposition.color);
-  let mapsB = new maps.b(handleComposition.b.colorComposition.color);
-  let mapsC = new maps.c(handleComposition.c.colorComposition.color);
+  let mapsA = new maps.a(handleComposition.a.colorComposition.color, Math.random()*96, Math.random()*16);
+  let mapsB = new maps.b(handleComposition.b.colorComposition.color, Math.random()*96, Math.random()*16);
+  let mapsC = new maps.c(handleComposition.c.colorComposition.color, Math.random()*96, Math.random()*16);
 
   // NORMAL
 
-  const noiseLevels = [4, 8, 16]
-  const nai = Math.round(Math.random() * (noiseLevels.length - 1));
-  const nbi = Math.round(Math.random() * (noiseLevels.length - 1));
-  const nci = Math.round(Math.random() * (noiseLevels.length - 1));
-  console.log('noise:    ', noiseLevels[nai], noiseLevels[nbi], noiseLevels[nci]);
-  let normalMapA = new RndNoiseNormal(noiseLevels[nai]);
-  let normalMapB = new RndNoiseNormal(noiseLevels[nbi]);
-  let normalMapC = new RndNoiseNormal(noiseLevels[nci]);
+  // const noiseLevels = [4, 8, 16]
+  // const nai = Math.round(Math.random() * (noiseLevels.length - 1));
+  // const nbi = Math.round(Math.random() * (noiseLevels.length - 1));
+  // const nci = Math.round(Math.random() * (noiseLevels.length - 1));
+  // console.log('noise:    ', noiseLevels[nai], noiseLevels[nbi], noiseLevels[nci]);
+  // let normalMapA = new RndNoiseNormal(noiseLevels[nai]);
+  // let normalMapB = new RndNoiseNormal(noiseLevels[nbi]);
+  // let normalMapC = new RndNoiseNormal(noiseLevels[nci]);
 
   // ROUGHNESS & METALNESS
 
@@ -89,19 +105,19 @@ const materialListComposer = (
   const rm = rmTheme();
 
   handleComposition.a.material = canvasTextureMaterial(
-    {...mapsA, ...normalMapA, envMap},
+    {...mapsA, envMap},
     rm.a,
     handleComposition.a.colorComposition.envMapIntensity
   );
 
   handleComposition.b.material = canvasTextureMaterial(
-    {...mapsB, ...normalMapB, envMap},
+    {...mapsB, envMap},
     rm.b,
     handleComposition.b.colorComposition.envMapIntensity
   );
 
   handleComposition.c.material = canvasTextureMaterial(
-    {...mapsC, ...normalMapC, envMap},
+    {...mapsC, envMap},
     rm.c,
     handleComposition.c.colorComposition.envMapIntensity
   );

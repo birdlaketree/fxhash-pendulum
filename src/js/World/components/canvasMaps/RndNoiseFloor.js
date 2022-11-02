@@ -1,4 +1,4 @@
-import { Vector2, MeshPhysicalMaterial, CanvasTexture, RepeatWrapping, DoubleSide } from 'three';
+import { Vector2, MeshStandardMaterial, CanvasTexture, RepeatWrapping, DoubleSide } from 'three';
 import { RndDotsFloor } from './RndDotsFloor';
 import { RndNoiseNormal } from './RndNoiseNormal';
 
@@ -95,7 +95,7 @@ const rndNoiseFloor = (bgHSL, color) => {
     side: DoubleSide
   } 
 
-  const material = new MeshPhysicalMaterial(parameters);
+  const material = new MeshStandardMaterial(parameters);
   return material;
 }
 

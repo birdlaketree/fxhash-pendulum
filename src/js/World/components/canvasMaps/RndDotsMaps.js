@@ -1,5 +1,8 @@
 class RndDotsMaps {
-	constructor(color, width = 2048, height = 2048 ) {
+	constructor(color) {
+		const width = 2048;
+		const height = 2048;
+		
 		const colorCanvas = document.createElement('canvas');
 		colorCanvas.width = width;
 		colorCanvas.height = height;
