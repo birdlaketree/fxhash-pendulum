@@ -18,7 +18,6 @@ const walls = (scene, size = 20, bgHSL, color) => {
   const geometryDome = new SphereGeometry(200, 64, 64);
   const dome = new Mesh(geometryDome, materialDome);
   scene.add(dome);
-
 }
 
 export { walls };

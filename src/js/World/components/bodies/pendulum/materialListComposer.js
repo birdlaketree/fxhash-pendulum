@@ -46,9 +46,9 @@ const materialListComposer = (
 
   let maps = themesDiffuse[themeIndex]();
   console.log('materials:', themesDiffuse[themeIndex].name);
-  let mapsA = new maps.a(handleComposition.a.colorComposition.color, Math.random()*96, Math.random()*16);
-  let mapsB = new maps.b(handleComposition.b.colorComposition.color, Math.random()*96, Math.random()*16);
-  let mapsC = new maps.c(handleComposition.c.colorComposition.color, Math.random()*96, Math.random()*16);
+  let mapsA = new maps.a(handleComposition.a.colorComposition.color, Math.random()*16, Math.random()*96);
+  let mapsB = new maps.b(handleComposition.b.colorComposition.color, Math.random()*16, Math.random()*96);
+  let mapsC = new maps.c(handleComposition.c.colorComposition.color, Math.random()*16, Math.random()*96);
 
   // NORMAL
 

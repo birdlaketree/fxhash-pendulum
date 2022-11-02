@@ -7,7 +7,7 @@ const rndNoiseFloor = (bgHSL, color) => {
   const repeatY = 8 * 15;
 
   const maps = new RndDotsFloor(bgHSL, color);
-  const normalMapCanvas = new RndNoiseNormal();
+  const normalMapCanvas = new RndNoiseNormal(256);
   
   const colorMap = new CanvasTexture(maps.colorMap);
   colorMap.repeat.x = repeatX;

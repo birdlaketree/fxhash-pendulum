@@ -1,7 +1,10 @@
 import { floatBufferFromCanvas, normalMap } from "@thi.ng/pixel";
 
 class RndNoiseNormal {
-	constructor(level = 128, width = 1024, height = 1024 ) {
+	constructor(level = 128) {
+    const width  = 1024;
+    const height = 1024;
+
 		const normalCanvas = document.createElement('canvas');
 		normalCanvas.width = width;
 		normalCanvas.height = height;
@@ -29,24 +32,6 @@ class RndNoiseNormal {
       return canvas;
     }
 
-    function perlinNoise(canvas, noise) {
-      noise = noise || randomNoise(canvas);
-      var g = canvas.getContext("2d");
-      g.save();
-      
-      /* Scale random iterations onto the canvas to generate Perlin noise. */
-      for (var size = 4; size <= noise.width; size *= 2) {
-          var x = (Math.random() * (noise.width - size)) | 0,
-              y = (Math.random() * (noise.height - size)) | 0;
-          g.globalAlpha = 4 / size;
-          g.drawImage(noise, x, y, size, size, 0, 0, canvas.width, canvas.height);
-      }
-  
-      g.restore();
-      return canvas;
-    }
-
-    // perlinNoise(colorCanvas);
     randomNoise(normalCanvas);
 
     const normalMapSrc = floatBufferFromCanvas(normalCanvas);
