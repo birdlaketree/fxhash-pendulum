@@ -124,9 +124,9 @@ const materialListComposer = (
   mapsB = null;
   mapsC = null;
   maps = null;
-  normalMapA = null;
-  normalMapB = null;
-  normalMapC = null;
+  // normalMapA = null;
+  // normalMapB = null;
+  // normalMapC = null;
 }
 
 export { materialListComposer };
