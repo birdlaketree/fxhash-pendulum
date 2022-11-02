@@ -1,23 +1,24 @@
 import Stats from 'three/examples/jsm/libs/stats.module';
-import RAPIER from '@dimforge/rapier3d-compat';
-import { World as RWorld } from '@dimforge/rapier3d-compat';
-import { Vector3, PMREMGenerator } from "three";
+import RAPIER from '@dimforge/rapier3d-compat'
+import { World as RWorld } from '@dimforge/rapier3d-compat'
+import { Vector3, PMREMGenerator } from "three"
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
-import { Loop } from './system/Loop.js';
-import { createRenderer } from './system/renderer.js';
-import { createScene } from './components/stage/scene.js';
-import { createCamera, createDolly } from './components/stage/camera.js';
-import { createLights } from './components/stage/lights.js';
-import { VrControls } from './system/VrControls.js';
-import { createHandsPhysicsController } from "./system/handsPhysicsController.js";
-import { room as roomPhysicsComposition } from './components/bodies/room.js';
+import { Loop } from './system/Loop.js'
+import { createRenderer } from './system/renderer.js'
+import { createScene } from './components/stage/scene.js'
+import { createCamera, createDolly } from './components/stage/camera.js'
+import { createLights } from './components/stage/lights.js'
+import { VrControls } from './system/VrControls.js'
+import { createHandsPhysicsController } from "./system/handsPhysicsController.js"
+import { room as roomPhysicsComposition } from './components/bodies/room.js'
 import { walls } from './components/meshes/walls.js'
-import { pendulum } from "./components/bodies/pendulum/pendulum.js";
-import { spheres } from "./components/sceneFragments/spheres.js";
-import { cubes } from "./components/sceneFragments/cubes.js";
-import { colorComposer } from './components/bodies/pendulum/colorComposer.js';
+import { pendulum } from "./components/bodies/pendulum/pendulum.js"
+import { spheres } from "./components/sceneFragments/spheres.js"
+import { cubes } from "./components/sceneFragments/cubes.js"
+import { colorComposer } from './components/bodies/pendulum/colorComposer.js'
 import { materialTester } from './utils/materialTester'
 import { RoomEnvironment } from './components/stage/RoomEnv'
+import { setPrintTools } from './utils/setPrintTools'
 
 class World {
   constructor() {
@@ -42,7 +43,7 @@ class World {
     this.orbitControls.minPolarAngle = 0;
     this.orbitControls.maxDistance = 40;
     this.orbitControls.minDistance = 2;
-    this.orbitControls.dampingFactor = 1000000;
+    this.orbitControls.dampingFactor = 100;
     // this.orbitControls.autoRotate = true;
     // this.orbitControls.autoRotateSpeed = 0.3;
 
@@ -55,6 +56,8 @@ class World {
     this.xrEnabled ? this.loop.updatableBodies.push(this.vrControls) : null;
 
     this.floorSize = 300;
+
+    setPrintTools(this.renderer, this.scene, this.camera);
 
     RAPIER.init().then(() => {
       this.physicsConfig();

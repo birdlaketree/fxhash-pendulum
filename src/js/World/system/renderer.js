@@ -10,7 +10,9 @@ import {
 import { VRButton } from 'three/examples/jsm/webxr/VRButton.js';
 
 const createRenderer = (xrEnabled = false) => {
-  const renderer = new WebGLRenderer({ antialias: true });
+  const renderer = new WebGLRenderer({
+    antialias: true
+  });
   renderer.physicallyCorrectLights = true;
 
   // mobile phone optimisation

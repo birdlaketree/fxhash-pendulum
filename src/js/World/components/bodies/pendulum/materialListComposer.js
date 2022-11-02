@@ -11,8 +11,6 @@ const materialListComposer = (
 
   // DIFFUSE
 
-  // let maps = new RndNoiseTresholdNormal(new Color(0x0000ff), 64);
-
   const themesDiffuse = [];
 
   const allDots = () => {
@@ -50,7 +48,7 @@ const materialListComposer = (
   let mapsB = new maps.b(handleComposition.b.colorComposition.color, Math.random()*16, Math.random()*96);
   let mapsC = new maps.c(handleComposition.c.colorComposition.color, Math.random()*16, Math.random()*96);
 
-  // NORMAL
+  // NORMAL -- right now normals are created in diffuse functions
 
   // const noiseLevels = [4, 8, 16]
   // const nai = Math.round(Math.random() * (noiseLevels.length - 1));
