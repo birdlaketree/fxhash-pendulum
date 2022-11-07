@@ -43,7 +43,7 @@ const rndNoiseFloor = (bgHSL, color) => {
     map: colorMap,
 
     roughness: 1,
-    roughnessMap: roughnessMap,
+    roughnessMap: null,
 
     normalMap: normalMap,
 		normalScale: new Vector2(1, 1),
@@ -61,8 +61,8 @@ const rndNoiseFloor = (bgHSL, color) => {
     // displacementScale
     // displacementBias
 
-    metalness: 1,
-    metalnessMap: metalnessMap,
+    metalness: 0,
+    metalnessMap: null,
 
     // alphaMap: alphaMap,
 

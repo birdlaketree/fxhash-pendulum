@@ -2,8 +2,8 @@ import { floatBufferFromCanvas, normalMap } from "@thi.ng/pixel";
 
 class RndNoiseTresholdNormal {
 	constructor(color, colorNoiselevel = 128, normalNoiselevel = 128) {
-    const width = 2048;
-		const height = 2048;
+    const width = 1024;
+		const height = 1024;
 
     console.log('noise maps', Math.round(colorNoiselevel), Math.round(normalNoiselevel));
 
@@ -35,9 +35,9 @@ class RndNoiseTresholdNormal {
     normalCanvasContext.fillStyle = 'rgb(255,255,255)';
 		normalCanvasContext.fillRect( 0, 0, width, height );
 
-    const darkTreshold   = 0.001;
-    const lightTreshold  = 0.001;
-    const normalTreshold = 0.001;
+    const darkTreshold   = 0.002;
+    const lightTreshold  = 0.002;
+    const normalTreshold = 0.002;
 
     function bgNoise(canvas, x = 0, y = 0, alpha = 255) {
       const w = canvas.width;

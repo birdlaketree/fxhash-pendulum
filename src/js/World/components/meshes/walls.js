@@ -1,8 +1,24 @@
 import { PlaneGeometry, SphereGeometry, Mesh, MeshStandardMaterial, MathUtils, DoubleSide } from 'three';
-import { rndNoiseFloor } from '../canvasMaps/RndNoiseFloor';
+import { RndDotsFloor } from '../canvasMaps/RndDotsFloor';
+import { canvasTextureMaterial } from '../materials/canvasTextureMaterial';
 
 const walls = (scene, size = 20, bgHSL, color) => {
-  const materialFloor = rndNoiseFloor(bgHSL, color);
+  const maps = new RndDotsFloor(bgHSL, color, 256);
+
+  const plastic = {
+    roughness: 1,
+    metalness: 0,
+    n: 'plastic'
+  }
+
+  const materialFloor = canvasTextureMaterial(
+    {...maps},
+    plastic,
+    1,
+    8 * 15,
+    8 * 15
+  )
+
   const materialDome = new MeshStandardMaterial({
     color: color,
     envMapIntensity: 100,

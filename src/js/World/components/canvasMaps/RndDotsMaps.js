@@ -1,9 +1,15 @@
 import { floatBufferFromCanvas, normalMap } from "@thi.ng/pixel";
+import { randomNoiseWithLevel } from '../../utils/noiseGenerators';
 
 class RndDotsMaps {
 	constructor(color, level = 128) {
-		const width = 2048;
+		const width  = 2048;
 		const height = 2048;
+
+		const normalWidth  = 1024;
+		const normalHeight = 1024;
+
+    console.log('noise maps', Math.round(level));
 		
 		const colorCanvas = document.createElement('canvas');
 		colorCanvas.width = width;
@@ -13,11 +19,11 @@ class RndDotsMaps {
 		colorCanvasContext.fillRect( 0, 0, width, height );
 
 		const normalCanvas = document.createElement('canvas');
-		normalCanvas.width = width;
-		normalCanvas.height = height;
+		normalCanvas.width = normalWidth;
+		normalCanvas.height = normalHeight;
     const normalCanvasContext = normalCanvas.getContext( '2d' );
     normalCanvasContext.fillStyle = 'rgb(255,255,255)';
-		normalCanvasContext.fillRect( 0, 0, width, height );
+		normalCanvasContext.fillRect( 0, 0, normalWidth, normalHeight );
 
 		const n = Math.random() * 160 + 40;
 		for ( let i = 0; i < n; i ++ ) {
@@ -32,24 +38,7 @@ class RndDotsMaps {
 			colorCanvasContext.fill();
 		}
 
-		function randomNoise(canvas, x = 0, y = 0, alpha = 244) {
-      const w = canvas.width;
-      const h = canvas.height;
-      const g = canvas.getContext("2d");
-      const imageData = g.getImageData(x, y, w, h);
-      const pixels = imageData.data;
-      const n = pixels.length;
-      let i = 0;
-      while (i < n) {
-          pixels[i++] = pixels[i++] = pixels[i++] = (Math.random() * level) | 0;
-          pixels[i++] = alpha;
-      }
-      g.putImageData(imageData, x, y);
-      return canvas;
-    }
-
-    randomNoise(normalCanvas);
-
+		randomNoiseWithLevel(normalCanvas, level);
     const normalMapSrc = floatBufferFromCanvas(normalCanvas);
 		const nMap = normalMap(normalMapSrc, {step: 0, scale: 1}).toImageData();
 

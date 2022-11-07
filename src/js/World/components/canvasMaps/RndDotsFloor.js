@@ -1,7 +1,14 @@
+import { floatBufferFromCanvas, normalMap } from "@thi.ng/pixel";
 import { mapNumber } from '../../utils/numUtils';
+import { randomNoiseWithLevel } from '../../utils/noiseGenerators';
 
 class RndDotsFloor {
-	constructor(bgHSL, color, width = 2048, height = 2048) {
+	constructor(bgHSL, color, level) {
+		const width  = 2048;
+		const height = 2048;
+
+		const normalWidth  = 1024;
+		const normalHeight = 1024;
 
 		const colorCanvas = document.createElement('canvas');
 		colorCanvas.width = width;
@@ -10,12 +17,12 @@ class RndDotsFloor {
 		colorCanvasContext.fillStyle = `rgb(${255*color.r}, ${255*color.g}, ${255*color.b})`;
 		colorCanvasContext.fillRect( 0, 0, width, height );
 
-		const noiseACanvas = document.createElement('canvas');
-		noiseACanvas.width = width;
-		noiseACanvas.height = height;
-    const noiseACanvasContext = noiseACanvas.getContext( '2d' );
-    noiseACanvasContext.fillStyle = 'rgb(255,255,255)';
-		noiseACanvasContext.fillRect( 0, 0, width, height );
+		const normalCanvas = document.createElement('canvas');
+		normalCanvas.width = normalWidth;
+		normalCanvas.height = normalHeight;
+    const normalCanvasContext = normalCanvas.getContext( '2d' );
+    normalCanvasContext.fillStyle = 'rgb(255,255,255)';
+		normalCanvasContext.fillRect( 0, 0, normalWidth, normalHeight );
 
     const roughnessCanvas = document.createElement('canvas');
 		roughnessCanvas.width = width;
@@ -59,6 +66,7 @@ class RndDotsFloor {
     // colorCanvasContext.globalCompositeOperation = 'multiply';
     // colorCanvasContext.drawImage(noiseACanvas, 0, 0, width, height);
 
+
 		const spread = mapNumber(bgHSL.l, 0, 1, 12, 400);
 		const start  = mapNumber(bgHSL.l, 0, 1, 12, 100);
 		const n = Math.random() * spread + start;
@@ -69,7 +77,6 @@ class RndDotsFloor {
 			const r = Math.random() * 6;
   
 			const cRGB = Math.random() * mapNumber(bgHSL.l, 0, 1, 255, 0);
-			// const cRGB = bgHSL.l > 0.5 ? 0 : 1;
 
       colorCanvasContext.fillStyle = `rgb(${cRGB}, ${cRGB}, ${cRGB})`;
 			colorCanvasContext.beginPath();
@@ -89,10 +96,15 @@ class RndDotsFloor {
 			metalnessCanvasContext.fill();
 		}
 
+		randomNoiseWithLevel(normalCanvas, level);
+		const normalMapSrc = floatBufferFromCanvas(normalCanvas);
+		const nMap = normalMap(normalMapSrc, {step: 0, scale: 1}).toImageData();
+
 		return {
       colorMap: colorCanvas,
       roughnessMap: roughnessCanvas,
-      metalnessMap: metalnessCanvas
+      metalnessMap: metalnessCanvas,
+			normalMap: nMap
     };
 	}
 }
