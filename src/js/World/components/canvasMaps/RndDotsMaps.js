@@ -32,20 +32,16 @@ class RndDotsMaps {
 			colorCanvasContext.fill();
 		}
 
-		function randomNoise(canvas, x, y, width, height, alpha) {
-      x = x || 0;
-      y = y || 0;
-      width = width || canvas.width;
-      height = height || canvas.height;
-      alpha = alpha || 255;
-      var g = canvas.getContext("2d"),
-          imageData = g.getImageData(x, y, width, height),
-          random = Math.random,
-          pixels = imageData.data,
-          n = pixels.length,
-          i = 0;
+		function randomNoise(canvas, x = 0, y = 0, alpha = 244) {
+      const w = canvas.width;
+      const h = canvas.height;
+      const g = canvas.getContext("2d");
+      const imageData = g.getImageData(x, y, w, h);
+      const pixels = imageData.data;
+      const n = pixels.length;
+      let i = 0;
       while (i < n) {
-          pixels[i++] = pixels[i++] = pixels[i++] = (random() * level) | 0;
+          pixels[i++] = pixels[i++] = pixels[i++] = (Math.random() * level) | 0;
           pixels[i++] = alpha;
       }
       g.putImageData(imageData, x, y);
