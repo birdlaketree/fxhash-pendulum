@@ -13,8 +13,8 @@ class RndDotsMaps {
 		colorCanvasContext.fillRect( 0, 0, width, height );
 
 		const normalCanvas = document.createElement('canvas');
-		normalCanvas.width = 1024;
-		normalCanvas.height = 1024;
+		normalCanvas.width = width;
+		normalCanvas.height = height;
     const normalCanvasContext = normalCanvas.getContext( '2d' );
     normalCanvasContext.fillStyle = 'rgb(255,255,255)';
 		normalCanvasContext.fillRect( 0, 0, width, height );

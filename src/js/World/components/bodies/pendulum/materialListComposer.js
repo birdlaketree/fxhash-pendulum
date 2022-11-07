@@ -26,18 +26,18 @@ const materialListComposer = (
   }
   themesDiffuse.push(allDots);
 
-  const allNoise = () => {
-    const a = RndNoiseTresholdNormal;
-    const b = RndNoiseTresholdNormal;
-    const c = RndNoiseTresholdNormal;
+  // const allNoise = () => {
+  //   const a = RndNoiseTresholdNormal;
+  //   const b = RndNoiseTresholdNormal;
+  //   const c = RndNoiseTresholdNormal;
 
-    return {
-      a,
-      b,
-      c
-    };
-  }
-  themesDiffuse.push(allNoise);
+  //   return {
+  //     a,
+  //     b,
+  //     c
+  //   };
+  // }
+  // themesDiffuse.push(allNoise);
 
   const themeIndex = Math.round((themesDiffuse.length - 1) * materialCompositionID);
   // const themeIndex = 0;

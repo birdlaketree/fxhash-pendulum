@@ -40,7 +40,7 @@ class World {
 
     this.orbitControls = new OrbitControls(this.camera, this.renderer.domElement);
     this.orbitControls.maxPolarAngle = Math.PI/2 - Math.PI/32;
-    this.orbitControls.minPolarAngle = 0;
+    this.orbitControls.minPolarAngle = Math.PI/32;
     this.orbitControls.maxDistance = 40;
     this.orbitControls.minDistance = 2;
     this.orbitControls.dampingFactor = 100;
@@ -76,6 +76,7 @@ class World {
   buildScene() {
     const pmremGenerator = new PMREMGenerator(this.renderer);
     const envMap = pmremGenerator.fromScene(new RoomEnvironment(), 0.001).texture;
+    // const envMap = null;
 
     // this.materialTester      = materialTester(this.scene);
     this.walls               = walls    (this.scene, this.floorSize, this.bgHSL, this.bgColor);
