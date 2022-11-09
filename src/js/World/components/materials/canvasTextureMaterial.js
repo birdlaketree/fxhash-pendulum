@@ -1,4 +1,4 @@
-import { Vector2, MeshPhysicalMaterial, CanvasTexture, RepeatWrapping } from 'three';
+import { Vector2, MeshPhysicalMaterial, CanvasTexture, RepeatWrapping, Color } from 'three';
 // import { GUI } from 'dat.gui';
 
 const canvasTextureMaterial = (
@@ -44,6 +44,96 @@ const canvasTextureMaterial = (
   const color     = props.color ? props.color : null;
   const roughness = props.roughness ? props.roughness : null;
   const metalness = props.metalness ? props.metalness : null;
+
+
+
+  let uniforms = {
+    color1: {
+      value: new Color(0xff0000)
+    }
+  }
+
+  // const obc = (shader) => {
+  //   shader.uniforms.color1 = uniforms.color1;
+  //   shader.vertexShader = `
+  //     varying vec3 vPos;
+  //     varying vec2 aUv;
+  //     ${shader.vertexShader}`
+  //     .replace(
+  //       `#include <begin_vertex>`,
+  //       `#include <begin_vertex>
+  //       vPos = transformed;
+  //       aUv = uv`
+  //     );
+
+  //   shader.fragmentShader = `
+  //     uniform vec3 color1;
+  //     varying vec3 vPos;
+  //     varying vec2 aUv;
+  //     ${shader.fragmentShader}`
+  //     .replace(
+  //     `vec4 diffuseColor = vec4( diffuse, opacity );`,
+  //     `
+  //     float random(vec2 st) {
+  //       return fract(sin(dot(st.xy, vec2(12.9898,78.233))) * 43758.5453123);
+  //     };
+  //     float r = random(aUv) * 0.2 + 0.8;
+  //     vec4 diffuseColor = vec4( r,r,r, opacity );`
+  //   );
+  //   // console.log(shader.vertexShader);
+  //   // console.log(shader.fragmentShader);
+  // }
+
+  const obc = (shader) => {
+    // shader.uniforms.color1 = {value: new Color(0xff0000)};
+
+    // VERTEX
+
+    shader.vertexShader =
+      `varying vec2 aUv;\n
+`
+      + shader.vertexShader;
+
+    shader.vertexShader = shader.vertexShader.replace(
+      `void main() {`,
+      `void main() {
+        aUv = uv;`
+    );
+
+    // FRAGMENT
+
+    shader.fragmentShader =
+      `varying vec2 aUv;
+uniform vec3 color1;\n
+` + shader.fragmentShader;
+
+    // shader.fragmentShader = shader.fragmentShader.replace(
+    //   `varying vec3 vViewPosition;`,
+    //   `varying vec3 vViewPosition;
+    //   uniform vec3 color1;`
+    // );
+    // shader.fragmentShader = shader.fragmentShader.replace(
+    //   `#include <map_fragment>`,
+    //   `
+    //   diffuseColor = vec4( color1, opacity );
+    //   `
+    // );
+
+    shader.fragmentShader = shader.fragmentShader.replace(
+      `#include <map_fragment>`,
+      `
+    diffuseColor = vec4( color1, opacity );
+      `
+    );
+
+    console.log('shader.vertexShader');
+    console.log(shader.vertexShader);
+    console.log('shader.fragmentShader');
+    console.log(shader.fragmentShader);
+
+  }
+
+  
 
   const parameters = {
     // STANDARD
@@ -103,6 +193,8 @@ const canvasTextureMaterial = (
     // specularColor:
     // specularIntensityMap:
     // specularColorMap:
+
+    // onBeforeCompile: obc
   } 
 
   const material = new MeshPhysicalMaterial(parameters);

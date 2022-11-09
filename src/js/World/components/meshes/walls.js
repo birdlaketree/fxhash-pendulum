@@ -1,5 +1,6 @@
 import { PlaneGeometry, SphereGeometry, Mesh, MeshStandardMaterial, MathUtils, DoubleSide } from 'three';
 import { RndDotsFloor } from '../canvasMaps/RndDotsFloor';
+import { RndNoiseNormal } from '../canvasMaps/RndNoiseNormal';
 import { canvasTextureMaterial } from '../materials/canvasTextureMaterial';
 
 const walls = (scene, size = 20, bgHSL, color) => {

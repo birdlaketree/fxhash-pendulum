@@ -21,7 +21,7 @@ class Loop {
       this.tick();
 
       // update stats
-      // this.stats.update();
+      this.stats.update();
 
       this.orbitControls.update();
 

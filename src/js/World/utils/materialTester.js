@@ -3,7 +3,7 @@ import { RndDotsMaps } from "../components/canvasMaps/RndDotsMaps";
 import { RndDotsNormal } from '../components/canvasMaps/RndDotsNormal';
 import { GridDotsMaps } from '../components/canvasMaps/GridDotsMaps';
 import { RndNoiseNormal } from '../components/canvasMaps/RndNoiseNormal';
-import { RndNoiseTresholdNormal } from '../components/canvasMaps/RndNoiseTresholdNormal';
+import { RndNoiseTresholdNormal } from '../components/canvasMaps/RndNoiseMaps';
 import { canvasTextureMaterial } from "../components/materials/canvasTextureMaterial";
 import { GUI } from 'dat.gui';
 

@@ -35,8 +35,8 @@ class World {
     this.camera = createCamera();
     this.lights = createLights(this.scene);
 
-    // this.stats = Stats();
-    // document.body.appendChild(this.stats.dom);
+    this.stats = Stats();
+    document.body.appendChild(this.stats.dom);
 
     this.orbitControls = new OrbitControls(this.camera, this.renderer.domElement);
     this.orbitControls.maxPolarAngle = Math.PI/2 - Math.PI/32;

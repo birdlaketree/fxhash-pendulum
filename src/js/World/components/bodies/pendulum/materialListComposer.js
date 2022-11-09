@@ -1,7 +1,8 @@
 import { canvasTextureMaterial } from "../../materials/canvasTextureMaterial";
 import { RndDotsMaps } from "../../canvasMaps/RndDotsMaps";
 import { RndNoiseNormal } from "../../canvasMaps/RndNoiseNormal";
-import { RndNoiseTresholdNormal } from "../../canvasMaps/RndNoiseTresholdNormal";
+import { RndNoiseTresholdNormal } from "../../canvasMaps/RndNoiseMaps";
+import { noiseShaderMaterial } from "../../shaderMaterials/noiseShaderMaterial";
 
 const materialListComposer = (
     materialCompositionID,
@@ -13,23 +14,10 @@ const materialListComposer = (
 
   const themesDiffuse = [];
 
-  const allDots = () => {
-    const a = RndDotsMaps;
-    const b = RndDotsMaps;
-    const c = RndDotsMaps;
-
-    return {
-      a,
-      b,
-      c
-    };
-  }
-  themesDiffuse.push(allDots);
-
-  // const allNoise = () => {
-  //   const a = RndNoiseTresholdNormal;
-  //   const b = RndNoiseTresholdNormal;
-  //   const c = RndNoiseTresholdNormal;
+  // const allDots = () => {
+  //   const a = RndDotsMaps;
+  //   const b = RndDotsMaps;
+  //   const c = RndDotsMaps;
 
   //   return {
   //     a,
@@ -37,7 +25,20 @@ const materialListComposer = (
   //     c
   //   };
   // }
-  // themesDiffuse.push(allNoise);
+  // themesDiffuse.push(allDots);
+
+  const allNoise = () => {
+    const a = RndNoiseTresholdNormal;
+    const b = RndNoiseTresholdNormal;
+    const c = RndNoiseTresholdNormal;
+
+    return {
+      a,
+      b,
+      c
+    };
+  }
+  themesDiffuse.push(allNoise);
 
   const themeIndex = Math.round((themesDiffuse.length - 1) * materialCompositionID);
   // const themeIndex = 0;
@@ -102,6 +103,7 @@ const materialListComposer = (
 
   const rm = rmTheme();
 
+  // handleComposition.a.material = noiseShaderMaterial(handleComposition.a.colorComposition.color);
   handleComposition.a.material = canvasTextureMaterial(
     {...mapsA, envMap},
     rm.a,

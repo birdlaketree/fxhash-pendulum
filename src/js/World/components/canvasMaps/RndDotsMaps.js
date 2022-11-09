@@ -3,8 +3,8 @@ import { randomNoiseWithLevel } from '../../utils/noiseGenerators';
 
 class RndDotsMaps {
 	constructor(color, level = 128) {
-		const width  = 2048;
-		const height = 2048;
+		const width  = 1024;
+		const height = 1024;
 
 		const normalWidth  = 1024;
 		const normalHeight = 1024;
