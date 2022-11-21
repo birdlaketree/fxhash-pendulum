@@ -2,7 +2,6 @@ import { canvasTextureMaterial } from "../../materials/canvasTextureMaterial";
 import { RndDotsMaps } from "../../canvasMaps/RndDotsMaps";
 import { RndNoiseNormal } from "../../canvasMaps/RndNoiseNormal";
 import { RndNoiseTresholdNormal } from "../../canvasMaps/RndNoiseMaps";
-import { noiseShaderMaterial } from "../../shaderMaterials/noiseShaderMaterial";
 
 const materialListComposer = (
     materialCompositionID,
