@@ -102,7 +102,6 @@ const materialListComposer = (
 
   const rm = rmTheme();
 
-  // handleComposition.a.material = noiseShaderMaterial(handleComposition.a.colorComposition.color);
   handleComposition.a.material = canvasTextureMaterial(
     {...mapsA, envMap},
     rm.a,
