@@ -1,44 +1,11 @@
-import { Vector2, MeshPhysicalMaterial, CanvasTexture, RepeatWrapping, Color } from 'three';
+import { Vector2, MeshPhysicalMaterial } from 'three';
 // import { GUI } from 'dat.gui';
 
 const canvasTextureMaterial = (
     maps,
     props = null,
-    envMapIntensity = 1,
-    repeatX = 1,
-    repeatY = 1
+    envMapIntensity = 1
   ) => {
-  const colorMap = maps.colorMap ? new CanvasTexture(maps.colorMap) : null;
-  if (colorMap) {
-    colorMap.repeat.x = repeatX;
-    colorMap.repeat.y = repeatY;
-    colorMap.wrapS = RepeatWrapping;
-    colorMap.wrapT = RepeatWrapping;
-  }
-
-  const roughnessMap = maps.roughnessMap ? new CanvasTexture(maps.roughnessMap) : null;
-  if (roughnessMap) {
-    roughnessMap.repeat.x = repeatX;
-    roughnessMap.repeat.y = repeatY;
-    roughnessMap.wrapS = RepeatWrapping;
-    roughnessMap.wrapT = RepeatWrapping;
-  };
-
-  const metalnessMap = maps.metalnessMap ? new CanvasTexture(maps.metalnessMap) : null;
-  if (metalnessMap) {
-    metalnessMap.repeat.x = repeatX;
-    metalnessMap.repeat.y = repeatY;
-    metalnessMap.wrapS = RepeatWrapping;
-    metalnessMap.wrapT = RepeatWrapping;
-  };
-
-  const normalMap = maps.normalMap ? new CanvasTexture(maps.normalMap) : null;
-  if (normalMap) {
-    normalMap.repeat.x = repeatX;
-    normalMap.repeat.y = repeatY;
-    normalMap.wrapS = RepeatWrapping;
-    normalMap.wrapT = RepeatWrapping;
-  };
 
   const envMap    = maps.envMap ? maps.envMap : null;
   const color     = props.color ? props.color : null;
@@ -52,12 +19,12 @@ const canvasTextureMaterial = (
     envMapIntensity: envMapIntensity,
 
     color: color,
-    map: colorMap ? colorMap : null,
+    map: maps.colorMap ? maps.colorMap : null,
 
     roughness: roughness,
-    roughnessMap: roughnessMap ? roughnessMap : null,
+    roughnessMap: maps.roughnessMap ? maps.roughnessMap : null,
 
-    normalMap: normalMap ? normalMap : null,
+    normalMap: maps.normalMap ? maps.normalMap : null,
 		normalScale: new Vector2(1, 1),
 
     // aoMap: aoMap,
@@ -74,7 +41,7 @@ const canvasTextureMaterial = (
     // displacementBias
 
     metalness: metalness,
-    metalnessMap: metalnessMap ? metalnessMap : null,
+    metalnessMap: maps.metalnessMap ? maps.metalnessMap : null,
 
     // alphaMap: alphaMap,
 

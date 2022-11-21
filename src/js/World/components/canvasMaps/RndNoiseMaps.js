@@ -1,4 +1,5 @@
-import { floatBufferFromCanvas, normalMap } from "@thi.ng/pixel";
+import { CanvasTexture, RepeatWrapping } from 'three';
+import { floatBufferFromCanvas, normalMap as normalMapCreator } from "@thi.ng/pixel";
 
 class RndNoiseTresholdNormal {
 	constructor(color, colorNoiselevel = 128, normalNoiselevel = 128) {
@@ -7,24 +8,24 @@ class RndNoiseTresholdNormal {
 
     console.log('noise maps', Math.round(colorNoiselevel), Math.round(normalNoiselevel));
 
-		const colorCanvas = document.createElement('canvas');
+		let colorCanvas = document.createElement('canvas');
 		colorCanvas.width = width;
 		colorCanvas.height = height;
-    const colorCanvasContext = colorCanvas.getContext( '2d' );
+    let colorCanvasContext = colorCanvas.getContext( '2d' );
     colorCanvasContext.fillStyle = `rgb(${255*color.r}, ${255*color.g}, ${255*color.b})`;
 		colorCanvasContext.fillRect( 0, 0, width, height );
 
     let noiseCanvas = document.createElement('canvas');
 		noiseCanvas.width = width;
 		noiseCanvas.height = height;
-    const noiseCanvasContext = noiseCanvas.getContext( '2d' );
+    let noiseCanvasContext = noiseCanvas.getContext( '2d' );
     // noiseACanvasContext.fillStyle = 'rgb(255,255,255)';
 		// noiseACanvasContext.fillRect( 0, 0, width, height );
 
-    const normalCanvas = document.createElement('canvas');
+    let normalCanvas = document.createElement('canvas');
 		normalCanvas.width = width;
 		normalCanvas.height = height;
-    const normalCanvasContext = normalCanvas.getContext( '2d' );
+    let normalCanvasContext = normalCanvas.getContext( '2d' );
     normalCanvasContext.fillStyle = 'rgb(255,255,255)';
 		normalCanvasContext.fillRect( 0, 0, width, height );
 
@@ -110,11 +111,24 @@ class RndNoiseTresholdNormal {
     normalNoise(normalCanvas);
 
     const normalMapSrc = floatBufferFromCanvas(normalCanvas);
-		const nMap = normalMap(normalMapSrc, {step: 0, scale: 1}).toImageData();
+    normalCanvas = null;
+		let normalImage = normalMapCreator(normalMapSrc, {step: 0, scale: 1}).toImageData();
+
+    // create maps from canvases
+
+    const normalMap =  new CanvasTexture(normalImage);
+    normalMap.wrapS = RepeatWrapping;
+    normalMap.wrapT = RepeatWrapping;
+    normalImage = null;
+
+    const colorMap  =  new CanvasTexture(colorCanvas);
+    colorMap.wrapS = RepeatWrapping;
+    colorMap.wrapT = RepeatWrapping;
+    colorCanvas = null;
 
 		return {
-			normalMap: nMap,
-      colorMap: colorCanvas
+			normalMap,
+      colorMap
     };
 	}
 }

@@ -1,4 +1,5 @@
-import { floatBufferFromCanvas, normalMap } from "@thi.ng/pixel";
+import { floatBufferFromCanvas, normalMap as normalMapCreator } from "@thi.ng/pixel";
+import { CanvasTexture, RepeatWrapping } from 'three';
 import { mapNumber } from '../../utils/numUtils';
 import { randomNoiseWithLevel } from '../../utils/noiseGenerators';
 
@@ -10,31 +11,31 @@ class RndDotsFloor {
 		const normalWidth  = 1024;
 		const normalHeight = 1024;
 
-		const colorCanvas = document.createElement('canvas');
+		let colorCanvas = document.createElement('canvas');
 		colorCanvas.width = width;
 		colorCanvas.height = height;
-    const colorCanvasContext = colorCanvas.getContext( '2d' );
+    let colorCanvasContext = colorCanvas.getContext( '2d' );
 		colorCanvasContext.fillStyle = `rgb(${255*color.r}, ${255*color.g}, ${255*color.b})`;
 		colorCanvasContext.fillRect( 0, 0, width, height );
 
-		const normalCanvas = document.createElement('canvas');
+		let normalCanvas = document.createElement('canvas');
 		normalCanvas.width = normalWidth;
 		normalCanvas.height = normalHeight;
-    const normalCanvasContext = normalCanvas.getContext( '2d' );
+    let normalCanvasContext = normalCanvas.getContext( '2d' );
     normalCanvasContext.fillStyle = 'rgb(255,255,255)';
 		normalCanvasContext.fillRect( 0, 0, normalWidth, normalHeight );
 
-    const roughnessCanvas = document.createElement('canvas');
+    let roughnessCanvas = document.createElement('canvas');
 		roughnessCanvas.width = width;
 		roughnessCanvas.height = height;
-		const roughnessCanvasContext = roughnessCanvas.getContext('2d');
+		let roughnessCanvasContext = roughnessCanvas.getContext('2d');
     roughnessCanvasContext.fillStyle = 'rgb(255,255,255)';
 		roughnessCanvasContext.fillRect( 0, 0, width, height );
 
-    const metalnessCanvas = document.createElement('canvas');
+    let metalnessCanvas = document.createElement('canvas');
 		metalnessCanvas.width = width;
 		metalnessCanvas.height = height;
-		const metalnessCanvasContext = metalnessCanvas.getContext('2d');
+		let metalnessCanvasContext = metalnessCanvas.getContext('2d');
     metalnessCanvasContext.fillStyle = 'rgb(0,0,0)';
 		metalnessCanvasContext.fillRect( 0, 0, width, height );
 
@@ -98,13 +99,47 @@ class RndDotsFloor {
 
 		randomNoiseWithLevel(normalCanvas, level);
 		const normalMapSrc = floatBufferFromCanvas(normalCanvas);
-		const nMap = normalMap(normalMapSrc, {step: 0, scale: 1}).toImageData();
+		normalCanvas = null;
+		let normalImage = normalMapCreator(normalMapSrc, {step: 0, scale: 1}).toImageData();
+
+		// create maps from canvases
+
+		const repeatX = 8 * 15;
+    const repeatY = 8 * 15;
+
+		const normalMap =  new CanvasTexture(normalImage);
+		normalMap.repeat.x = repeatX;
+    normalMap.repeat.y = repeatY;
+    normalMap.wrapS = RepeatWrapping;
+    normalMap.wrapT = RepeatWrapping;
+		normalImage = null;
+
+		const colorMap  =  new CanvasTexture(colorCanvas);
+		colorMap.repeat.x = repeatX;
+    colorMap.repeat.y = repeatY;
+    colorMap.wrapS = RepeatWrapping;
+    colorMap.wrapT = RepeatWrapping;
+		colorCanvas = null;
+
+		const roughnessMap  =  new CanvasTexture(roughnessCanvas);
+		roughnessMap.repeat.x = repeatX;
+    roughnessMap.repeat.y = repeatY;
+    roughnessMap.wrapS = RepeatWrapping;
+    roughnessMap.wrapT = RepeatWrapping;
+		roughnessCanvas = null;
+
+		const metalnessMap  =  new CanvasTexture(metalnessCanvas);
+		metalnessMap.repeat.x = repeatX;
+    metalnessMap.repeat.y = repeatY;
+    metalnessMap.wrapS = RepeatWrapping;
+    metalnessMap.wrapT = RepeatWrapping;
+		metalnessCanvas = null;
 
 		return {
-      colorMap: colorCanvas,
-      roughnessMap: roughnessCanvas,
-      metalnessMap: metalnessCanvas,
-			normalMap: nMap
+      colorMap,
+      roughnessMap,
+      metalnessMap,
+			normalMap
     };
 	}
 }

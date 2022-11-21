@@ -120,10 +120,15 @@ const materialListComposer = (
     handleComposition.c.colorComposition.envMapIntensity
   );
 
-  mapsA = null;
-  mapsB = null;
-  mapsC = null;
-  maps = null;
+  let mapsAKeys = Object.keys(mapsA);
+  mapsAKeys.forEach(k => mapsA[k] = null);
+  
+  let mapsBKeys = Object.keys(mapsB);
+  mapsBKeys.forEach(k => mapsA[k] = null);
+  
+  let mapsCKeys = Object.keys(mapsC);
+  mapsCKeys.forEach(k => mapsA[k] = null)
+
   // normalMapA = null;
   // normalMapB = null;
   // normalMapC = null;
