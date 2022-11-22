@@ -1,4 +1,5 @@
-import { floatBufferFromCanvas, normalMap } from "@thi.ng/pixel";
+import { CanvasTexture, RepeatWrapping } from 'three';
+import { floatBufferFromCanvas, normalMap as normalMapCreator } from "@thi.ng/pixel";
 import { randomNoiseWithLevel } from '../../utils/noiseGenerators';
 
 class RndDotsMaps {
@@ -11,17 +12,17 @@ class RndDotsMaps {
 
     console.log('noise maps', Math.round(level));
 		
-		const colorCanvas = document.createElement('canvas');
+		let colorCanvas = document.createElement('canvas');
 		colorCanvas.width = width;
 		colorCanvas.height = height;
-    const colorCanvasContext = colorCanvas.getContext( '2d' );
+    let colorCanvasContext = colorCanvas.getContext( '2d' );
     colorCanvasContext.fillStyle = `rgb(${255*color.r}, ${255*color.g}, ${255*color.b})`;
 		colorCanvasContext.fillRect( 0, 0, width, height );
 
-		const normalCanvas = document.createElement('canvas');
+		let normalCanvas = document.createElement('canvas');
 		normalCanvas.width = normalWidth;
 		normalCanvas.height = normalHeight;
-    const normalCanvasContext = normalCanvas.getContext( '2d' );
+    let normalCanvasContext = normalCanvas.getContext( '2d' );
     normalCanvasContext.fillStyle = 'rgb(255,255,255)';
 		normalCanvasContext.fillRect( 0, 0, normalWidth, normalHeight );
 
@@ -40,11 +41,21 @@ class RndDotsMaps {
 
 		randomNoiseWithLevel(normalCanvas, level);
     const normalMapSrc = floatBufferFromCanvas(normalCanvas);
-		const nMap = normalMap(normalMapSrc, {step: 0, scale: 1}).toImageData();
+		let normalImage = normalMapCreator(normalMapSrc, {step: 0, scale: 1}).toImageData();
+
+		const normalMap =  new CanvasTexture(normalImage);
+    normalMap.wrapS = RepeatWrapping;
+    normalMap.wrapT = RepeatWrapping;
+    normalImage = null;
+
+    const colorMap  =  new CanvasTexture(colorCanvas);
+    colorMap.wrapS = RepeatWrapping;
+    colorMap.wrapT = RepeatWrapping;
+    colorCanvas = null;
 
 		return {
-      colorMap: colorCanvas,
-			normalMap: nMap
+      normalMap,
+      colorMap
     };
 	}
 }
