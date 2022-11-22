@@ -1,6 +1,4 @@
 import { canvasTextureMaterial } from "../../materials/canvasTextureMaterial";
-import { RndDotsMaps } from "../../canvasMaps/RndDotsMaps";
-import { RndNoiseNormal } from "../../canvasMaps/RndNoiseNormal";
 import { RndNoiseTresholdNormal } from "../../canvasMaps/RndNoiseMaps";
 
 const materialListComposer = (
@@ -12,19 +10,6 @@ const materialListComposer = (
   // DIFFUSE
 
   const themesDiffuse = [];
-
-  // const allDots = () => {
-  //   const a = RndDotsMaps;
-  //   const b = RndDotsMaps;
-  //   const c = RndDotsMaps;
-
-  //   return {
-  //     a,
-  //     b,
-  //     c
-  //   };
-  // }
-  // themesDiffuse.push(allDots);
 
   const allNoise = () => {
     const a = RndNoiseTresholdNormal;
@@ -47,17 +32,6 @@ const materialListComposer = (
   let mapsA = new maps.a(handleComposition.a.colorComposition.color, Math.random()*16, Math.random()*96);
   let mapsB = new maps.b(handleComposition.b.colorComposition.color, Math.random()*16, Math.random()*96);
   let mapsC = new maps.c(handleComposition.c.colorComposition.color, Math.random()*16, Math.random()*96);
-
-  // NORMAL -- right now normals are created in diffuse functions
-
-  // const noiseLevels = [4, 8, 16]
-  // const nai = Math.round(Math.random() * (noiseLevels.length - 1));
-  // const nbi = Math.round(Math.random() * (noiseLevels.length - 1));
-  // const nci = Math.round(Math.random() * (noiseLevels.length - 1));
-  // console.log('noise:    ', noiseLevels[nai], noiseLevels[nbi], noiseLevels[nci]);
-  // let normalMapA = new RndNoiseNormal(noiseLevels[nai]);
-  // let normalMapB = new RndNoiseNormal(noiseLevels[nbi]);
-  // let normalMapC = new RndNoiseNormal(noiseLevels[nci]);
 
   // ROUGHNESS & METALNESS
 
@@ -128,10 +102,6 @@ const materialListComposer = (
   
   let mapsCKeys = Object.keys(mapsC);
   mapsCKeys.forEach(k => mapsA[k] = null)
-
-  // normalMapA = null;
-  // normalMapB = null;
-  // normalMapC = null;
 }
 
 export { materialListComposer };

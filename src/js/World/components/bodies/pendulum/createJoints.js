@@ -67,7 +67,7 @@ export const createJoints = (
       const stiffness = Math.random() * 220 + (100 * handleComposition.a.volume * handleComposition.b.volume); // strength of the force that will be applied to make the bodies reach the target relative positions
       const damping   = Math.random() * 0.4 + 0.3;   // strength of the force that will be applied to make the bodies reach the target relative velocities 
       jointA.configureMotorPosition(rndAngleRad, stiffness, damping);
-      console.log('stiffness.a', (100 * handleComposition.a.volume * handleComposition.b.volume));
+      // console.log('stiffness.a', (100 * handleComposition.a.volume * handleComposition.b.volume));
     }
   }
 
@@ -82,7 +82,7 @@ export const createJoints = (
       const stiffness = Math.random() * 220 + (100 * handleComposition.b.volume * handleComposition.c.volume); // strength of the force that will be applied to make the bodies reach the target relative positions
       const damping   = Math.random() * 0.4 + 0.3;   // strength of the force that will be applied to make the bodies reach the target relative velocities 
       jointB.configureMotorPosition(rndAngleRad, stiffness, damping);
-      console.log('stiffness.b', (100 * handleComposition.b.volume * handleComposition.c.volume));
+      // console.log('stiffness.b', (100 * handleComposition.b.volume * handleComposition.c.volume));
     }
   }
 
