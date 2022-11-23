@@ -2,7 +2,7 @@ import { PlaneGeometry, SphereGeometry, Mesh, MeshStandardMaterial, MathUtils, D
 import { RndDotsFloor } from '../canvasMaps/RndDotsFloor';
 import { canvasTextureMaterial } from '../materials/canvasTextureMaterial';
 
-const walls = (scene, size = 20, bgHSL, color) => {
+const walls = (scene, size, bgHSL, color) => {
   const maps = new RndDotsFloor(bgHSL, color, 256);
 
   const plastic = {
@@ -17,13 +17,13 @@ const walls = (scene, size = 20, bgHSL, color) => {
     1
   )
 
-  let mapsKeys = Object.keys(maps);
-  mapsKeys.forEach(k => maps[k] = null);
-
   const materialDome = new MeshStandardMaterial({
-    color: color,
+    map: maps.colorMap,
+    normalMap: maps.normalMap,
     envMapIntensity: 100,
-    side: DoubleSide
+    side: DoubleSide,
+    roughness: plastic.roughness,
+    metalness: plastic.metalness,
   });
 
   const geometryPlane = new PlaneGeometry(size, size, 4, 4);
@@ -32,9 +32,12 @@ const walls = (scene, size = 20, bgHSL, color) => {
   floor.rotation.x = MathUtils.degToRad(270);
   scene.add(floor);
 
-  const geometryDome = new SphereGeometry(200, 64, 64);
+  const geometryDome = new SphereGeometry(size/2, 64, 64);
   const dome = new Mesh(geometryDome, materialDome);
   scene.add(dome);
+
+  let mapsKeys = Object.keys(maps);
+  mapsKeys.forEach(k => maps[k] = null);
 }
 
 export { walls };

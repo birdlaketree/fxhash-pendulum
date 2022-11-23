@@ -1,15 +1,13 @@
 import { floatBufferFromCanvas, normalMap as normalMapCreator } from "@thi.ng/pixel";
 import { CanvasTexture, RepeatWrapping } from 'three';
 import { mapNumber } from '../../utils/numUtils';
-import { randomNoiseWithLevel } from '../../utils/noiseGenerators';
 
 class RndDotsFloor {
-	constructor(bgHSL, color, level) {
+	constructor(bgHSL, color, normalNoiselevel) {
 		const width  = 2048;
 		const height = 2048;
-
-		const normalWidth  = 1024;
-		const normalHeight = 1024;
+		const normalWidth  = 2048;
+		const normalHeight = 2048;
 
 		let colorCanvas = document.createElement('canvas');
 		colorCanvas.width = width;
@@ -39,33 +37,73 @@ class RndDotsFloor {
     metalnessCanvasContext.fillStyle = 'rgb(0,0,0)';
 		metalnessCanvasContext.fillRect( 0, 0, width, height );
 
-		// const colorNoiselevel = 64;
-		// const darkTreshold   = 0.001;
+		const randomNoiseWithLevel = (cc, nc, x = 0, y = 0, alpha = 255) => {
+			const w = cc.width;
+      const h = cc.height;
+    
+      const ccContext = cc.getContext("2d");      
+      const ccImageData = ccContext.getImageData(x, y, w, h);
+      const ccPixels = ccImageData.data;
 
-		// function bgNoise(canvas, x = 0, y = 0, alpha = 255) {
-    //   const w = canvas.width;
-    //   const h = canvas.height;
-    //   const g = canvas.getContext("2d");
-    //   const imageData = g.getImageData(x, y, w, h);
-    //   const pixels = imageData.data;
-    //   const n = pixels.length;
-    //   let i = 0;
-    //   while (i < n) {
-    //     let lv = 255 - (Math.random() * colorNoiselevel);
-    //     const treshold = Math.random();
-    //     if (treshold < darkTreshold){
-    //       lv = Math.random() * 255;
-    //     }
-    //     pixels[i++] = pixels[i++] = pixels[i++] = lv | 0;
-    //     pixels[i++] = alpha;
-    //   }
-    //   g.putImageData(imageData, x, y);
-    //   return canvas;
-    // }
+      const ncContext = nc.getContext("2d");      
+      const ncImageData = ncContext.getImageData(x, y, w, h);
+      const ncPixels = ncImageData.data;
 
-		// bgNoise(noiseACanvas);
-    // colorCanvasContext.globalCompositeOperation = 'multiply';
-    // colorCanvasContext.drawImage(noiseACanvas, 0, 0, width, height);
+      const n = ccPixels.length;
+			let i = 0;
+
+			const cnl = 0.35;
+			const nnl = 0.5;
+
+			const darkSpotTreshold           = Math.random() * 0.1;
+    	const brightSpotTreshold         = Math.random() * 0.001;
+
+			while (i < n) {
+				let iN = i;
+				
+				// add background noise
+        const rnd = Math.random()
+        let noiseLevel  = 1 - (rnd * cnl);
+        let nNoiseLevel = 1 - (rnd * nnl);
+
+        // dark px
+        let td = Math.random();
+        const blackORGrayscale = Math.round(Math.random());
+        if (td < darkSpotTreshold) {
+          // noiseLevel = blackORGrayscale ? Math.random() * 1 : 0;
+          noiseLevel = Math.random() * 1;
+          nNoiseLevel = Math.random() * 0.4;
+        }
+
+        let r = color.r * noiseLevel;
+        let g = color.g * noiseLevel;
+        let b = color.b * noiseLevel;
+
+        // bright px
+        const tb = Math.random();
+        const whiteORGrayscale = Math.round(Math.random());
+        if (tb < brightSpotTreshold) {
+          // noiseLevel = whiteORGrayscale ? Math.random() * 0.75 : 0.9;
+          noiseLevel = Math.random() * 75;
+          r = noiseLevel / r;
+          g = noiseLevel / g;
+          b = noiseLevel / b;
+        }
+
+        ccPixels[i++] = r * 255;
+        ccPixels[i++] = g * 255;
+        ccPixels[i++] = b * 255;
+        ccPixels[i++] = alpha;
+
+				ncPixels[iN++] = ncPixels[iN++] = ncPixels[iN++] = nNoiseLevel * 255;
+				ncPixels[iN++] = alpha;
+			}
+			
+			ccContext.putImageData(ccImageData, x, y);
+      ncContext.putImageData(ncImageData, x, y);
+		}
+
+		randomNoiseWithLevel(colorCanvas, normalCanvas);
 
 
 		const spread = mapNumber(bgHSL.l, 0, 1, 12, 400);
@@ -75,7 +113,7 @@ class RndDotsFloor {
 		for ( let i = 0; i < n; i ++ ) {
 			const x = Math.random() * width;
 			const y = Math.random() * height;
-			const r = Math.random() * 6;
+			const r = Math.random() * 3;
   
 			const cRGB = Math.random() * mapNumber(bgHSL.l, 0, 1, 255, 0);
 
@@ -97,12 +135,9 @@ class RndDotsFloor {
 			metalnessCanvasContext.fill();
 		}
 
-		randomNoiseWithLevel(normalCanvas, level);
 		const normalMapSrc = floatBufferFromCanvas(normalCanvas);
 		normalCanvas = null;
-		let normalImage = normalMapCreator(normalMapSrc, {step: 0, scale: 1}).toImageData();
-
-		// create maps from canvases
+		let normalImage = normalMapCreator(normalMapSrc, {step: 3, scale: 3}).toImageData();
 
 		const repeatX = 8 * 15;
     const repeatY = 8 * 15;

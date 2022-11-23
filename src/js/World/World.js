@@ -78,12 +78,12 @@ class World {
     const envMap = pmremGenerator.fromScene(new RoomEnvironment(), 0.001).texture;
     // const envMap = null;
 
-    // this.materialTester      = materialTester(this.scene);
+    // this.materialTester      = materialTester(this.scene, envMap);
     this.walls               = walls    (this.scene, this.floorSize, this.bgHSL, this.bgColor);
     this.pendulum            = pendulum (this.scene, this.loop, this.physicsWorld, envMap, this.colorComposition);
     this.spheresFragment     = spheres  (this.scene, this.loop, this.physicsWorld, envMap, this.bgHSL, {min: 0.02,  sizeRange: Math.random()/20, n: 6, y: 0.2, yRange: 3});
     this.cubesFragment       = cubes    (this.scene, this.loop, this.physicsWorld, envMap, this.bgHSL, {min: 0.05,  sizeRange: 0.10, n: 8 , y: 0.2,  yRange: 2});
-    this.miniCubesFragment   = cubes    (this.scene, this.loop, this.physicsWorld, envMap, this.bgHSL, {min: 0.006, sizeRange: 0.04, n: 24, y: 0.06, yRange: 2});
+    this.miniCubesFragment   = cubes    (this.scene, this.loop, this.physicsWorld, envMap, this.bgHSL, {min: 0.006, sizeRange: 0.04, n: 48, y: 0.06, yRange: 2});
     this.orbitControls.target = this.pendulum.handleB.mesh.position;
   }
 

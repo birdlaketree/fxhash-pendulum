@@ -22,10 +22,6 @@ class RndNoiseTresholdNormal {
     normalCanvasContext.fillStyle = 'rgb(255,255,255)';
 		normalCanvasContext.fillRect( 0, 0, width, height );
 
-    const darkSpotTreshold           = Math.random() * 0.1;
-    const brightSpotTreshold         = Math.random() * 0.0016;
-    const normalMapDeviationTreshold = 0.002;
-
     const compositeNoise = (cc, nc, x = 0, y = 0, alpha = 255) => {
       const w = cc.width;
       const h = cc.height;
@@ -42,11 +38,18 @@ class RndNoiseTresholdNormal {
       let i = 0;
 
       const cnl = colorNoiselevel/256;
+      const nnl = normalNoiselevel/256;
+
+      const darkSpotTreshold           = Math.random() * 0.1;
+      const brightSpotTreshold         = Math.random() * 0.0010;
 
       while (i < n) {
         let iN = i;
+
         // add background noise
-        let noiseLevel = 1 - (Math.random() * cnl);
+        const rnd = Math.random()
+        let noiseLevel  = 1 - (rnd * cnl);
+        let nNoiseLevel = 1 - (rnd * nnl);
 
         // dark px
         let td = Math.random();
@@ -54,6 +57,7 @@ class RndNoiseTresholdNormal {
         if (td < darkSpotTreshold) {
           // noiseLevel = blackORGrayscale ? Math.random() * 1 : 0;
           noiseLevel = Math.random() * 1;
+          nNoiseLevel = Math.random() * 0.4;
         }
 
         let r = color.r * noiseLevel;
@@ -77,13 +81,7 @@ class RndNoiseTresholdNormal {
         ccPixels[i++] = alpha;
 
         // normal map
-
-        noiseLevel = 255 - (Math.random() * normalNoiselevel);
-        const treshold = Math.random();
-        if (treshold < normalMapDeviationTreshold) {
-          noiseLevel = Math.random() * 64 + 191;
-        }
-        ncPixels[iN++] = ncPixels[iN++] = ncPixels[iN++] = noiseLevel | 0;
+        ncPixels[iN++] = ncPixels[iN++] = ncPixels[iN++] = nNoiseLevel * normalNoiselevel | 0;
         ncPixels[iN++] = alpha;
 
       }
@@ -98,8 +96,6 @@ class RndNoiseTresholdNormal {
     const normalMapSrc = floatBufferFromCanvas(normalCanvas);
     normalCanvas = null;
 		let normalImage = normalMapCreator(normalMapSrc, {step: 0, scale: 1}).toImageData();
-
-    // create textures from canvases
 
     const normalMap =  new CanvasTexture(normalImage);
     normalMap.wrapS = RepeatWrapping;

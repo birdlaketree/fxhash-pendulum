@@ -1,4 +1,4 @@
-const randomNoiseWithLevel = (canvas, level = 128, x = 0, y = 0, alpha = 255) => {
+const randomNoiseWithLevel = (canvas, level = 256, x = 0, y = 0, alpha = 255) => {
   const w = canvas.width;
   const h = canvas.height;
   const g = canvas.getContext("2d");
