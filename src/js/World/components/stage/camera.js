@@ -27,6 +27,7 @@ const createDolly = (camera, scene) => {
   dolly.name = "dolly";
   scene.add(dolly);
   dolly.add(camera);
+  dolly.position.set(0, 0, 0);
   return dolly;
 }
 

@@ -1,8 +1,8 @@
-import Stats from 'three/examples/jsm/libs/stats.module';
 import RAPIER from '@dimforge/rapier3d-compat'
 import { World as RWorld } from '@dimforge/rapier3d-compat'
+import { orbitControls } from './utils/orbitControls'
+import { stats } from './utils/stats'
 import { Vector3, PMREMGenerator } from "three"
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import { Loop } from './system/Loop.js'
 import { createRenderer } from './system/renderer.js'
 import { createScene } from './components/stage/scene.js'
@@ -16,11 +16,10 @@ import { pendulum } from "./components/bodies/pendulum/pendulum.js"
 import { spheres } from "./components/sceneFragments/spheres.js"
 import { cubes } from "./components/sceneFragments/cubes.js"
 import { colorComposer } from './components/bodies/pendulum/colorComposer.js'
-import { materialTester } from './utils/materialTester'
 import { RoomEnvironment } from './components/stage/RoomEnv'
 import { setPrintTools } from './utils/setPrintTools'
 import { ssao as postprocessing } from './components/effects/ssao'
-
+import { materialTester } from './utils/materialTester'
 
 class World {
   constructor() {
@@ -38,29 +37,16 @@ class World {
     this.camera = createCamera();
     this.lights = createLights(this.scene);
 
-    this.stats = Stats();
-    document.body.appendChild(this.stats.dom);
-
-    this.orbitControls = new OrbitControls(this.camera, this.renderer.domElement);
-    this.orbitControls.maxPolarAngle = Math.PI/2 - Math.PI/32;
-    this.orbitControls.minPolarAngle = Math.PI/32;
-    this.orbitControls.maxDistance = 40;
-    this.orbitControls.minDistance = 2;
-    this.orbitControls.dampingFactor = 100;
-    // this.orbitControls.autoRotate = true;
-    // this.orbitControls.autoRotateSpeed = 0.3;
-
+    this.stats = stats();
+    this.orbitControls = orbitControls(this.camera, this.renderer.domElement);
     this.composer = this.doPostprocessing ? postprocessing(this.camera, this.scene, this.renderer) : null;
     this.loop = new Loop(this.camera, this.scene, this.renderer, this.composer, this.stats, this.orbitControls, this.doPostprocessing);
 
     this.dolly = createDolly(this.camera, this.scene);
-    this.dolly.position.set(0, 0, 0);
-
     this.vrControls = this.xrEnabled ? new VrControls(this.renderer, this.dolly, this.camera) : null;
     this.xrEnabled ? this.loop.updatableBodies.push(this.vrControls) : null;
 
     this.floorSize = 300;
-
     setPrintTools(this.renderer, this.scene, this.camera);
 
     RAPIER.init().then(() => {
