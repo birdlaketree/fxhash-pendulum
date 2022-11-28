@@ -2,7 +2,7 @@ import { Clock } from 'three';
 import { Quaternion } from "three";
 
 class Loop {
-  constructor(camera, scene, renderer, composer = null, stats, orbitControls) {
+  constructor(camera, scene, renderer, composer = null, stats, orbitControls, doPostprocessing) {
     this.camera = camera;
     this.scene = scene;
     this.renderer = renderer;
@@ -14,6 +14,7 @@ class Loop {
     this.clock = new Clock();
     this.physicsWorld = undefined;
     this.composer = composer;
+    this.doPostprocessing = doPostprocessing;
   }
 
   start() {
@@ -21,14 +22,14 @@ class Loop {
       // tell every animated object to tick forward one frame
       this.tick();
 
-      // update stats
       this.stats.update();
-
       this.orbitControls.update();
 
-      // render a frame
-      this.renderer.render(this.scene, this.camera);
-      // this.composer.render();
+      if (this.doPostprocessing) {
+        this.composer.render();
+      } else {
+        this.renderer.render(this.scene, this.camera);
+      }
     });
   }
 

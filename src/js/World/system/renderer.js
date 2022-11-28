@@ -9,10 +9,22 @@ import {
 } from 'three';
 import { VRButton } from 'three/examples/jsm/webxr/VRButton.js';
 
-const createRenderer = (xrEnabled = false) => {
-  const renderer = new WebGLRenderer({
-    antialias: true
-  });
+const createRenderer = (doPostprocessing, xrEnabled) => {
+  let renderer = null;
+
+  if (!doPostprocessing) {
+    renderer = new WebGLRenderer({
+      antialias: true
+    });
+  } else {
+    renderer = new WebGLRenderer({
+      powerPreference: "high-performance",
+      antialias: true,
+      stencil: false,
+      depth: false
+    });
+  }
+  
   renderer.physicallyCorrectLights = true;
 
   // mobile phone optimisation
