@@ -27,7 +27,7 @@ const createLights = scene => {
   spot.target.position.set(0, 0, 0);
   spot.castShadow = true;
   spot.map = texture;
-  spot.shadow.focus = 1.2;
+  spot.shadow.focus = 1;
   spot.shadow.mapSize.width = 4096;
   spot.shadow.mapSize.height = 4096;
   scene.add(spot);
