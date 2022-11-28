@@ -58,34 +58,34 @@ class World {
     this.saoPass = new SAOPass( this.scene, this.camera, false, true,  );
     this.composer.addPass( this.saoPass );
 
-    this.saoPass.setSize(4096,4096);
-    this.saoPass.params.saoBias = 1;
-    this.saoPass.params.saoIntensity = 0.04;
-    this.saoPass.params.saoScale = 20;
-    this.saoPass.params.saoKernelRadius = 100;
-    this.saoPass.params.saoBlur = false;
+    // this.saoPass.setSize(4096,4096);
+    // this.saoPass.params.saoBias = 1;
+    // this.saoPass.params.saoIntensity = 0.04;
+    // this.saoPass.params.saoScale = 20;
+    // this.saoPass.params.saoKernelRadius = 100;
+    // this.saoPass.params.saoBlur = false;
 
-    const gui = new GUI();
-    gui.add( this.saoPass.params, 'output', {
-      'Beauty': SAOPass.OUTPUT.Beauty,
-      'Beauty+SAO': SAOPass.OUTPUT.Default,
-      'SAO': SAOPass.OUTPUT.SAO,
-      'Depth': SAOPass.OUTPUT.Depth,
-      'Normal': SAOPass.OUTPUT.Normal
-    } ).onChange( function ( value ) {
+    // const gui = new GUI();
+    // gui.add( this.saoPass.params, 'output', {
+    //   'Beauty': SAOPass.OUTPUT.Beauty,
+    //   'Beauty+SAO': SAOPass.OUTPUT.Default,
+    //   'SAO': SAOPass.OUTPUT.SAO,
+    //   'Depth': SAOPass.OUTPUT.Depth,
+    //   'Normal': SAOPass.OUTPUT.Normal
+    // } ).onChange( function ( value ) {
 
-      this.saoPass.params.output = parseInt( value );
+    //   this.saoPass.params.output = parseInt( value );
 
-    } );
-    gui.add( this.saoPass.params, 'saoBias', - 1, 1 );
-    gui.add( this.saoPass.params, 'saoIntensity', 0, 1 );
-    gui.add( this.saoPass.params, 'saoScale', 0, 20 );
-    gui.add( this.saoPass.params, 'saoKernelRadius', 1, 100 );
-    gui.add( this.saoPass.params, 'saoMinResolution', 0, 1 );
-    gui.add( this.saoPass.params, 'saoBlur' );
-    gui.add( this.saoPass.params, 'saoBlurRadius', 0, 200 );
-    gui.add( this.saoPass.params, 'saoBlurStdDev', 0.5, 150 );
-    gui.add( this.saoPass.params, 'saoBlurDepthCutoff', 0.0, 0.1 );
+    // } );
+    // gui.add( this.saoPass.params, 'saoBias', - 1, 1 );
+    // gui.add( this.saoPass.params, 'saoIntensity', 0, 1 );
+    // gui.add( this.saoPass.params, 'saoScale', 0, 20 );
+    // gui.add( this.saoPass.params, 'saoKernelRadius', 1, 100 );
+    // gui.add( this.saoPass.params, 'saoMinResolution', 0, 1 );
+    // gui.add( this.saoPass.params, 'saoBlur' );
+    // gui.add( this.saoPass.params, 'saoBlurRadius', 0, 200 );
+    // gui.add( this.saoPass.params, 'saoBlurStdDev', 0.5, 150 );
+    // gui.add( this.saoPass.params, 'saoBlurDepthCutoff', 0.0, 0.1 );
 
 
     this.loop = new Loop(this.camera, this.scene, this.renderer, this.composer, this.stats, this.orbitControls);

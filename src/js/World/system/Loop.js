@@ -27,8 +27,8 @@ class Loop {
       this.orbitControls.update();
 
       // render a frame
-      // this.renderer.render(this.scene, this.camera);
-      this.composer.render();
+      this.renderer.render(this.scene, this.camera);
+      // this.composer.render();
     });
   }
 
