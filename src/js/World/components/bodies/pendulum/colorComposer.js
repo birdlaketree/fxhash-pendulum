@@ -22,9 +22,9 @@ const colorComposer = (colorCompositionID) => {
   const strongSaturation = () => Math.random() * 0.2 + 0.8;
   const darkSaturation   = () => Math.random() * 0.4 + 0.2;
 
-  const brightLightness = () => Math.random() * 0.3 + 0.5;
-  const strongLightness = () => Math.random() * 0.3 + 0.2;
-  const darkLightness   = () => Math.random() * 0.1 + 0.004;
+  const brightLightness = () => Math.random() * 0.35 + 0.5;
+  const strongLightness = () => Math.random() * 0.3  + 0.2;
+  const darkLightness   = () => Math.random() * 0.2  + 0.04;
 
   const brightTheme = [brightSaturation(), brightLightness()];
   const strongTheme = [strongSaturation(), strongLightness()];
