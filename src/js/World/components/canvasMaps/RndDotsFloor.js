@@ -84,10 +84,10 @@ class RndDotsFloor {
         const whiteORGrayscale = Math.round(Math.random());
         if (tb < brightSpotTreshold) {
           // noiseLevel = whiteORGrayscale ? Math.random() * 0.75 : 0.9;
-          noiseLevel = Math.random() * 75;
-          r = noiseLevel / r;
-          g = noiseLevel / g;
-          b = noiseLevel / b;
+          noiseLevel = Math.random() * 1;
+          r = mapNumber(noiseLevel, 0, 1, color.r, 1);
+          g = mapNumber(noiseLevel, 0, 1, color.g, 1);
+          b = mapNumber(noiseLevel, 0, 1, color.b, 1);
         }
 
         ccPixels[i++] = r * 255;

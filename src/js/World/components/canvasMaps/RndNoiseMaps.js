@@ -1,12 +1,13 @@
 import { CanvasTexture, RepeatWrapping } from 'three';
 import { floatBufferFromCanvas, normalMap as normalMapCreator } from "@thi.ng/pixel";
+import { mapNumber } from './../../utils/numUtils';
 
 class RndNoiseTresholdNormal {
-	constructor(color, colorNoiselevel = 128, normalNoiselevel = 128) {
+	constructor(color, colorNoiselevel = 0.55, normalNoiselevel = 0.7) {
     const width  = 1024;
 		const height = 1024;
 
-    console.log('noise maps', Math.round(colorNoiselevel), Math.round(normalNoiselevel));
+    console.log('noise maps', colorNoiselevel, normalNoiselevel);
 
 		let colorCanvas = document.createElement('canvas');
 		colorCanvas.width = width;
@@ -37,19 +38,16 @@ class RndNoiseTresholdNormal {
       const n = ccPixels.length;
       let i = 0;
 
-      const cnl = colorNoiselevel/256;
-      const nnl = normalNoiselevel/256;
-
-      const darkSpotTreshold           = Math.random() * 0.1;
-      const brightSpotTreshold         = Math.random() * 0.0010;
+      const darkSpotTreshold           = Math.random() * 0.04;
+      const brightSpotTreshold         = Math.random() * 0.002;
 
       while (i < n) {
         let iN = i;
 
         // add background noise
         const rnd = Math.random()
-        let noiseLevel  = 1 - (rnd * cnl);
-        let nNoiseLevel = 1 - (rnd * nnl);
+        let noiseLevel  = 1 - (rnd * colorNoiselevel);
+        let nNoiseLevel = 1 - (rnd * normalNoiselevel);
 
         // dark px
         let td = Math.random();
@@ -57,7 +55,7 @@ class RndNoiseTresholdNormal {
         if (td < darkSpotTreshold) {
           // noiseLevel = blackORGrayscale ? Math.random() * 1 : 0;
           noiseLevel = Math.random() * 1;
-          nNoiseLevel = Math.random() * 0.4;
+          nNoiseLevel = 1 - Math.random() * 0.45;
         }
 
         let r = color.r * noiseLevel;
@@ -69,10 +67,10 @@ class RndNoiseTresholdNormal {
         const whiteORGrayscale = Math.round(Math.random());
         if (tb < brightSpotTreshold) {
           // noiseLevel = whiteORGrayscale ? Math.random() * 0.75 : 0.9;
-          noiseLevel = Math.random() * 0.75;
-          r = noiseLevel / r;
-          g = noiseLevel / g;
-          b = noiseLevel / b;
+          noiseLevel = Math.random() * 1;
+          r = mapNumber(noiseLevel, 0, 1, color.r, 1);
+          g = mapNumber(noiseLevel, 0, 1, color.g, 1);
+          b = mapNumber(noiseLevel, 0, 1, color.b, 1);
         }
 
         ccPixels[i++] = r * 255;
@@ -81,7 +79,7 @@ class RndNoiseTresholdNormal {
         ccPixels[i++] = alpha;
 
         // normal map
-        ncPixels[iN++] = ncPixels[iN++] = ncPixels[iN++] = nNoiseLevel * normalNoiselevel | 0;
+        ncPixels[iN++] = ncPixels[iN++] = ncPixels[iN++] = nNoiseLevel * 255 | 0;
         ncPixels[iN++] = alpha;
 
       }
