@@ -32,10 +32,9 @@ const createRenderer = (doPostprocessing, xrEnabled) => {
   renderer.setPixelRatio( window.devicePixelRatio );
   renderer.setSize( window.innerWidth, window.innerHeight );
 
-  // renderer.toneMapping = ACESFilmicToneMapping;
-	// renderer.toneMappingExposure = 1;
-
   renderer.outputEncoding = sRGBEncoding;
+  renderer.toneMapping    = ACESFilmicToneMapping;
+	// renderer.toneMappingExposure = 1;
 
   // mobile phone optimisation
   // setting easier shadowMap makes it much faster on iPhone 12 Pro Max

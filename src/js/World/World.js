@@ -34,9 +34,9 @@ class World {
     this.bgColor.getHSL(this.bgHSL);
 
     this.renderer = createRenderer(this.doPostprocessing, this.xrEnabled);
-    this.scene = createScene();
-    this.camera = createCamera();
-    this.lights = createLights(this.scene);
+    this.scene    = createScene();
+    this.camera   = createCamera();
+    this.lights   = createLights(this.scene);
 
     this.stats = stats();
     this.orbitControls = orbitControls(this.camera, this.renderer.domElement);
@@ -50,7 +50,6 @@ class World {
     this.floorSize = 300;
     setPrintTools(this.renderer, this.scene, this.camera);
     
-
     RAPIER.init().then(() => {
       this.physicsConfig();
       this.buildScene();
