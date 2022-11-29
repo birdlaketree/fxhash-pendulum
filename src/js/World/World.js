@@ -49,6 +49,7 @@ class World {
 
     this.floorSize = 300;
     setPrintTools(this.renderer, this.scene, this.camera);
+    
 
     RAPIER.init().then(() => {
       this.physicsConfig();

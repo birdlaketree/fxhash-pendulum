@@ -15,12 +15,14 @@ class Loop {
     this.physicsWorld = undefined;
     this.composer = composer;
     this.doPostprocessing = doPostprocessing;
+    this.runPhysics = true;
+    document.addEventListener('keypress', this.togglePhysicsEngine);
   }
 
   start() {
     this.renderer.setAnimationLoop(() => {
       // tell every animated object to tick forward one frame
-      this.tick();
+      if (this.runPhysics) this.tick();
 
       this.stats.update();
       this.orbitControls.update();
@@ -39,6 +41,16 @@ class Loop {
 
   setPhysics(physicsWorld) {
     this.physicsWorld = physicsWorld;
+  }
+
+  togglePhysicsEngine = (e) => {
+    if (e.code === 'KeyR') {
+      if (this.runPhysics === true) {
+        this.runPhysics = false;
+      } else {
+        this.runPhysics = true;
+      }
+    }
   }
 
   tick() {
