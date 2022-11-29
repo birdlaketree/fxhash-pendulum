@@ -5,7 +5,7 @@ const orbitControls = (camera, domElement) => {
   oc.maxPolarAngle = Math.PI/2 - Math.PI/32;
   oc.minPolarAngle = Math.PI/32;
   oc.maxDistance = 40;
-  oc.minDistance = 2;
+  oc.minDistance = 3;
   oc.dampingFactor = 100;
   // oc.autoRotate = true;
   // oc.autoRotateSpeed = 0.3;
