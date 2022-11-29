@@ -8,7 +8,7 @@ const createCamera = () => {
   // camera.position.y = 9;
   // camera.position.z = 9;
 
-  const radius  = Math.random()*12+12;
+  const radius  = Math.random()*15+9;
   const polar   = MathUtils.degToRad(Math.random()*45+30);
   const equator = MathUtils.degToRad(Math.random()*60+15);
 
