@@ -10,7 +10,7 @@ const spheres = (
   bgHSL,
   props
 ) => {
-  const color = (bgHSL.l > 0.5) ? hslToHex(0.6, 0, 0.8) : hslToHex(0.6, 0, 0.002);
+  const color = (bgHSL.l > 0.5) ? hslToHex(0.6, 0, 0.8) : hslToHex(0.6, 0, 0.04);
   const colorMaterial = defaultColorShinyPlastic(color, 1, envMap);
   const spreadWidth = 14;
   const {

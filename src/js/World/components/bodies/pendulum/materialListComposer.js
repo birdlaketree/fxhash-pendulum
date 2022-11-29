@@ -53,7 +53,6 @@ const materialListComposer = (
   }
 
   const rm = rmTheme();
-  console.log('rm', rm);
 
   // DIFFUSE
 

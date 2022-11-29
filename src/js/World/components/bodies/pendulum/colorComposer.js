@@ -6,11 +6,11 @@ const colorComposer = (colorCompositionID) => {
   // primitives
 
   const black = {
-    color: hslToHex(0, 1, 0),
+    color: hslToHex(0, 0, 0.04),
     envMapIntensity: envMapIntensity - 0.1
   };
   const white = {
-    color: hslToHex(0, 1, 1),
+    color: hslToHex(0, 0, 0.85),
     envMapIntensity: envMapIntensity - 0.1
   };
 
@@ -47,9 +47,13 @@ const colorComposer = (colorCompositionID) => {
     ]
   }
 
-  const grayscaleBright = () => Math.random() * 0.1 + 0.92;
-  const grayscaleStrong = () => Math.random() * 0.3 + 0.1;
-  const grayscaleDark   = () => Math.random() * 0.02;
+  // const grayscaleBright = () => Math.random() * 0.1 + 0.92;
+  // const grayscaleStrong = () => Math.random() * 0.3 + 0.1;
+  // const grayscaleDark   = () => Math.random() * 0.02;
+
+  const grayscaleBright = () => Math.random() * 0.35 + 0.5;
+  const grayscaleStrong = () => Math.random() * 0.3  + 0.2;
+  const grayscaleDark   = () => Math.random() * 0.2  + 0.0;
 
   const grayscaleThemes = [
     grayscaleBright(),
@@ -214,7 +218,7 @@ const colorComposer = (colorCompositionID) => {
   }
   paleteGenerators.push(grayscale);
 
-  // let colorConfig = whiteBlackColor();
+  // let colorConfig = grayscale();
   const pgIndex = Math.round((paleteGenerators.length - 1) * colorCompositionID);
   let colorConfig = paleteGenerators[pgIndex]();
   console.log('palette:  ', paleteGenerators[pgIndex].name);
