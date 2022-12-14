@@ -19,7 +19,7 @@ const createRenderer = (doPostprocessing, xrEnabled) => {
   } else {
     renderer = new WebGLRenderer({
       powerPreference: "high-performance",
-      antialias: true,
+      antialias: false,
       stencil: false,
       depth: false
     });
