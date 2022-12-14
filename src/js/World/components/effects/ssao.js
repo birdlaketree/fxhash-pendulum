@@ -13,35 +13,34 @@ const ssao = (
   const normalPass = new NormalPass(scene, camera);
   const depthDownsamplingPass = new DepthDownsamplingPass({
     normalBuffer: normalPass.texture,
-    resolutionScale: 0.5
+    resolutionScale: 1.0
   });
 
-  const normalDepthBuffer = capabilities.isWebGL2 ?
-    depthDownsamplingPass.texture : null;
+  const normalDepthBuffer = capabilities.isWebGL2 ? depthDownsamplingPass.texture : null;
 
   const smaaEffect = new SMAAEffect();
-  smaaEffect.preset = SMAAPreset.HIGH;
+  smaaEffect.preset = SMAAPreset.ULTRA;
   smaaEffect.edgeDetectionMode = EdgeDetectionMode.DEPTH;
-
-  smaaEffect.edgeDetectionMaterial.setEdgeDetectionThreshold(0.01);
+  smaaEffect.edgeDetectionMaterial.edgeDetectionThreshold = 0.05;
   
   const ssaoEffect = new SSAOEffect(camera, normalPass.texture, {
     blendFunction: BlendFunction.MULTIPLY,
-    distanceScaling: true,
-    depthAwareUpsampling: true,
+    // blendFunction: BlendFunction.NORMAL,
+    distanceScaling: false,
+    depthAwareUpsampling: false,
     normalDepthBuffer,
-    samples: 6,
-    rings: 4,
-    distanceThreshold: 0.2,	// Render up to a distance of ~200 world units
+    samples: 10,
+    rings: 3,
+    distanceThreshold: 0.2,	  // Render up to a distance of ~200 world units
     distanceFalloff: 0.0025,	// with an additional ~2.5 units of falloff.
     rangeThreshold: 0.0003,		// Occlusion proximity of ~0.3 world units
     rangeFalloff: 0.0001,			// with ~0.1 units of falloff.
     luminanceInfluence: 0.6,
-    minRadiusScale: 0.33,
-    radius: 0.05,
-    intensity: 2.0,
-    bias: 0.025,
-    fade: 0.05,
+    minRadiusScale: 0.1,
+    radius: 0.03,
+    intensity: 1.9,
+    bias: 0.01,
+    fade: 0.034,
     color: null,
     resolutionScale: 1.0,
   });
@@ -62,9 +61,46 @@ const ssao = (
 
   composer.addPass(effectPass);
 
+  // const blendMode = ssaoEffect.blendMode;
+  // const uniforms = ssaoEffect.ssaoMaterial.uniforms;
+
+  // const params = {
+  //   "distance": {
+  //     "threshold": uniforms.distanceCutoff.value.x,
+  //     "falloff": (uniforms.distanceCutoff.value.y -
+  //       uniforms.distanceCutoff.value.x)
+  //   },
+  //   "proximity": {
+  //     "threshold": uniforms.proximityCutoff.value.x,
+  //     "falloff": (uniforms.proximityCutoff.value.y -
+  //       uniforms.proximityCutoff.value.x)
+  //   },
+  //   "upsampling": {
+  //     "enabled": ssaoEffect.defines.has("DEPTH_AWARE_UPSAMPLING"),
+  //     "threshold": Number(ssaoEffect.defines.get("THRESHOLD"))
+  //   },
+  //   "distanceScaling": {
+  //     "enabled": ssaoEffect.distanceScaling,
+  //     "min scale": uniforms.minRadiusScale.value
+  //   },
+  //   "lum influence": ssaoEffect.uniforms.get("luminanceInfluence").value,
+  //   "intensity": uniforms.intensity.value,
+  //   "bias": uniforms.bias.value,
+  //   "fade": uniforms.fade.value,
+  //   // "render mode": RenderMode.DEFAULT,
+  //   "resolution": ssaoEffect.resolution.scale,
+  //   "color": 0x000000,
+  //   "opacity": blendMode.opacity.value,
+  //   "blend mode": blendMode.blendFunction
+  // };
+
   // const gui = new GUI();
-  // gui.add( ssaoEffect, 'intensity', 0.0, 10.0 );
-  // gui.add( ssaoEffect.resolution, 'scale', 0.0, 2.0 );
+  // gui.add(ssaoEffect, 'intensity', 0.0, 10.0 );
+  // gui.add(ssaoEffect, "samples", 1, 32, 1);
+	// gui.add(ssaoEffect, "rings", 1, 16, 1);
+	// gui.add(ssaoEffect, "radius", 1e-6, 1.0, 0.001);
+  // gui.add(params, "bias", 0.0, 0.2, 0.001).onChange((value) => {uniforms.bias.value = value;});
+  // gui.add(params, "fade", 0.0, 0.2, 0.001).onChange((value) => {uniforms.fade.value = value;});
   
   return composer;
 }
