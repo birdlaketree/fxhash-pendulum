@@ -31,10 +31,8 @@ const ssao = (
     normalDepthBuffer,
     samples: 10,
     rings: 3,
-    distanceThreshold: 0.2,	  // Render up to a distance of ~200 world units
-    distanceFalloff: 0.0025,	// with an additional ~2.5 units of falloff.
-    rangeThreshold: 0.0003,		// Occlusion proximity of ~0.3 world units
-    rangeFalloff: 0.0001,			// with ~0.1 units of falloff.
+    worldDistanceThreshold: 35,
+    worldDistanceFalloff: 10,
     luminanceInfluence: 0.6,
     minRadiusScale: 0.1,
     radius: 0.03,
