@@ -53,6 +53,10 @@ class Loop {
     }
   }
 
+  updateComposer = (composer) => {
+    this.composer = composer;
+  }
+
   tick() {
     // only call the getDelta function once per frame!
     const delta = this.clock.getDelta();

@@ -21,6 +21,7 @@ import { setPrintTools } from './utils/setPrintTools'
 import { ssao as postprocessing } from './components/effects/ssao'
 import { materialTester } from './utils/materialTester'
 import { lightTester } from './utils/lightTester'
+import { Resizer } from './system/Resizer'
 
 class World {
   constructor() {
@@ -49,6 +50,12 @@ class World {
 
     this.floorSize = 300;
     setPrintTools(this.renderer, this.scene, this.camera);
+
+    this.resizer = new Resizer(this.camera, this.renderer);
+    this.resizer.onResize = () => {
+      this.composer = this.doPostprocessing ? postprocessing(this.camera, this.scene, this.renderer) : null;
+      this.loop.updateComposer(this.composer);
+    };
     
     RAPIER.init().then(() => {
       this.physicsConfig();
