@@ -218,12 +218,30 @@ const colorComposer = (colorCompositionID) => {
   }
   paleteGenerators.push(grayscale);
 
-  // let colorConfig = grayscale();
-  const pgIndex = Math.round((paleteGenerators.length - 1) * colorCompositionID);
-  let colorConfig = paleteGenerators[pgIndex]();
-  console.log('palette:  ', paleteGenerators[pgIndex].name);
+  let colorConfig = null;
+  let paleteName = null;
 
+  if (colorCompositionID < 0.1) {
+    // no color - 10%
+    colorConfig = grayscale();
+    paleteName = grayscale.name;
+  } else if ((colorCompositionID => 0.1) && (colorCompositionID < 0.35)) {
+    // one color - 25%
+    colorConfig = whiteBlackColor();
+    paleteName = whiteBlackColor.name;
+  } else if ((colorCompositionID => 0.35) && (colorCompositionID < 0.75)) {
+    // two colors - 40%
+    colorConfig = duoAndLightness();
+    paleteName = duoAndLightness.name;
+  } else if ((colorCompositionID => 0.75) && (colorCompositionID < 1)) {
+    // three colors - 25%
+    colorConfig = tripple();
+    paleteName = tripple.name;
+  }
+  // let colorConfig = grayscale();
+
+  console.log('palette:  ', paleteName, colorCompositionID);
   return colorConfig;
 }
 
-export { colorComposer }
+export { colorComposer };
