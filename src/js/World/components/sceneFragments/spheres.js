@@ -12,7 +12,7 @@ const spheres = (
 ) => {
   const color = (bgHSL.l > 0.5) ? hslToHex(0.6, 0, 0.8) : hslToHex(0.6, 0, 0.04);
   const colorMaterial = defaultColorMattPlastic(color, 1, envMap);
-  const spreadWidth = 14;
+  const spreadWidth = 20;
   const {
     min = 0.02,
     sizeRange = Math.random()/12,

@@ -1,5 +1,4 @@
-import { Clock } from 'three';
-import { Quaternion } from "three";
+import { Clock, Quaternion, Vector2 } from 'three';
 
 class Loop {
   constructor(camera, scene, renderer, composer = null, stats, orbitControls, doPostprocessing) {
@@ -88,6 +87,18 @@ class Loop {
             rotation.z,
             rotation.w
           ));
+        
+        if (body.mesh.name === 'handle') {
+          const n = new Vector2(0, 0);
+          const b = new Vector2(position.x, position.z);
+          // console.log('distance:', n.distanceTo(b));
+
+          if (n.distanceTo(b) > 18) {
+            // push it back to the center
+            body.rigidBody.applyImpulse({ x: -position.x/4, y: 0, z: -position.z/4 }, true);
+            console.log('+++ kick it back !!!');
+          }
+        }
       });
 
       this.kinematicPositionBasedBodies.forEach(body => {

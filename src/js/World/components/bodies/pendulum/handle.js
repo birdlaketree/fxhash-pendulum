@@ -30,6 +30,7 @@ const handle = (
   const group = new Group();
   group.add(mesh);
   shiftHandleUVs(conf, mesh.geometry.attributes.uv);
+  group.name = 'handle';
 
   const rigidBodyDesc = RigidBodyDesc.dynamic();
   rigidBodyDesc.setTranslation(conf.translation.x, conf.translation.y, conf.translation.z);
