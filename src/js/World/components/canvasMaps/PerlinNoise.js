@@ -2,9 +2,7 @@ import {
   CanvasTexture,
   RepeatWrapping,
   LinearFilter,
-  sRGBEncoding,
-  RGBAFormat,
-  UnsignedByteType
+  sRGBEncoding
 } from 'three';
 import Perlin from 'pf-perlin';
 
