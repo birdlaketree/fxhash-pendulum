@@ -1,21 +1,10 @@
 import { PlaneGeometry, MathUtils, Mesh, Color } from 'three';
-import { RndDotsMaps } from "../components/canvasMaps/RndDotsMaps";
-import { RndDotsNormal } from '../components/canvasMaps/RndDotsNormal';
-import { GridDotsMaps } from '../components/canvasMaps/GridDotsMaps';
-import { RndNoiseNormal } from '../components/canvasMaps/RndNoiseNormal';
-import { RndNoiseTresholdNormal } from '../components/canvasMaps/RndNoiseMaps';
 import { canvasTextureMaterial } from "../components/materials/canvasTextureMaterial";
 import { GUI } from 'dat.gui';
 import { PerlinNoise } from '../components/canvasMaps/PerlinNoise';
 
 export const materialTester = scene => {
-
-  // let maps = new RndDotsMaps(new Color(0x0000ff));
-  // let maps = new GridDotsMaps(new Color(0x0000ff));
-
-  // let normalMap = new RndNoiseNormal(128);
   let normalMap = null;
-  // let maps = new RndNoiseTresholdNormal(new Color(0x0000ff), 64);
   let maps = new PerlinNoise();
 
   const material = canvasTextureMaterial({...maps}, {roughness: 1, metalness: 0}, 1);
