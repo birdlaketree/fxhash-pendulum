@@ -25,6 +25,12 @@ import { Resizer } from './system/Resizer'
 
 class World {
   constructor() {
+    console.log('');
+    console.log('fxhash', fxhash);
+    console.log('fxrand()', fxrand());
+    console.log('fxrand()', fxrand());
+    console.log('');
+
     this.xrEnabled = false;
     this.doPostprocessing = true;
 
