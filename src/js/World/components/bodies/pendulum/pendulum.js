@@ -10,8 +10,7 @@ const pendulum = (
     envMap,
     colorComposition
   ) => {
-  const sizeAndPositionID = Math.random();
-  const sizeAndPosition = sizePositionComposer(sizeAndPositionID);
+  const sizeAndPosition = sizePositionComposer();
 
   const handleComposition = {
     a: {
@@ -43,8 +42,7 @@ const pendulum = (
     }
   }
 
-  const materialCompositionID = Math.random();
-  materialListComposer(materialCompositionID, handleComposition, envMap);
+  materialListComposer(handleComposition, envMap);
 
   const handleA = handle(handleComposition.a, physicsWorld);
   scene.add(handleA.mesh);

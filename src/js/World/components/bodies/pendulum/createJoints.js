@@ -57,30 +57,30 @@ export const createJoints = (
   let jointB = physicsWorld.createImpulseJoint(paramsB, handleB.rigidBody, handleC.rigidBody, false);
 
   jointA.tick = (delta) => {
-    const treshold = Math.random();
+    const treshold = fxrand();
     if (treshold < 0.02) {
       handleA.rigidBody.wakeUp();
       handleB.rigidBody.wakeUp();
       handleC.rigidBody.wakeUp();
       const angleRangeDeg = 720;
-      const rndAngleRad = MathUtils.degToRad(Math.random() * angleRangeDeg - angleRangeDeg/2);
-      const stiffness = Math.random() * 220 + (100 * handleComposition.a.volume * handleComposition.b.volume); // strength of the force that will be applied to make the bodies reach the target relative positions
-      const damping   = Math.random() * 0.4 + 0.3;   // strength of the force that will be applied to make the bodies reach the target relative velocities 
+      const rndAngleRad = MathUtils.degToRad(fxrand() * angleRangeDeg - angleRangeDeg/2);
+      const stiffness = fxrand() * 220 + (100 * handleComposition.a.volume * handleComposition.b.volume); // strength of the force that will be applied to make the bodies reach the target relative positions
+      const damping   = fxrand() * 0.4 + 0.3;   // strength of the force that will be applied to make the bodies reach the target relative velocities 
       jointA.configureMotorPosition(rndAngleRad, stiffness, damping);
       // console.log('stiffness.a', (100 * handleComposition.a.volume * handleComposition.b.volume));
     }
   }
 
   jointB.tick = (delta) => {
-    const treshold = Math.random();
+    const treshold = fxrand();
     if (treshold < 0.02) {
       handleA.rigidBody.wakeUp();
       handleB.rigidBody.wakeUp();
       handleC.rigidBody.wakeUp();
       const angleRangeDeg = 720;
-      const rndAngleRad = MathUtils.degToRad(Math.random() * angleRangeDeg - angleRangeDeg/2);
-      const stiffness = Math.random() * 220 + (100 * handleComposition.b.volume * handleComposition.c.volume); // strength of the force that will be applied to make the bodies reach the target relative positions
-      const damping   = Math.random() * 0.4 + 0.3;   // strength of the force that will be applied to make the bodies reach the target relative velocities 
+      const rndAngleRad = MathUtils.degToRad(fxrand() * angleRangeDeg - angleRangeDeg/2);
+      const stiffness = fxrand() * 220 + (100 * handleComposition.b.volume * handleComposition.c.volume); // strength of the force that will be applied to make the bodies reach the target relative positions
+      const damping   = fxrand() * 0.4 + 0.3;   // strength of the force that will be applied to make the bodies reach the target relative velocities 
       jointB.configureMotorPosition(rndAngleRad, stiffness, damping);
       // console.log('stiffness.b', (100 * handleComposition.b.volume * handleComposition.c.volume));
     }

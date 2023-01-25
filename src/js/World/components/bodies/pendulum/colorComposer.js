@@ -1,6 +1,7 @@
 import { hslToHex } from "../../../utils/colorUtils";
 
-const colorComposer = (colorCompositionID) => {
+const colorComposer = () => {
+  colorCompositionID = fxrand();
   const envMapIntensity = 1;
 
   // primitives
@@ -18,13 +19,13 @@ const colorComposer = (colorCompositionID) => {
 
   // palette tools
 
-  const brightSaturation = () => Math.random() * 0.1 + 0.9;
-  const strongSaturation = () => Math.random() * 0.2 + 0.8;
-  const darkSaturation   = () => Math.random() * 0.4 + 0.2;
+  const brightSaturation = () => fxrand() * 0.1 + 0.9;
+  const strongSaturation = () => fxrand() * 0.2 + 0.8;
+  const darkSaturation   = () => fxrand() * 0.4 + 0.2;
 
-  const brightLightness = () => Math.random() * 0.35 + 0.5;
-  const strongLightness = () => Math.random() * 0.3  + 0.2;
-  const darkLightness   = () => Math.random() * 0.2  + 0.04;
+  const brightLightness = () => fxrand() * 0.35 + 0.5;
+  const strongLightness = () => fxrand() * 0.3  + 0.2;
+  const darkLightness   = () => fxrand() * 0.2  + 0.04;
 
   const brightTheme = [brightSaturation(), brightLightness()];
   const strongTheme = [strongSaturation(), strongLightness()];
@@ -47,13 +48,13 @@ const colorComposer = (colorCompositionID) => {
     ]
   }
 
-  // const grayscaleBright = () => Math.random() * 0.1 + 0.92;
-  // const grayscaleStrong = () => Math.random() * 0.3 + 0.1;
-  // const grayscaleDark   = () => Math.random() * 0.02;
+  // const grayscaleBright = () => fxrand() * 0.1 + 0.92;
+  // const grayscaleStrong = () => fxrand() * 0.3 + 0.1;
+  // const grayscaleDark   = () => fxrand() * 0.02;
 
-  const grayscaleBright = () => Math.random() * 0.35 + 0.5;
-  const grayscaleStrong = () => Math.random() * 0.3  + 0.2;
-  const grayscaleDark   = () => Math.random() * 0.2  + 0.0;
+  const grayscaleBright = () => fxrand() * 0.35 + 0.5;
+  const grayscaleStrong = () => fxrand() * 0.3  + 0.2;
+  const grayscaleDark   = () => fxrand() * 0.2  + 0.0;
 
   const grayscaleThemes = [
     grayscaleBright(),
@@ -64,18 +65,18 @@ const colorComposer = (colorCompositionID) => {
   // palettes
 
   const whiteBlackColor = () => {
-    const themeSeed = Math.random();
+    const themeSeed = fxrand();
     const themeIndex = Math.round((themes.length - 1) * themeSeed);
     const theme = themes[themeIndex];
 
     const a = black;
     const b = white;
     const c = {
-      color: hslToHex(Math.random(), ...theme),
+      color: hslToHex(fxrand(), ...theme),
       envMapIntensity
     };
 
-    const randomized = [a,b,c].sort(() => Math.random() - 0.5);
+    const randomized = [a,b,c].sort(() => fxrand() - 0.5);
     return {
       a: randomized[0],
       b: randomized[1],
@@ -86,25 +87,25 @@ const colorComposer = (colorCompositionID) => {
   paleteGenerators.push(whiteBlackColor);
 
   const duoAndLightness = () => {
-    const themeSeed = Math.random();
+    const themeSeed = fxrand();
     const themeIndex = Math.round((themes.length - 1) * themeSeed);
     const theme = themes[themeIndex];
 
-    const themeASeed = Math.random();
+    const themeASeed = fxrand();
     const themeAIndex = Math.round((themes.length - 1) * themeASeed);
     const themeA = themes[themeAIndex];
 
-    const themeBSeed = Math.random();
+    const themeBSeed = fxrand();
     const themeBIndex = Math.round((themes.length - 1) * themeBSeed);
     const themeB = themes[themeBIndex];
 
-    const initHue = Math.random();
+    const initHue = fxrand();
     const secondHueVariants = getHueVariants(initHue);
-    const secondHueSeed = Math.random();
+    const secondHueSeed = fxrand();
     const secondHueIndex = Math.round((secondHueVariants.length - 1) * secondHueSeed);
     const secondHue = secondHueVariants[secondHueIndex];
 
-    const a = Math.round(Math.random()) ? white : black;
+    const a = Math.round(fxrand()) ? white : black;
     const b = {
       color: hslToHex(initHue, ...themeA),
       envMapIntensity
@@ -114,7 +115,7 @@ const colorComposer = (colorCompositionID) => {
       envMapIntensity
     };
 
-    const randomized = [a,b,c].sort(() => Math.random() - 0.5);
+    const randomized = [a,b,c].sort(() => fxrand() - 0.5);
     return {
       a: randomized[0],
       b: randomized[1],
@@ -125,27 +126,27 @@ const colorComposer = (colorCompositionID) => {
   paleteGenerators.push(duoAndLightness);
 
   const tripple = () => {
-    const themeASeed = Math.random();
+    const themeASeed = fxrand();
     const themeAIndex = Math.round((themes.length - 1) * themeASeed);
     const themeA = themes[themeAIndex];
 
-    const themeBSeed = Math.random();
+    const themeBSeed = fxrand();
     const themeBIndex = Math.round((themes.length - 1) * themeBSeed);
     const themeB = themes[themeBIndex];
 
-    const themeCSeed = Math.random();
+    const themeCSeed = fxrand();
     const themeCIndex = Math.round((themes.length - 2) * themeCSeed);
     const themeC = themes[themeCIndex];
 
-    const initHue = Math.random();
+    const initHue = fxrand();
 
     const secondHueVariants = getHueVariants(initHue);
-    const secondHueSeed = Math.random();
+    const secondHueSeed = fxrand();
     const secondHueIndex = Math.round((secondHueVariants.length - 1) * secondHueSeed);
     const secondHue = secondHueVariants[secondHueIndex];
 
     const thirdHueVariants = getHueVariants(secondHue);
-    const thirdHueSeed = Math.random();
+    const thirdHueSeed = fxrand();
     const thirdHueIndex = Math.round((thirdHueVariants.length - 1) * thirdHueSeed);
     const thirdHue = thirdHueVariants[thirdHueIndex];
 
@@ -162,11 +163,11 @@ const colorComposer = (colorCompositionID) => {
       envMapIntensity
     };
 
-    const randomized = [a,b,c].sort(() => Math.random() - 0.5);
+    const randomized = [a,b,c].sort(() => fxrand() - 0.5);
 
     const bg1 = black;
     const bg2 = white;
-    const randomizedBg = [a,b,c,bg1,bg2].sort(() => Math.random() - 0.5);
+    const randomizedBg = [a,b,c,bg1,bg2].sort(() => fxrand() - 0.5);
 
     return {
       a: randomized[0],
@@ -178,15 +179,15 @@ const colorComposer = (colorCompositionID) => {
   paleteGenerators.push(tripple);
 
   const grayscale = () => {
-    const themeASeed = Math.random();
+    const themeASeed = fxrand();
     const themeAIndex = Math.round((grayscaleThemes.length - 1) * themeASeed);
     const themeA = grayscaleThemes[themeAIndex];
 
-    const themeBSeed = Math.random();
+    const themeBSeed = fxrand();
     const themeBIndex = Math.round((grayscaleThemes.length - 1) * themeBSeed);
     const themeB = grayscaleThemes[themeBIndex];
 
-    const themeCSeed = Math.random();
+    const themeCSeed = fxrand();
     const themeCIndex = Math.round((grayscaleThemes.length - 1) * themeCSeed);
     const themeC = grayscaleThemes[themeCIndex];
 
@@ -203,11 +204,11 @@ const colorComposer = (colorCompositionID) => {
       envMapIntensity
     };
 
-    const randomized = [a,b,c].sort(() => Math.random() - 0.5);
+    const randomized = [a,b,c].sort(() => fxrand() - 0.5);
 
     const bg1 = black;
     const bg2 = white;
-    const randomizedBg = [a,b,c,bg1,bg2].sort(() => Math.random() - 0.5);
+    const randomizedBg = [a,b,c,bg1,bg2].sort(() => fxrand() - 0.5);
 
     return {
       a: randomized[0],

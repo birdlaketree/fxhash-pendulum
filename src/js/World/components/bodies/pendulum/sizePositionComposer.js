@@ -1,6 +1,8 @@
 import { mapNumber } from "../../../utils/numUtils";
 
-const sizePositionComposer = sizeAndPositionID => {
+const sizePositionComposer = () => {
+  const sizeAndPositionID = fxrand();
+
   const minW = 0.3;
   const maxW  = 2.4;
 
@@ -19,27 +21,27 @@ const sizePositionComposer = sizeAndPositionID => {
     const bVolumeIndex = sizeAndPositionID;
     const bVolume = mapNumber(bVolumeIndex, 0, 1, minVolumeAsFrac, maxVolume);
     const bW      = mapNumber(1, 0, 1, minW, maxW);
-    const brd     = mapNumber(Math.random(), 0, 1, minAspect, maxAspect);
+    const brd     = mapNumber(fxrand(), 0, 1, minAspect, maxAspect);
     const brh = 1/brd;
     const bH = Math.pow(bVolume/bW * brh, 1/2);
     const bD = Math.pow(bVolume/bW * brd, 1/2);
 
-    const aVolumeIndex = Math.random();
+    const aVolumeIndex = fxrand();
     const aVolumeMin = bVolume * mapNumber(bVolumeIndex, 0, 1, 1, Math.log(bVolumeIndex + 0.0001) + minVolumeAsFrac);
     const aVolumeMax = bVolume * mapNumber(bVolumeIndex, 0, 1, 4, 1)
     const aVolume = mapNumber(aVolumeIndex, 0, 1, aVolumeMin, aVolumeMax);
-    const aW      = mapNumber(Math.random(), 0, 1, minW, maxW);
-    const ard     = mapNumber(Math.random(), 0, 1, minAspect, maxAspect);
+    const aW      = mapNumber(fxrand(), 0, 1, minW, maxW);
+    const ard     = mapNumber(fxrand(), 0, 1, minAspect, maxAspect);
     const arh = 1/ard;
     const aH = Math.pow(aVolume/aW * arh, 1/2);
     const aD = Math.pow(aVolume/aW * ard, 1/2);
 
-    const cVolumeIndex = Math.random();
+    const cVolumeIndex = fxrand();
     const cVolumeMin = bVolume * mapNumber(bVolumeIndex, 0, 1, 1, Math.log(bVolumeIndex + 0.0001) + minVolumeAsFrac);
     const cVolumeMax = bVolume * mapNumber(bVolumeIndex, 0, 1, 4, 1)
     const cVolume = mapNumber(cVolumeIndex, 0, 1, cVolumeMin, cVolumeMax);
-    const cW      = mapNumber(Math.random(), 0, 1, minW, maxW);
-    const crd     = mapNumber(Math.random(), 0, 1, minAspect, maxAspect);
+    const cW      = mapNumber(fxrand(), 0, 1, minW, maxW);
+    const crd     = mapNumber(fxrand(), 0, 1, minAspect, maxAspect);
     const crh = 1/crd;
     const cH = Math.pow(cVolume/cW * crh, 1/2);
     const cD = Math.pow(cVolume/cW * crd, 1/2);
@@ -78,28 +80,28 @@ const sizePositionComposer = sizeAndPositionID => {
     console.log('size:      sideWeighted');
     const aVolumeIndex = sizeAndPositionID;
     const aVolume = mapNumber(aVolumeIndex, 0, 1, minVolumeAsFrac, maxVolume);
-    const aW      = mapNumber(Math.random(), 0, 1, minW, maxW);
-    const ard     = mapNumber(Math.random(), 0, 1, minAspect, maxAspect);
+    const aW      = mapNumber(fxrand(), 0, 1, minW, maxW);
+    const ard     = mapNumber(fxrand(), 0, 1, minAspect, maxAspect);
     const arh = 1/ard;
     const aH = Math.pow(aVolume/aW * arh, 1/2);
     const aD = Math.pow(aVolume/aW * ard, 1/2);
 
-    const bVolumeIndex = Math.random();
+    const bVolumeIndex = fxrand();
     const bVolumeMin = aVolume * mapNumber(aVolumeIndex, 0, 1, 1, Math.log(aVolumeIndex*1.03 + 0.0001) + minVolumeAsFrac);
     const bVolumeMax = aVolume * mapNumber(aVolumeIndex, 0, 1, 4, 1)
     const bVolume = mapNumber(bVolumeIndex, 0, 1, bVolumeMin, bVolumeMax);
-    const bW      = mapNumber(Math.random(), 0, 1, minW, maxW);
-    const brd     = mapNumber(Math.random(), 0, 1, minAspect, maxAspect);
+    const bW      = mapNumber(fxrand(), 0, 1, minW, maxW);
+    const brd     = mapNumber(fxrand(), 0, 1, minAspect, maxAspect);
     const brh = 1/brd;
     const bH = Math.pow(bVolume/bW * brh, 1/2);
     const bD = Math.pow(bVolume/bW * brd, 1/2);
 
-    const cVolumeIndex = Math.random();
+    const cVolumeIndex = fxrand();
     const cVolumeMin = bVolume * mapNumber(bVolumeIndex, 0, 1, 1, Math.log(bVolumeIndex + 0.0001) + minVolumeAsFrac);
     const cVolumeMax = bVolume * mapNumber(bVolumeIndex, 0, 1, 4, 1)
     const cVolume = mapNumber(cVolumeIndex, 0, 1, cVolumeMin, cVolumeMax);
-    const cW      = mapNumber(Math.random(), 0, 1, minW, maxW);
-    const crd     = mapNumber(Math.random(), 0, 1, minAspect, maxAspect);
+    const cW      = mapNumber(fxrand(), 0, 1, minW, maxW);
+    const crd     = mapNumber(fxrand(), 0, 1, minAspect, maxAspect);
     const crh = 1/crd;
     const cH = Math.pow(cVolume/cW * crh, 1/2);
     const cD = Math.pow(cVolume/cW * crd, 1/2);
@@ -134,7 +136,7 @@ const sizePositionComposer = sizeAndPositionID => {
     }
   }
 
-  const sizeAndVolume = Math.round(Math.random()) ? centerWeighted() : sideWeighted();
+  const sizeAndVolume = Math.round(fxrand()) ? centerWeighted() : sideWeighted();
   const size = sizeAndVolume.size;
   // console.log('volume index', sizeAndVolume.volume);
 

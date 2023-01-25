@@ -2,10 +2,11 @@ import { canvasTextureMaterial } from "../../materials/canvasTextureMaterial";
 import { RndNoiseTresholdNormal } from "../../canvasMaps/RndNoiseMaps";
 
 const materialListComposer = (
-    materialCompositionID,
     handleComposition,
     envMap
   ) => {
+
+  const materialCompositionID = fxrand();
 
   // ROUGHNESS & METALNESS
 
@@ -41,9 +42,9 @@ const materialListComposer = (
   rmProprerties.push(shinyMetal);
 
   const rmTheme = () => {
-    const ai = Math.round(Math.random() * (rmProprerties.length - 1));
-    const bi = Math.round(Math.random() * (rmProprerties.length - 1));
-    const ci = Math.round(Math.random() * (rmProprerties.length - 1));
+    const ai = Math.round(fxrand() * (rmProprerties.length - 1));
+    const bi = Math.round(fxrand() * (rmProprerties.length - 1));
+    const ci = Math.round(fxrand() * (rmProprerties.length - 1));
     const a = rmProprerties[ai];
     const b = rmProprerties[bi];
     const c = rmProprerties[ci];
@@ -76,9 +77,9 @@ const materialListComposer = (
 
   let maps = themesDiffuse[themeIndex]();
   console.log('materials:', themesDiffuse[themeIndex].name);
-  let mapsA = new maps.a(handleComposition.a.colorComposition.color, Math.random()*0.25, Math.random()*rm.a.normalRange);
-  let mapsB = new maps.b(handleComposition.b.colorComposition.color, Math.random()*0.25, Math.random()*rm.a.normalRange);
-  let mapsC = new maps.c(handleComposition.c.colorComposition.color, Math.random()*0.25, Math.random()*rm.a.normalRange);
+  let mapsA = new maps.a(handleComposition.a.colorComposition.color, fxrand()*0.25, fxrand()*rm.a.normalRange);
+  let mapsB = new maps.b(handleComposition.b.colorComposition.color, fxrand()*0.25, fxrand()*rm.a.normalRange);
+  let mapsC = new maps.c(handleComposition.c.colorComposition.color, fxrand()*0.25, fxrand()*rm.a.normalRange);
 
   handleComposition.a.material = canvasTextureMaterial(
     {...mapsA, envMap},

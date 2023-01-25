@@ -27,15 +27,12 @@ class World {
   constructor() {
     console.log('');
     console.log('fxhash', fxhash);
-    console.log('fxrand()', fxrand());
-    console.log('fxrand()', fxrand());
     console.log('');
 
     this.xrEnabled = false;
     this.doPostprocessing = true;
 
-    this.colorCompositionID = Math.random();
-    this.colorComposition = colorComposer(this.colorCompositionID);
+    this.colorComposition = colorComposer();
     this.bgColor = this.colorComposition.bg.color;
     this.bgHSL = {};
     this.bgColor.getHSL(this.bgHSL);
@@ -86,7 +83,7 @@ class World {
     
     this.walls               = walls    (this.scene, this.floorSize, this.bgHSL, this.bgColor);
     this.pendulum            = pendulum (this.scene, this.loop, this.physicsWorld, envMap, this.colorComposition);
-    this.spheresFragment     = spheres  (this.scene, this.loop, this.physicsWorld, envMap, this.bgHSL, {min: 0.02,  sizeRange: Math.random()/20, n: 8, y: 0.2, yRange: 3});
+    this.spheresFragment     = spheres  (this.scene, this.loop, this.physicsWorld, envMap, this.bgHSL, {min: 0.02,  sizeRange: fxrand()/20, n: 8, y: 0.2, yRange: 3});
     this.cubesFragment       = cubes    (this.scene, this.loop, this.physicsWorld, envMap, this.bgHSL, {min: 0.05,  sizeRange: 0.10, n: 10 , y: 0.2,  yRange: 2});
     this.miniCubesFragment   = cubes    (this.scene, this.loop, this.physicsWorld, envMap, this.bgHSL, {min: 0.006, sizeRange: 0.04, n: 48, y: 0.06, yRange: 2});
     
