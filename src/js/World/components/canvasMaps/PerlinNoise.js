@@ -24,7 +24,7 @@ class PerlinNoise {
       persistence: 0.1
     });
     const resolution = Math.round(fxrand() * 32 + 32); // from 32 t0 64
-    console.log('perlin.r: ', resolution);
+    // console.log('perlin.r: ', resolution);
     const imageData = perlinCanvasContext.getImageData(0, 0, width, height);
     let dataIndex = 0;
 

@@ -22,12 +22,15 @@ import { ssao as postprocessing } from './components/effects/ssao'
 import { materialTester } from './utils/materialTester'
 import { lightTester } from './utils/lightTester'
 import { Resizer } from './system/Resizer'
+import { planetsConfig } from "./components/bodies/planetsConfig";
 
 class World {
   constructor() {
-    console.log('');
-    console.log('fxhash', fxhash);
-    console.log('');
+    console.log('fxhash:   ', fxhash);
+
+    this.planetsConfig = planetsConfig();
+    this.gravity = this.planetsConfig.gravity;
+    this.dt = 1/120;
 
     this.xrEnabled = false;
     this.doPostprocessing = true;
@@ -45,7 +48,7 @@ class World {
     this.stats = stats();
     this.orbitControls = orbitControls(this.camera, this.renderer.domElement);
     this.composer = this.doPostprocessing ? postprocessing(this.camera, this.scene, this.renderer) : null;
-    this.loop = new Loop(this.camera, this.scene, this.renderer, this.composer, this.stats, this.orbitControls, this.doPostprocessing);
+    this.loop = new Loop(this.camera, this.scene, this.renderer, this.composer, this.stats, this.orbitControls, this.doPostprocessing, this.gravity, this.dt);
 
     this.dolly = createDolly(this.camera, this.scene);
     this.vrControls = this.xrEnabled ? new VrControls(this.renderer, this.dolly, this.camera) : null;
@@ -67,8 +70,9 @@ class World {
   }
 
   physicsConfig() {
-    const gravity = new Vector3(0.0, -9.81, 0.0);
-    this.physicsWorld = new RWorld(gravity);
+    const engineGravity = new Vector3(0.0, -this.gravity, 0.0);
+    this.physicsWorld = new RWorld(engineGravity);
+    this.physicsWorld.timestep = this.dt;
     this.loop.setPhysics(this.physicsWorld);
     this.room = roomPhysicsComposition(this.physicsWorld, this.floorSize, false);
     this.handsPhysicsController = this.xrEnabled ? createHandsPhysicsController(this.scene, this.loop, this.physicsWorld, this.vrControls) : null;
@@ -82,7 +86,7 @@ class World {
     // this.lightTester         = lightTester(this.scene, envMap);
     
     this.walls               = walls    (this.scene, this.floorSize, this.bgHSL, this.bgColor);
-    this.pendulum            = pendulum (this.scene, this.loop, this.physicsWorld, envMap, this.colorComposition);
+    this.pendulum            = pendulum (this.scene, this.loop, this.physicsWorld, envMap, this.colorComposition, this.gravity);
     this.spheresFragment     = spheres  (this.scene, this.loop, this.physicsWorld, envMap, this.bgHSL, {min: 0.02,  sizeRange: fxrand()/20, n: 8, y: 0.2, yRange: 3});
     this.cubesFragment       = cubes    (this.scene, this.loop, this.physicsWorld, envMap, this.bgHSL, {min: 0.05,  sizeRange: 0.10, n: 10 , y: 0.2,  yRange: 2});
     this.miniCubesFragment   = cubes    (this.scene, this.loop, this.physicsWorld, envMap, this.bgHSL, {min: 0.006, sizeRange: 0.04, n: 48, y: 0.06, yRange: 2});

@@ -7,7 +7,7 @@ class RndNoiseTresholdNormal {
     const width  = 1024;
 		const height = 1024;
 
-    console.log('colorNoise', colorNoiselevel, 'normalNoise', normalNoiselevel);
+    // console.log('colorNoise', colorNoiselevel, 'normalNoise', normalNoiselevel);
 
 		let colorCanvas = document.createElement('canvas');
 		colorCanvas.width = width;

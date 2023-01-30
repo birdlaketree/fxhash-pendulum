@@ -156,21 +156,23 @@ const sizePositionComposer = () => {
     hCConfXOffset = size.c.width/2;
   };
 
+  const zoffset = 0;
+
   const translation = {
     a: {
       x: -size.b.width/2 - size.a.width/2 + hBConfXOffset + hAConfXOffset,
       y: initY,
-      z: size.b.depth/2 + size.a.depth/2
+      z: size.b.depth/2 + size.a.depth/2 +zoffset
     },
     b: {
       x: 0,
       y: initY,
-      z: 0
+      z: 0 +zoffset
     },
     c: {
       x: size.b.width/2 + size.c.width/2 - hBConfXOffset - hCConfXOffset,
       y: initY,
-      z: -size.b.depth/2 - size.c.depth/2
+      z: -size.b.depth/2 - size.c.depth/2 +zoffset
     }
   }
 

@@ -1,7 +1,8 @@
 import { Clock, Quaternion, Vector2 } from 'three';
+import { mapNumber } from '../utils/numUtils';
 
 class Loop {
-  constructor(camera, scene, renderer, composer = null, stats, orbitControls, doPostprocessing) {
+  constructor(camera, scene, renderer, composer = null, stats, orbitControls, doPostprocessing, gravity, dt) {
     this.camera = camera;
     this.scene = scene;
     this.renderer = renderer;
@@ -15,13 +16,15 @@ class Loop {
     this.composer = composer;
     this.doPostprocessing = doPostprocessing;
     this.runPhysics = true;
+    this.gravity = gravity;
+    this.dt = dt;
+    this.accumulator = 0;
     document.addEventListener('keypress', this.togglePhysicsEngine);
   }
 
   start() {
     this.renderer.setAnimationLoop(() => {
-      // tell every animated object to tick forward one frame
-      if (this.runPhysics) this.tick();
+      if (this.runPhysics) this.tick(); // update physics engine
 
       this.stats.update();
       this.orbitControls.update();
@@ -56,22 +59,44 @@ class Loop {
     this.composer = composer;
   }
 
-  tick() {
-    // only call the getDelta function once per frame!
-    const delta = this.clock.getDelta();
-
-    // console.log(
-    //   `The last frame rendered in ${delta * 1000} milliseconds`,
-    // );
-
+  updatePhysicsObjects = () => {
+    // update motor positions
     for (const object of this.updatableBodies) {
-      object.tick(delta);
+      object.tick(this.dt);
     }
-
     
-    if (this.physicsWorld && this.bodies.length > 0) {
-      this.physicsWorld.step();
+    // boundary crossing impulse that kicks body back to the direction of center
+    this.bodies.forEach(body => {
+      if (body.mesh.name === 'handle') {
+        const position = body.rigidBody.translation();
+        const b = new Vector2(position.x, position.z);
 
+        if (b.length() > 18) {
+          const xI = -position.x/b.length() * 0.1;
+          const zI = -position.z/b.length() * 0.1;
+          body.rigidBody.applyImpulse({x: xI, y: 0, z: zI}, true);
+        }
+      }
+    });
+  }
+
+  tick() {
+    const frameTime = this.clock.getDelta();
+
+    if (this.physicsWorld && this.bodies.length > 0) {
+      this.accumulator += frameTime;
+
+      // accumulator architecture is implemented according to this article
+      // https://gafferongames.com/post/fix_your_timestep/
+
+      while (this.accumulator >= this.dt) {
+        // before making step in engine, run all the code that deals with updates to ensure we have a deterministic simulation
+        this.updatePhysicsObjects();
+        this.physicsWorld.step();
+        this.accumulator -= this.dt;
+      }
+
+      // now update threejs items
       this.bodies.forEach(body => {
         const position = body.rigidBody.translation();
         const rotation = body.rigidBody.rotation();
@@ -87,32 +112,21 @@ class Loop {
             rotation.z,
             rotation.w
           ));
-        
-        if (body.mesh.name === 'handle') {
-          const n = new Vector2(0, 0);
-          const b = new Vector2(position.x, position.z);
-          // console.log('distance:', n.distanceTo(b));
-
-          if (n.distanceTo(b) > 18) {
-            // push it back to the center
-            body.rigidBody.applyImpulse({ x: -position.x/4, y: 0, z: -position.z/4 }, true);
-            console.log('+++ kick it back !!!');
-          }
-        }
       });
 
-      this.kinematicPositionBasedBodies.forEach(body => {
-        const position = body.mesh.position;
-        const rotation = body.mesh.rotation;
+      // no kinematics since we are running a deterministic simulation
+      // this.kinematicPositionBasedBodies.forEach(body => {
+      //   const position = body.mesh.position;
+      //   const rotation = body.mesh.rotation;
 
-        const quaternion = new Quaternion();
-        quaternion.setFromEuler(rotation);
+      //   const quaternion = new Quaternion();
+      //   quaternion.setFromEuler(rotation);
 
-        body.rigidBody.setNextKinematicTranslation(position);
-        body.rigidBody.setNextKinematicRotation(quaternion);
-        // body.rigidBody.setTranslation(position, true);
-        // body.rigidBody.setRotation(quaternion, true);
-      });
+      //   body.rigidBody.setNextKinematicTranslation(position);
+      //   body.rigidBody.setNextKinematicRotation(quaternion);
+      //   // body.rigidBody.setTranslation(position, true);
+      //   // body.rigidBody.setRotation(quaternion, true);
+      // });
 
     }
   }

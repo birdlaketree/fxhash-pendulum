@@ -8,7 +8,8 @@ const pendulum = (
     loop,
     physicsWorld,
     envMap,
-    colorComposition
+    colorComposition,
+    gravity
   ) => {
   const sizeAndPosition = sizePositionComposer();
 
@@ -62,7 +63,8 @@ const pendulum = (
     physicsWorld,
     handleA,
     handleB,
-    handleC
+    handleC,
+    gravity
   );
 
   return {
