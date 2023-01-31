@@ -10,11 +10,9 @@
       let alphabet = "123456789abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ"
       
       var fxhash = "oo" + Array(49).fill(0).map(_=>alphabet[(Math.random()*alphabet.length)|0]).join('')
-      // var fxhash = "oo1bf6NEfjpscmUrG2snkMkq4rPQauJNJGN1c1bLoq7RnEGdsV6";
-      // var fxhash = "oobbeG7e9YWs6g3M1FfpXZr3UtxHwSVCMNSWCbyBj9SD2WKggo3";
-      // var fxhash = "ooi16qTCx3Eni7CYtYNTxnbUr2rZYAwYyPaZjNkGit6bE9eguZ8";
-      // var fxhash = "ooUVDRKf5phXEy8x3nF5wgfTgZW7W53LGVBL7YnyPboggnNMeoX";
-      // var fxhash = "ooCKUz93uMuoGU9xhmK6KvY1U7UxBgFFaajQpitPL3WSSL3LTd1";
+      // var fxhash = "ookgB9RPSdVJWfsbBa6Cxmk4o7D5bGQM1tG9mC6CwE7qWjF9tjL";
+      // var fxhash = "oofKNbtgPi3avSf3BpF9t5N4SEQuEzmFapL4zExuxCUoAujYKB8";
+      // var fxhash = "oo6EpBzjC6dnBaFhzbW2ZMizDor9WPNURjL2grqA9R213wgb427";
       
       let b58dec = str=>[...str].reduce((p,c)=>p*alphabet.length+alphabet.indexOf(c)|0, 0)
       let fxhashTrunc = fxhash.slice(2)
