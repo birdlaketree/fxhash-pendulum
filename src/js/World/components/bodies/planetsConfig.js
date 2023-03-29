@@ -1,6 +1,6 @@
 const planetsConfig = () => {
   // https://nssdc.gsfc.nasa.gov/planetary/factsheet/
-  config = [
+  const config = [
     {
       name: 'Mercury',
       gravity: 3.7,
