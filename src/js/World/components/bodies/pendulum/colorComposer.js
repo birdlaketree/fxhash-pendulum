@@ -293,16 +293,12 @@ const colorComposer = () => {
 
   if (colorCompositionID < 0.05) {
     colorConfig = grayscale();
-    paleteName = grayscale.name;
   } else if ((colorCompositionID >= 0.05) && (colorCompositionID < 0.6)) {
     colorConfig = whiteBlackColor();
-    paleteName = whiteBlackColor.name;
   } else if ((colorCompositionID >= 0.6) && (colorCompositionID < 0.8)) {
     colorConfig = tripple();
-    paleteName = tripple.name;
   } else if ((colorCompositionID >= 0.8) && (colorCompositionID <= 1)) {
     colorConfig = duoAndLightness();
-    paleteName = duoAndLightness.name;
   }
 
   // colorConfig = grayscale();
