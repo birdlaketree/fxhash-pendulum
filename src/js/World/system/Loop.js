@@ -19,14 +19,20 @@ class Loop {
     this.gravity = gravity;
     this.dt = dt;
     this.accumulator = 0;
+    this.stepCounter = 0;
+    this.engineInitStepDone = false;
     document.addEventListener('keypress', this.togglePhysicsEngine);
+    document.addEventListener('visibilitychange', e => this.handleVisibilityChange(e));
   }
 
   start() {
     this.renderer.setAnimationLoop(() => {
       if (this.runPhysics) this.tick(); // update physics engine
 
-      this.stats.update();
+      if ( this.stats !== undefined) {
+        this.stats.update(); 
+      }
+
       this.orbitControls.update();
 
       if (this.doPostprocessing) {
@@ -48,15 +54,49 @@ class Loop {
   togglePhysicsEngine = (e) => {
     if (e.code === 'KeyR') {
       if (this.runPhysics === true) {
+        this.clock.stop();
         this.runPhysics = false;
       } else {
+        this.clock.start();
         this.runPhysics = true;
       }
     }
   }
 
+  handleVisibilityChange(e) {
+    if (document.visibilityState === 'hidden') {
+      this.clock.stop();
+      this.stop();
+    } else {
+      this.clock.start();
+      this.start();
+    }
+  }
+
   updateComposer = (composer) => {
     this.composer = composer;
+  }
+
+  prepareForCapture = () => {
+    if (this.doPostprocessing) {
+      this.composer.render();
+    } else {
+      this.renderer.render(this.scene, this.camera);
+    }
+  }
+
+  saveAsPng = () => {
+    console.log('downloading...', this.stepCounter);
+
+    const imgData = this.renderer.domElement.toDataURL();
+    var img = new Image();
+    img.src = imgData;
+
+    const link = document.createElement('a');
+    link.download = 'crash_' + fxhash + '.png';
+    link.href = imgData;
+    link.click();
+    link.delete;
   }
 
   updatePhysicsObjects = () => {
@@ -78,6 +118,23 @@ class Loop {
         }
       }
     });
+
+    if (!this.engineInitStepDone) {
+      const preloader = document.getElementById("preloader");
+      preloader.style.display = "none";
+      preloader?.remove();
+      this.engineInitStepDone = true;
+    }
+
+    if (this.stepCounter <= 400) {
+      if (this.stepCounter === 400) {
+        // this.prepareForCapture();
+        // this.saveAsPng();
+        // location.reload();
+        $fx.preview();
+      }
+      ++ this.stepCounter;
+    }
   }
 
   tick() {

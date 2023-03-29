@@ -6,7 +6,7 @@ const materialListComposer = (
     envMap
   ) => {
 
-  const materialCompositionID = fxrand();
+  const materialCompositionID = $fx.rand();
 
   // ROUGHNESS & METALNESS
 
@@ -42,9 +42,9 @@ const materialListComposer = (
   rmProprerties.push(shinyMetal);
 
   const rmTheme = () => {
-    const ai = Math.round(fxrand() * (rmProprerties.length - 1));
-    const bi = Math.round(fxrand() * (rmProprerties.length - 1));
-    const ci = Math.round(fxrand() * (rmProprerties.length - 1));
+    const ai = Math.round($fx.rand() * (rmProprerties.length - 1));
+    const bi = Math.round($fx.rand() * (rmProprerties.length - 1));
+    const ci = Math.round($fx.rand() * (rmProprerties.length - 1));
     const a = rmProprerties[ai];
     const b = rmProprerties[bi];
     const c = rmProprerties[ci];
@@ -78,9 +78,9 @@ const materialListComposer = (
   let maps = themesDiffuse[themeIndex]();
   // console.log('materials:', themesDiffuse[themeIndex].name);
 
-  let mapsA = new maps.a(handleComposition.a.colorComposition.color, fxrand()*0.25, fxrand()*rm.a.normalRange);
-  let mapsB = new maps.b(handleComposition.b.colorComposition.color, fxrand()*0.25, fxrand()*rm.a.normalRange);
-  let mapsC = new maps.c(handleComposition.c.colorComposition.color, fxrand()*0.25, fxrand()*rm.a.normalRange);
+  let mapsA = new maps.a(handleComposition.a.colorComposition.color, $fx.rand()*0.25, $fx.rand()*rm.a.normalRange);
+  let mapsB = new maps.b(handleComposition.b.colorComposition.color, $fx.rand()*0.25, $fx.rand()*rm.a.normalRange);
+  let mapsC = new maps.c(handleComposition.c.colorComposition.color, $fx.rand()*0.25, $fx.rand()*rm.a.normalRange);
 
   handleComposition.a.material = canvasTextureMaterial(
     {...mapsA, envMap},

@@ -23,19 +23,19 @@ const cubes = (
 
   for (let i = 0; i < n; i++) {
     const size = {
-      width:  fxrand() * sizeRange + min,
-      height: fxrand() * sizeRange + min,
-      depth:  fxrand() * sizeRange + min
+      width:  $fx.rand() * sizeRange + min,
+      height: $fx.rand() * sizeRange + min,
+      depth:  $fx.rand() * sizeRange + min
     }
     const translation = {
-      x: fxrand() * spreadWidth - spreadWidth/2,
-      y: fxrand() * yRange + y,
-      z: fxrand() * spreadWidth - spreadWidth/2
+      x: $fx.rand() * spreadWidth - spreadWidth/2,
+      y: $fx.rand() * yRange + y,
+      z: $fx.rand() * spreadWidth - spreadWidth/2
     }
     const rotation = {
-      x: fxrand(),
-      y: fxrand(),
-      z: fxrand()
+      x: $fx.rand(),
+      y: $fx.rand(),
+      z: $fx.rand()
     }
     const cubeItem = cube(blackMaterial, size, translation, rotation, physicsWorld);
     scene.add(cubeItem.mesh);

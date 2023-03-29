@@ -33,35 +33,41 @@ class World {
     this.dt = 1/120;
 
     this.xrEnabled = false;
-    this.doPostprocessing = true;
+    this.postprocessingEnabled = true;
+    this.printToolsEnabled = true;
 
     this.colorComposition = colorComposer();
     this.bgColor = this.colorComposition.bg.color;
     this.bgHSL = {};
     this.bgColor.getHSL(this.bgHSL);
 
-    this.renderer = createRenderer(this.doPostprocessing, this.xrEnabled);
+    this.renderer = createRenderer(this.postprocessingEnabled, this.xrEnabled);
     this.scene    = createScene();
     this.camera   = createCamera();
     this.lights   = createLights(this.scene);
 
-    this.stats = stats();
+    this.stats = stats(false);
     this.orbitControls = orbitControls(this.camera, this.renderer.domElement);
-    this.composer = this.doPostprocessing ? postprocessing(this.camera, this.scene, this.renderer) : null;
-    this.loop = new Loop(this.camera, this.scene, this.renderer, this.composer, this.stats, this.orbitControls, this.doPostprocessing, this.gravity, this.dt);
+    this.composer = this.postprocessingEnabled ? postprocessing(this.camera, this.scene, this.renderer) : null;
+    this.loop = new Loop(this.camera, this.scene, this.renderer, this.composer, this.stats, this.orbitControls, this.postprocessingEnabled, this.gravity, this.dt);
 
     this.dolly = createDolly(this.camera, this.scene);
     this.vrControls = this.xrEnabled ? new VrControls(this.renderer, this.dolly, this.camera) : null;
     this.xrEnabled ? this.loop.updatableBodies.push(this.vrControls) : null;
 
     this.floorSize = 300;
-    setPrintTools(this.renderer, this.scene, this.camera);
+    this.printTools = this.printToolsEnabled ? setPrintTools(this.renderer, this.composer, this.postprocessingEnabled, this.scene, this.camera) : null;
 
     this.resizer = new Resizer(this.camera, this.renderer);
     this.resizer.onResize = () => {
-      this.composer = this.doPostprocessing ? postprocessing(this.camera, this.scene, this.renderer) : null;
+      this.composer = this.postprocessingEnabled ? postprocessing(this.camera, this.scene, this.renderer) : null;
       this.loop.updateComposer(this.composer);
     };
+
+    $fx.features({
+      'Background Color': this.colorComposition.bg.name,
+      'Color Palette': this.colorComposition.name,
+    });
     
     RAPIER.init().then(() => {
       this.physicsConfig();
@@ -87,7 +93,7 @@ class World {
     
     this.walls               = walls    (this.scene, this.floorSize, this.bgHSL, this.bgColor);
     this.pendulum            = pendulum (this.scene, this.loop, this.physicsWorld, envMap, this.colorComposition, this.gravity);
-    this.spheresFragment     = spheres  (this.scene, this.loop, this.physicsWorld, envMap, this.bgHSL, {min: 0.02,  sizeRange: fxrand()/20, n: 8, y: 0.2, yRange: 3});
+    this.spheresFragment     = spheres  (this.scene, this.loop, this.physicsWorld, envMap, this.bgHSL, {min: 0.02,  sizeRange: $fx.rand()/20, n: 8, y: 0.2, yRange: 3});
     this.cubesFragment       = cubes    (this.scene, this.loop, this.physicsWorld, envMap, this.bgHSL, {min: 0.05,  sizeRange: 0.10, n: 10 , y: 0.2,  yRange: 2});
     this.miniCubesFragment   = cubes    (this.scene, this.loop, this.physicsWorld, envMap, this.bgHSL, {min: 0.006, sizeRange: 0.04, n: 48, y: 0.06, yRange: 2});
     
@@ -95,6 +101,8 @@ class World {
   }
 
   start() {
+    const preloaderText = document.getElementById("preloader-text");
+    preloaderText.innerText="•";
     this.loop.start();
   }
 

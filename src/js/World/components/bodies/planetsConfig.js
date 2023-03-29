@@ -43,7 +43,7 @@ const planetsConfig = () => {
     },
   ];
 
-  const gi = Math.round((config.length - 1) * fxrand());
+  const gi = Math.round((config.length - 1) * $fx.rand());
   // const gi = 5;
   console.log('planet:   ', config[gi].name, config[gi].gravity);
   return config[gi];

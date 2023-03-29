@@ -8,9 +8,9 @@ const createCamera = () => {
   // camera.position.y = 9;
   // camera.position.z = 9;
 
-  const radius  = fxrand()*15+9;
-  const polar   = MathUtils.degToRad(fxrand()*45+30);
-  const equator = MathUtils.degToRad(fxrand()*60+15);
+  const radius  = $fx.rand()*15+9;
+  const polar   = MathUtils.degToRad($fx.rand()*45+30);
+  const equator = MathUtils.degToRad($fx.rand()*60+15);
 
   const cameraVector = new Vector3();
   cameraVector.setFromSphericalCoords(radius, polar, equator);
