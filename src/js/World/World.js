@@ -2,7 +2,7 @@ import RAPIER from '@dimforge/rapier3d-compat'
 import { World as RWorld } from '@dimforge/rapier3d-compat'
 import { orbitControls } from './utils/orbitControls'
 import { stats } from './utils/stats'
-import { Vector3, PMREMGenerator } from "three"
+import { Vector3, PMREMGenerator, EquirectangularReflectionMapping } from "three"
 import { Loop } from './system/Loop.js'
 import { createRenderer } from './system/renderer.js'
 import { createScene } from './components/stage/scene.js'
@@ -88,6 +88,10 @@ class World {
   buildScene() {
     const pmremGenerator = new PMREMGenerator(this.renderer);
     const envMap = pmremGenerator.fromScene(new RoomEnvironment(), 0.001).texture;
+
+    // envMap.mapping = EquirectangularReflectionMapping;
+    // this.scene.environment = envMap;
+    // this.scene.background = this.bgColor;
 
     // this.materialTester      = materialTester(this.scene, envMap);
     // this.lightTester         = lightTester(this.scene, envMap);

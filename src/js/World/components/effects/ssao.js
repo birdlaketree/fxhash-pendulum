@@ -1,84 +1,116 @@
 import { GUI } from 'dat.gui';
+import * as POSTPROCESSING from "postprocessing"
+import { SSGIEffect, TRAAEffect, MotionBlurEffect, VelocityDepthNormalPass } from "realism-effects"
 import { BlendFunction, NormalPass, SSAOEffect, SMAAEffect, SMAAPreset, EdgeDetectionMode, EffectComposer, EffectPass, RenderPass, TextureEffect, DepthDownsamplingPass } from "postprocessing";
+import { SSGIDebugGUI } from '../../utils/SSGIDebugGUI';
 
 const ssao = (
   camera,
   scene,
   renderer
 ) => {
-  const capabilities = renderer.capabilities;
-  const composer = new EffectComposer(renderer);
-  composer.addPass(new RenderPass(scene, camera));
   
-  const normalPass = new NormalPass(scene, camera);
-  const depthDownsamplingPass = new DepthDownsamplingPass({
-    normalBuffer: normalPass.texture,
-    resolutionScale: 1.0
-  });
+  const composer = new POSTPROCESSING.EffectComposer(renderer)
+  composer.addPass(new RenderPass(scene, camera));
 
-  const normalDepthBuffer = capabilities.isWebGL2 ? depthDownsamplingPass.texture : null;
+  const velocityDepthNormalPass = new VelocityDepthNormalPass(scene, camera)
+  composer.addPass(velocityDepthNormalPass)
 
+  const options = {
+		distance: 2.0,
+		thickness: 1.3,
+		autoThickness: false,
+		maxRoughness: 1,
+		blend: 0.95,
+		denoiseIterations: 4,
+		denoiseKernel: 3,
+		denoiseDiffuse: 25,
+		denoiseSpecular: 25.5,
+		depthPhi: 5,
+		normalPhi: 28,
+		roughnessPhi: 18.75,
+		envBlur: 0.5,
+		importanceSampling: false,
+		directLightMultiplier: 1,
+		steps: 20,
+		refineSteps: 4,
+		spp: 1,
+		resolutionScale: 1,
+		missedRays: false
+	}
+
+  const ssgiEffect = new SSGIEffect(scene, camera, velocityDepthNormalPass, options)
+  
+  // const traaEffect = new TRAAEffect(scene, camera, velocityDepthNormalPass)
   const smaaEffect = new SMAAEffect();
   smaaEffect.preset = SMAAPreset.ULTRA;
   smaaEffect.edgeDetectionMode = EdgeDetectionMode.DEPTH;
   smaaEffect.edgeDetectionMaterial.edgeDetectionThreshold = 0.05;
+  const motionBlurEffect = new MotionBlurEffect(velocityDepthNormalPass)
+  const effectPass = new POSTPROCESSING.EffectPass(camera, ssgiEffect)
+  const effectPass2 = new POSTPROCESSING.EffectPass(camera, smaaEffect, motionBlurEffect)
+  composer.addPass(effectPass)
+  composer.addPass(effectPass2)
+
+  // const gui = new SSGIDebugGUI(ssgiEffect, options)
+
+  // ---
+
+  // const capabilities = renderer.capabilities;
+  // const composer = new EffectComposer(renderer);
+  // composer.addPass(new RenderPass(scene, camera));
   
+  // const normalPass = new NormalPass(scene, camera);
+  // const depthDownsamplingPass = new DepthDownsamplingPass({
+  //   normalBuffer: normalPass.texture,
+  //   resolutionScale: 1.0
+  // });
+
+  // const normalDepthBuffer = capabilities.isWebGL2 ? depthDownsamplingPass.texture : null;
+
+  // const smaaEffect = new SMAAEffect();
+  // smaaEffect.preset = SMAAPreset.ULTRA;
+  // smaaEffect.edgeDetectionMode = EdgeDetectionMode.DEPTH;
+  // smaaEffect.edgeDetectionMaterial.edgeDetectionThreshold = 0.05;
+
   // const ssaoEffect = new SSAOEffect(camera, normalPass.texture, {
   //   blendFunction: BlendFunction.MULTIPLY,
   //   // blendFunction: BlendFunction.NORMAL,
   //   distanceScaling: false,
   //   depthAwareUpsampling: false,
   //   normalDepthBuffer,
-  //   samples: 10,
+  //   samples: 16,
   //   rings: 3,
   //   worldDistanceThreshold: 35,
   //   worldDistanceFalloff: 10,
   //   luminanceInfluence: 0.6,
   //   minRadiusScale: 0.1,
-  //   radius: 0.03,
-  //   intensity: 1.9,
-  //   bias: 0.01,
-  //   fade: 0.034,
+  //   radius: 0.075,
+  //   intensity: 10,
+  //   bias: 0.082,
+  //   // fade: 0.085,
+  //   fade: 0.095,
   //   color: null,
   //   resolutionScale: 1.0,
   // });
 
-  const ssaoEffect = new SSAOEffect(camera, normalPass.texture, {
-    blendFunction: BlendFunction.MULTIPLY,
-    // blendFunction: BlendFunction.NORMAL,
-    distanceScaling: false,
-    depthAwareUpsampling: false,
-    normalDepthBuffer,
-    samples: 16,
-    rings: 3,
-    worldDistanceThreshold: 35,
-    worldDistanceFalloff: 10,
-    luminanceInfluence: 0.6,
-    minRadiusScale: 0.1,
-    radius: 0.075,
-    intensity: 10,
-    bias: 0.082,
-    // fade: 0.085,
-    fade: 0.095,
-    color: null,
-    resolutionScale: 1.0,
-  });
+  // const textureEffect = new TextureEffect({
+  //   blendFunction: BlendFunction.SKIP,
+  //   texture: depthDownsamplingPass.texture
+  // });
 
-  const textureEffect = new TextureEffect({
-    blendFunction: BlendFunction.SKIP,
-    texture: depthDownsamplingPass.texture
-  });
+  // const effectPass = new EffectPass(camera, smaaEffect, ssaoEffect, textureEffect);
+  // composer.addPass(normalPass);
 
-  const effectPass = new EffectPass(camera, smaaEffect, ssaoEffect, textureEffect);
-  composer.addPass(normalPass);
+  // if(capabilities.isWebGL2) {
+  //   composer.addPass(depthDownsamplingPass);
+  // } else {
+  //   console.log("WebGL 2 not supported, falling back to naive depth downsampling");
+  // }
 
-  if(capabilities.isWebGL2) {
-    composer.addPass(depthDownsamplingPass);
-  } else {
-    console.log("WebGL 2 not supported, falling back to naive depth downsampling");
-  }
+  // composer.addPass(effectPass);
 
-  composer.addPass(effectPass);
+  // ---
 
   // const blendMode = ssaoEffect.blendMode;
   // const uniforms = ssaoEffect.ssaoMaterial.uniforms;
