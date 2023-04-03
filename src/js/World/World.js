@@ -15,6 +15,7 @@ import { walls } from './components/meshes/walls.js'
 import { pendulum } from "./components/bodies/pendulum/pendulum.js"
 import { spheres } from "./components/sceneFragments/spheres.js"
 import { cubes } from "./components/sceneFragments/cubes.js"
+import { pedestals } from './components/sceneFragments/pedestals'
 import { colorComposer } from './components/bodies/pendulum/colorComposer.js'
 import { RoomEnvironment } from './components/stage/RoomEnv'
 import { setPrintTools } from './utils/setPrintTools'
@@ -96,6 +97,7 @@ class World {
     this.spheresFragment     = spheres  (this.scene, this.loop, this.physicsWorld, envMap, this.bgHSL, {min: 0.02,  sizeRange: $fx.rand()/20, n: 8, y: 0.2, yRange: 3});
     this.cubesFragment       = cubes    (this.scene, this.loop, this.physicsWorld, envMap, this.bgHSL, {min: 0.05,  sizeRange: 0.10, n: 10 , y: 0.2,  yRange: 2});
     this.miniCubesFragment   = cubes    (this.scene, this.loop, this.physicsWorld, envMap, this.bgHSL, {min: 0.006, sizeRange: 0.04, n: 48, y: 0.06, yRange: 2});
+    this.pedestals           = pedestals(this.scene, this.loop, this.physicsWorld, envMap, this.colorComposition, {min: 0.006, sizeRange: 0.04, n: 48, y: 0.06, yRange: 2});
     
     this.orbitControls.target = this.pendulum.handleB.mesh.position;
   }

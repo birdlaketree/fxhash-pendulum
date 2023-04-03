@@ -140,7 +140,7 @@ const sizePositionComposer = () => {
   const size = sizeAndVolume.size;
   // console.log('volume index', sizeAndVolume.volume);
 
-  const initY = 1;
+  const initY = 3;
   let hAConfXOffset = size.a.height/2;
   if (size.a.height >= size.a.width) {
     hAConfXOffset = size.a.width/2;

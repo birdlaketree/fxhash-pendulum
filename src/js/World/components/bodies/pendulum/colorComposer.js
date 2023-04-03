@@ -138,7 +138,7 @@ const colorComposer = () => {
     } else if (bgSeed >= 0.45 && bgSeed < 0.9) {
       bg = c;
     } else if (bgSeed >= 0.9 && bgSeed < 1.0) {
-      bg = a;
+      bg = white;
     }
 
     const randomized = shuffle([a,b,c]);
@@ -223,7 +223,7 @@ const colorComposer = () => {
         bg = c;
       }
     } else if (bgSeed >= 0.9 && bgSeed <= 1.0) {
-      bg = ($fx.rand() > 0.9) ? bg1 : bg2;
+      bg = bg2;
     }
 
     return {
@@ -271,9 +271,9 @@ const colorComposer = () => {
 
     const randomized = shuffle([a,b,c]);
 
-    const bg1 = black;
+    // const bg1 = black;
     const bg2 = white;
-    const randomizedBg = shuffle([a,b,c,bg1,bg2]);
+    const randomizedBg = shuffle([a,b,c,bg2]);
 
     return {
       a: randomized[0],
