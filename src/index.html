@@ -21,6 +21,7 @@
       // var fxhash = "oogS7iBBiQfWNsWuDFNzh8H7WkbxGJgzgXh9h22CFJsSCpfkQNF"
       // var fxhash = "ooSxLtcKGynNxLru4EVfNb2y5dhazT2ReJGFjRh4bSzr3kuQnt1"
       // var fxhash = "ooF85f8cxQoyjBVFaRvHLRkF8DkLn93u9aoVQFAyL3SgKK8RayK"
+      // var fxhash = "oo2nnoD4B65aTMMAVqAsUn8uSF2k7yUFKJHadzaC8Hf6pAc7Srk"
       let b58dec = str=>[...str].reduce((p,c)=>p*alphabet.length+alphabet.indexOf(c)|0, 0)
       let fxhashTrunc = fxhash.slice(2)
       let regex = new RegExp(".{" + ((fxhash.length/4)|0) + "}", 'g')

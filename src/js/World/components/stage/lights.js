@@ -30,10 +30,10 @@ const createLights = scene => {
   const ambient = new AmbientLight(0x404040, 3.4); // soft white light
   scene.add(ambient);
 
-  const gui = new GUI();
-  gui.close()
-  gui.add(spot, 'intensity', 0.0, 1600.0 );
-  gui.add(ambient, 'intensity', 0.0, 10.0 );
+  // const gui = new GUI();
+  // gui.close()
+  // gui.add(spot, 'intensity', 0.0, 1600.0 );
+  // gui.add(ambient, 'intensity', 0.0, 10.0 );
 
 }
 

@@ -19,7 +19,7 @@ import { pedestals } from './components/sceneFragments/pedestals'
 import { colorComposer } from './components/bodies/pendulum/colorComposer.js'
 import { RoomEnvironment } from './components/stage/RoomEnv'
 import { setPrintTools } from './utils/setPrintTools'
-import { ssao as postprocessing } from './components/effects/ssao'
+import { postprocessing } from './components/effects/postprocessing'
 import { materialTester } from './utils/materialTester'
 import { lightTester } from './utils/lightTester'
 import { Resizer } from './system/Resizer'
@@ -36,6 +36,11 @@ class World {
     this.xrEnabled = false;
     this.postprocessingEnabled = true;
     this.printToolsEnabled = true;
+    this.ppM = {
+      ssao: 'SSAO',
+      ssgi: 'SSGI'
+    }
+    this.ppMA = this.ppM.ssao;
 
     this.colorComposition = colorComposer();
     this.bgColor = this.colorComposition.bg.color;
@@ -49,7 +54,7 @@ class World {
 
     this.stats = stats(false);
     this.orbitControls = orbitControls(this.camera, this.renderer.domElement);
-    this.composer = this.postprocessingEnabled ? postprocessing(this.camera, this.scene, this.renderer) : null;
+    this.composer = this.postprocessingEnabled ? postprocessing(this.camera, this.scene, this.renderer, this.ppMA) : null;
     this.loop = new Loop(this.camera, this.scene, this.renderer, this.composer, this.stats, this.orbitControls, this.postprocessingEnabled, this.gravity, this.dt);
 
     this.dolly = createDolly(this.camera, this.scene);
@@ -61,7 +66,7 @@ class World {
 
     this.resizer = new Resizer(this.camera, this.renderer);
     this.resizer.onResize = () => {
-      this.composer = this.postprocessingEnabled ? postprocessing(this.camera, this.scene, this.renderer) : null;
+      this.composer = this.postprocessingEnabled ? postprocessing(this.camera, this.scene, this.renderer, this.ppMA) : null;
       this.loop.updateComposer(this.composer);
     };
 
@@ -101,7 +106,7 @@ class World {
     this.spheresFragment     = spheres  (this.scene, this.loop, this.physicsWorld, envMap, this.bgHSL, {min: 0.02,  sizeRange: $fx.rand()/20, n: 8, y: 0.2, yRange: 3});
     this.cubesFragment       = cubes    (this.scene, this.loop, this.physicsWorld, envMap, this.bgHSL, {min: 0.05,  sizeRange: 0.10, n: 10 , y: 0.2,  yRange: 2});
     this.miniCubesFragment   = cubes    (this.scene, this.loop, this.physicsWorld, envMap, this.bgHSL, {min: 0.006, sizeRange: 0.04, n: 48, y: 0.06, yRange: 2});
-    this.pedestals           = pedestals(this.scene, this.loop, this.physicsWorld, envMap, this.colorComposition, {min: 0.006, sizeRange: 0.04, n: 48, y: 0.06, yRange: 2});
+    // this.pedestals           = pedestals(this.scene, this.loop, this.physicsWorld, envMap, this.colorComposition, {min: 0.006, sizeRange: 0.04, n: 48, y: 0.06, yRange: 2});
     
     this.orbitControls.target = this.pendulum.handleB.mesh.position;
   }
