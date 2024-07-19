@@ -4,6 +4,10 @@ In Authonomy (final name for project on fxhash) I explore one of the basic behav
 
 The work is made with three.js and Rapier — a fast game/physics engine made with Rust programming language. All textures, normal and light maps are created dynamically using Canvas. This work is best viewed at 4k & 120Hz or better display.
 
+[Authonomy](https://vedrankolac.github.io/fxhash-pendulum/)
+
+
+
 ### Boilerplate
 Boilerplate for a fast start with three.js materials in rapier physics engine on Oculus Quest 2 VR headset.
 - only tested on Oculus Quest 2
