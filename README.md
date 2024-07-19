@@ -4,7 +4,7 @@ In Authonomy I explore one of the basic behaviors of life —continual change. I
 
 The work is made with three.js and Rapier — a fast game/physics engine made with Rust programming language. All textures, normal and light maps are created dynamically using Canvas. This work is best viewed at 4k & 120Hz or better display.
 
-[Authonomy](https://vedrankolac.github.io/fxhash-pendulum/)
+[Authonomy](https://vedrankolac.github.io/authonomy/)
 
 
 ### Boilerplate
